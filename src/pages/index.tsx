@@ -1,4 +1,4 @@
-import PageHead from "@/components/cummons/PageHead";
+import PageHead from "@/components/commons/PageHead";
 import { Button } from "@heroui/react";
 import { Inter } from "next/font/google";
 
