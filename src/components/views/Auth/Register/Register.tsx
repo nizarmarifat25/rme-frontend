@@ -1,15 +1,15 @@
 import { Button, Card, CardBody, Input } from "@heroui/react";
 
 import Image from "next/image";
-import useRegister from "./UseRegister";
+import useRegister from "./useRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const { visiblePassword, handleVisiblePassword } = useRegister();
 
   return (
-    <div className="flex w-full flex-row items-center justify-center gap-20">
-      <div className="w-1/3">
+    <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20">
+      <div className="w-full lg:w-1/3">
         <Image
           src="/images/illustration/login.svg"
           alt="register"

@@ -17,3 +17,21 @@ body {
     text-wrap: balance;
   }
 }
+
+.sidebar-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-items::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Warna lebih soft */
+  border-radius: 10px;
+}
+
+.sidebar-items::-webkit-scrollbar-thumb {
+  background: #888; /* Warna abu-abu netral */
+  border-radius: 10px;
+}
+
+.sidebar-items::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna lebih gelap saat hover */
+}
