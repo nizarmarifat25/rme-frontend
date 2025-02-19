@@ -1,6 +1,7 @@
 import { Button, Accordion, AccordionItem } from "@heroui/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { CiLogout } from "react-icons/ci";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 
@@ -19,12 +20,13 @@ interface PropsTypes {
 
 const DashboardLayoutSidebar = (props: PropsTypes) => {
   const { sidebarItems, isOpen, toggleSidebar } = props;
+  const router = useRouter();
 
   return (
     <>
       <button
         onClick={toggleSidebar}
-        className="fixed right-4 top-4 z-50  text-black lg:hidden"
+        className="fixed right-4 top-4 z-50 text-black lg:hidden"
       >
         {isOpen ? <RxCross1 size={24} /> : <RxHamburgerMenu size={24} />}
       </button>
@@ -43,7 +45,13 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                 <Accordion className="w-full">
                   <AccordionItem
                     title={
-                      <div className="flex items-center gap-2">
+                      <div
+                        className={`flex items-center gap-2 rounded px-4 py-2 ${
+                          router.pathname.includes(item.path_name)
+                            ? "bg-green-100 text-green-600"
+                            : "hover:bg-gray-100"
+                        }`}
+                      >
                         {item.icon} {item.name}
                       </div>
                     }
@@ -53,7 +61,11 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                         <Link
                           key={subIndex}
                           href={subItem.path_name}
-                          className="rounded px-4 py-2 hover:bg-gray-100"
+                          className={`rounded px-4 py-2 ${
+                            router.pathname === subItem.path_name
+                              ? "bg-green-100 text-green-600"
+                              : "hover:bg-gray-100"
+                          }`}
                         >
                           {subItem.name}
                         </Link>
@@ -63,10 +75,14 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                 </Accordion>
               </div>
             ) : (
-              <div key={index} className="px-4 py-2 hover:bg-gray-100">
+              <div key={index} className="px-4 py-2">
                 <Link
                   href={item.path_name}
-                  className="flex items-center gap-2 rounded"
+                  className={`flex items-center gap-2 rounded px-4 py-2 ${
+                    router.pathname === item.path_name
+                      ? "bg-green-100 text-green-600"
+                      : "hover:bg-gray-100"
+                  }`}
                 >
                   {item.icon} {item.name}
                 </Link>
