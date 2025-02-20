@@ -12,13 +12,21 @@ export async function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
-    if (pathname === "/auth/login") {
-        if (token) {
-            return NextResponse.redirect(new URL("/", request.url))
+    
+
+    // if (pathname === "/auth/login") {
+    //     if (token) {
+    //         return NextResponse.redirect(new URL("/", request.url))
+    //     }
+    // }
+
+    if (pathname === "/") {
+        if (!token) {
+            return NextResponse.redirect(new URL("/owner/dashboard", request.url))
         }
     }
 
-    if (pathname.startsWith("/admin")) {
+    if (pathname.startsWith("/owner")) {
         if (!token) {
             const url = new URL("/auth/login", request.url)
             url.searchParams.set("callbackUrl", encodeURI(request.url))
@@ -27,8 +35,17 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (pathname === "/admin") {
-        return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+    if (pathname.startsWith("/master-data")) {
+        if (!token) {
+            const url = new URL("/auth/login", request.url)
+            url.searchParams.set("callbackUrl", encodeURI(request.url))
+
+            return NextResponse.redirect(url)
+        }
+    }
+
+    if (pathname === "/owner") {
+        return NextResponse.redirect(new URL('/owner/dashboard', request.url))
     }
 
 
@@ -36,5 +53,5 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-    matcher: ['/auth/:path*', "/admin/:path*"]
+    matcher: ['/auth/:path*', "/owner/:path*", "/master-data/:path*", "/:path*"]
 }

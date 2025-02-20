@@ -6,93 +6,56 @@ import {
   MdOutlineMedicalServices,
 } from "react-icons/md";
 import { BsClipboardCheck } from "react-icons/bs";
+import { RiFileList2Line } from "react-icons/ri";
 
-const SIDEBAR_ADMIN = [
+const SIDEBAR_OWNER = [
   {
-    name: "Dashboard",
-    path_name: "/admin/dashboard",
-    icon: <RxDashboard />,
-    child: [],
-  },
-  {
-    name: "Dokter",
-    path_name: "/admin/dokter",
-    icon: <FaUserMd />,
+    name: "Master Data",
+    path_name: "/master-data",
+    icon: <MdOutlineMedicalServices />,
     child: [
       {
-        name: "Dokter 1",
-        path_name: "/admin/dokter/1",
+        name: "Obat",
+        path_name: "/master-data/medicine",
       },
       {
-        name: "Dokter 2",
-        path_name: "/admin/dokter/2",
+        name: "Dokter",
+        path_name: "/master-data/doctor",
+        icon: <FaUserMd />,
+      },
+      {
+        name: "Perawat",
+        path_name: "/master-data/nurse",
+        icon: <FaUserNurse />,
+      },
+      {
+        name: "Pasien",
+        path_name: "/master-data/patient",
+        icon: <FaUsers />,
       },
     ],
   },
   {
-    name: "Perawat",
-    path_name: "/admin/perawat",
-    icon: <FaUserNurse />,
-    child: [],
-  },
-  {
-    name: "Pasien",
-    path_name: "/admin/pasien",
-    icon: <FaUsers />,
-    child: [],
-  },
-  {
     name: "Rekam Medis",
-    path_name: "/admin/rekam-medis",
+    path_name: "/rekam-medis",
     icon: <BsClipboardCheck />,
     child: [],
   },
   {
-    name: "Jadwal",
-    path_name: "/admin/jadwal",
-    icon: <MdAssignment />,
+    name: "Laporan",
+    path_name: "/laporan",
+    icon: <RiFileList2Line />,
     child: [
       {
-        name: "Jadwal Dokter",
-        path_name: "/admin/jadwal/dokter",
+        name: "Transaksi",
+        path_name: "/laporan-transaksi",
       },
       {
-        name: "Jadwal Perawat",
-        path_name: "/admin/jadwal/perawat",
+        name: "Keuangan",
+        path_name: "/laporan-keuangan",
       },
     ],
-  },
-  {
-    name: "Layanan",
-    path_name: "/admin/layanan",
-    icon: <MdOutlineMedicalServices />,
-    child: [],
-  },
-  {
-    name: "Pengguna",
-    path_name: "/admin/pengguna",
-    icon: <FaUserCog />,
-    child: [
-      {
-        name: "Admin",
-        path_name: "/admin/pengguna/admin",
-      },
-      {
-        name: "Dokter",
-        path_name: "/admin/pengguna/dokter",
-      },
-      {
-        name: "Pasien",
-        path_name: "/admin/pengguna/pasien",
-      },
-    ],
-  },
-  {
-    name: "Pengaturan",
-    path_name: "/admin/pengaturan",
-    icon: <MdSettings />,
-    child: [],
   },
 ];
 
-export { SIDEBAR_ADMIN };
+export { SIDEBAR_OWNER };

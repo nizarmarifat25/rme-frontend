@@ -2,6 +2,7 @@ import { Button, Accordion, AccordionItem } from "@heroui/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { JSX } from "react";
 import { CiLogout } from "react-icons/ci";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 
@@ -31,14 +32,14 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
         {isOpen ? <RxCross1 size={24} /> : <RxHamburgerMenu size={24} />}
       </button>
       <div
-        className={`fixed left-0 top-0 z-40 flex h-screen w-[320px] max-w-[320px] flex-col justify-between border-r border-default-200 bg-white px-4 py-6 transition-transform lg:relative ${
+        className={`fixed left-0 top-0 z-40 flex h-screen w-[320px] max-w-[320px] flex-col border-r border-default-200 bg-white px-4 py-6 transition-transform lg:relative ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
         <div className="text-center text-3xl font-semibold text-green-400">
           RME
         </div>
-        <div className="sidebar-items mt-4 flex max-h-[80vh] flex-col justify-start gap-2 overflow-y-auto py-5">
+        <div className="sidebar-items mt-4 flex flex-col gap-2 overflow-y-auto flex-grow">
           {sidebarItems.map((item, index) =>
             item.child && item.child.length > 0 ? (
               <div key={index} className="px-2">
@@ -63,7 +64,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                           href={subItem.path_name}
                           className={`rounded px-4 py-2 ${
                             router.pathname === subItem.path_name
-                              ? "bg-green-100 text-green-600"
+                              ? "bg-green-100 text-green-600 pointer-events-none cursor-default"
                               : "hover:bg-gray-100"
                           }`}
                         >
@@ -80,20 +81,20 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                   href={item.path_name}
                   className={`flex items-center gap-2 rounded px-4 py-2 ${
                     router.pathname === item.path_name
-                      ? "bg-green-100 text-green-600"
+                      ? "bg-green-100 text-green-600 pointer-events-none cursor-default"
                       : "hover:bg-gray-100"
                   }`}
                 >
                   {item.icon} {item.name}
                 </Link>
               </div>
-            ),
+            )
           )}
         </div>
         <Button
           size="lg"
           fullWidth
-          className="mt-2 flex justify-start rounded-lg px-2 py-1.5"
+          className="mt-auto flex justify-start rounded-lg px-2 py-1.5"
           variant="light"
           color="success"
           onPress={() => signOut()}
@@ -103,7 +104,6 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
         </Button>
       </div>
 
-      {/* Overlay di Mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"

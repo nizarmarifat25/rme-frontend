@@ -1,7 +1,7 @@
 import PageHead from "@/components/commons/PageHead";
 import { ReactNode, useState } from "react";
 import DashboardLayoutSidebar from "./DashboardLayoutSidebar";
-import { SIDEBAR_ADMIN } from "./DashboardLayout.constans";
+import { SIDEBAR_OWNER } from "./DashboardLayout.constans";
 
 interface PropTypes {
   title?: string;
@@ -10,7 +10,7 @@ interface PropTypes {
 }
 
 const DashboardLayout = (props: PropTypes) => {
-  const { title, children, type = "admin" } = props;
+  const { title, children, type = "owner" } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,13 +21,16 @@ const DashboardLayout = (props: PropTypes) => {
   return (
     <>
       <PageHead title={title} />
-      <div className="flex max-w-screen-3xl 3xl:container">
+      <div className="max-w-screen-3xl 3xl:container flex">
         <DashboardLayoutSidebar
-          sidebarItems={type === "admin" ? SIDEBAR_ADMIN : []}
+          sidebarItems={type === "owner" ? SIDEBAR_OWNER : []}
           isOpen={isOpen}
           toggleSidebar={toggleSidebar}
         />
-        <div className="h-screen w-full overflow-y-auto p-8">{children}</div>
+        <div className="h-screen w-full overflow-y-auto bg-slate-100 lg:p-8">
+          
+          {children}
+        </div>
       </div>
     </>
   );

@@ -35,3 +35,9 @@ body {
 .sidebar-items::-webkit-scrollbar-thumb:hover {
   background: #555; /* Warna lebih gelap saat hover */
 }
+
+@layer components {
+  .nextui-pagination .nextui-pagination-item {
+    color: white !important;
+  }
+}

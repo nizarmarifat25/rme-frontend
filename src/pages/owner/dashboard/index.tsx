@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";  
-import Dashboard from "@/components/views/Admin/Dashboard";
+import Dashboard from "@/components/views/Owner/Dashboard";
 
 const LoginPage = () =>{
     return (
