@@ -1,6 +1,6 @@
 import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constans/list.constans";
 import useDebounce from "@/hooks/useDebounce";
-import medicineServices from "@/services/medicine.service"; 
+import medicineServices from "@/services/medicine.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
@@ -11,7 +11,7 @@ const useMedicine = () => {
 
     const currentSize = router.query.size;
     const currentPage = router.query.page;
-    const currentKeyword = router.query.keyword ;
+    const currentKeyword = router.query.keyword;
 
     const setURL = () => {
         router.replace({
@@ -22,16 +22,23 @@ const useMedicine = () => {
             }
         });
     };
-
     const getMedicines = async () => {
-        let params = `size=${currentSize}&page=${currentPage}`;
-        if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`;
+        try {
+            let params = `size=${currentSize}&page=${currentPage}`;
+            if (currentKeyword) {
+                params += `&keyword=${currentKeyword}`;
+            }
+
+            const res = await medicineServices.getMedicines(params);
+            const { data } = res;
+            return data;
+        } catch (error) {
+            console.error("Error fetching medicines:", error);
+
+            return { error: true, message: "Gagal mengambil data obat." };
         }
-        const res = await medicineServices.getMedicines(params);
-        const { data } = res;
-        return data;
     };
+
 
     const {
         data: dataMedicine,
@@ -87,19 +94,19 @@ const useMedicine = () => {
         });
     };
 
-    return { 
-        dataMedicine, 
-        isLoadingMedicine, 
-        currentPage, 
+    return {
+        dataMedicine,
+        isLoadingMedicine,
+        currentPage,
         currentSize,
-        currentKeyword, 
-        isRefetchingMedicine, 
-        setURL, 
+        currentKeyword,
+        isRefetchingMedicine,
+        setURL,
         refetchMedicine,
-        handleChangePage, 
-        handleChangeSize, 
-        handleKeyword, 
-        handleClearKeyword 
+        handleChangePage,
+        handleChangeSize,
+        handleKeyword,
+        handleClearKeyword
     };
 };
 
