@@ -3,7 +3,7 @@ import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
-import { COLUMN_LISTS_PATIENT } from "./patient.constans"; 
+import { COLUMN_LISTS_PATIENT } from "./Patient.constans";  
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import usePatient from "./usePatient"; 
 
