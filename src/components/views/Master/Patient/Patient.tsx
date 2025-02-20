@@ -42,16 +42,6 @@ const Patient = () => {
       const cellValue = patient[columnKey as keyof typeof patient];
 
       switch (columnKey) {
-        case "image":
-          return (
-            <Image
-              src={`${cellValue}`}
-              alt="patient image"
-              width={100}
-              height={200}
-            />
-          );
-
         case "actions":
           return (
             <div className="flex space-x-1">
