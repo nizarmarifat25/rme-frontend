@@ -119,6 +119,7 @@ const DataTable = (props: PropsTypes) => {
 
   return (
     <Table
+      align="center"
       topContent={topContent}
       bottomContent={bottomContent}
       topContentPlacement="outside"

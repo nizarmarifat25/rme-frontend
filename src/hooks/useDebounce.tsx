@@ -1,3 +1,4 @@
+
 import { useRef } from "react";
 
 const useDebounce = () => {
@@ -12,5 +13,6 @@ const useDebounce = () => {
   };
   return debounce;
 };
+
 
 export default useDebounce;

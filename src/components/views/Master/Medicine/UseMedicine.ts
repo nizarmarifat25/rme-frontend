@@ -11,7 +11,7 @@ const useMedicine = () => {
 
     const currentSize = router.query.size;
     const currentPage = router.query.page;
-    const currentKeyword = router.query.keyword;
+    const currentKeyword = router.query.keyword ;
 
     const setURL = () => {
         router.replace({
@@ -91,9 +91,11 @@ const useMedicine = () => {
         dataMedicine, 
         isLoadingMedicine, 
         currentPage, 
-        currentSize, 
+        currentSize,
+        currentKeyword, 
         isRefetchingMedicine, 
         setURL, 
+        refetchMedicine,
         handleChangePage, 
         handleChangeSize, 
         handleKeyword, 

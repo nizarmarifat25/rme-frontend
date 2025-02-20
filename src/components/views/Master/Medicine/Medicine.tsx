@@ -2,10 +2,12 @@ import DataTable from "@/components/ui/DataTable";
 import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback, useEffect } from "react";
+import { Key, ReactNode, useCallback, useEffect, useState } from "react";
 import { COLUMN_LISTS_MEDICINE } from "./Medicine.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import useMedicine from "./UseMedicine"; 
+import useMedicine from "./UseMedicine";
+import AddMedicineModal from "./AddMedicineModal";
+import { formatRupiah } from "@/utils/currency-format";
 
 interface Medicine {
   medicine_id: number;
@@ -25,11 +27,14 @@ const Medicine = () => {
     currentPage,
     currentSize,
     isRefetchingMedicine,
+    refetchMedicine,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
   } = useMedicine();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (isReady) {
@@ -42,20 +47,14 @@ const Medicine = () => {
       const cellValue = medicine[columnKey as keyof typeof medicine];
 
       switch (columnKey) {
-        case "image":
-          return (
-            <Image
-              src={`${cellValue}`}
-              alt="medicine image"
-              width={100}
-              height={200}
-            />
-          );
+        case "price":
+          return <p className="text-green-500 font-semibold">{formatRupiah(Number(cellValue))}</p>;
+
 
         case "actions":
           return (
             <div className="flex space-x-1">
-              <Tooltip content="Lihat Detail">
+              {/* <Tooltip content="Lihat Detail">
                 <Button
                   size="sm"
                   variant="light"
@@ -65,7 +64,7 @@ const Medicine = () => {
                 >
                   <FaEye className="text-lg" />
                 </Button>
-              </Tooltip>
+              </Tooltip> */}
 
               <Tooltip content="Edit Obat">
                 <Button
@@ -73,7 +72,9 @@ const Medicine = () => {
                   variant="light"
                   aria-label="edit medicine"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => console.log(`Edit medicine ${medicine.medicine_id}`)}
+                  onPress={() =>
+                    console.log(`Edit medicine ${medicine.medicine_id}`)
+                  }
                 >
                   <FaEdit className="text-lg" />
                 </Button>
@@ -130,12 +131,18 @@ const Medicine = () => {
               totalPage={dataMedicine?.total_pages}
               isLoading={isLoadingMedicine || isRefetchingMedicine}
               buttonTopContent="Tambah Obat"
-              onClickButtonTopContent={() => {}}
+              onClickButtonTopContent={() => setIsModalOpen(true)}
               data={dataMedicine?.data || []}
             />
           )}
         </section>
       </div>
+
+      <AddMedicineModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        refetchMedicine={refetchMedicine}
+      />
     </div>
   );
 };
