@@ -3,9 +3,13 @@ import useDebounce from "@/hooks/useDebounce";
 import medicineServices from "@/services/medicine.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 const useMedicine = () => {
+    const [isModalOpen, setIsModalOpen] = useState("");
+    const [selectedId, setSelectedId] = useState("");
+    const [selectedData, setSelectedData] = useState({})
+
     const router = useRouter();
     const debounce = useDebounce();
 
@@ -106,7 +110,16 @@ const useMedicine = () => {
         handleChangePage,
         handleChangeSize,
         handleKeyword,
-        handleClearKeyword
+        handleClearKeyword,
+
+        isModalOpen,
+        setIsModalOpen,
+
+        selectedId,
+        setSelectedId,
+
+        selectedData,
+        setSelectedData
     };
 };
 

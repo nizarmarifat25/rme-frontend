@@ -12,14 +12,18 @@ export async function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
+    if (pathname === "/auth/login") {
+        if (token) {
+            const url = new URL(request.url);
+            const callbackUrl = url.searchParams.get("callbackUrl") || `${url.protocol}//${url.host}/`;
+
+            return Response.redirect(callbackUrl);
+        } else {
+            const url = new URL(request.url);
+            url.searchParams.set("callbackUrl", encodeURI(request.url));
+        }
+    }
     
-
-    // if (pathname === "/auth/login") {
-    //     if (token) {
-    //         return NextResponse.redirect(new URL("/", request.url))
-    //     }
-    // }
-
     if (pathname === "/") {
         if (!token) {
             return NextResponse.redirect(new URL("/owner/dashboard", request.url))

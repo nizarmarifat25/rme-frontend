@@ -1,16 +1,24 @@
 import DataTable from "@/components/ui/DataTable";
-import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  Button,
+  Tooltip,
+  DatePicker,
+} from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect, useState } from "react";
 import { COLUMN_LISTS_MEDICINE } from "./Medicine.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useMedicine from "./UseMedicine";
-import AddMedicineModal from "./AddMedicineModal";
 import { formatRupiah } from "@/utils/currency-format";
+import DeleteMedicineModal from "./DeleteMedicineModal";
+import ActionMedicineModal from "./ActionMedicineModal";
+import { getLocalTimeZone, now, parseDate } from "@internationalized/date";
 
 interface Medicine {
-  medicine_id: number;
+  medicine_id: string;
   name: string;
   category: string;
   manufacturer: string;
@@ -32,9 +40,13 @@ const Medicine = () => {
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
+    isModalOpen,
+    setIsModalOpen,
+    selectedId,
+    setSelectedId,
+    selectedData,
+    setSelectedData,
   } = useMedicine();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (isReady) {
@@ -42,39 +54,34 @@ const Medicine = () => {
     }
   }, [isReady]);
 
+
+  console.log({isModalOpen});
+  
   const renderCell = useCallback(
     (medicine: Record<string, unknown>, columnKey: Key) => {
       const cellValue = medicine[columnKey as keyof typeof medicine];
 
       switch (columnKey) {
         case "price":
-          return <p className="text-green-500 font-semibold">{formatRupiah(Number(cellValue))}</p>;
-
+          return (
+            <p className="font-semibold text-green-500">
+              {formatRupiah(Number(cellValue))}
+            </p>
+          );
 
         case "actions":
           return (
             <div className="flex space-x-1">
-              {/* <Tooltip content="Lihat Detail">
-                <Button
-                  size="sm"
-                  variant="light"
-                  aria-label="detail Obat"
-                  className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => push(`/owner/detail/${medicine.medicine_id}`)}
-                >
-                  <FaEye className="text-lg" />
-                </Button>
-              </Tooltip> */}
-
               <Tooltip content="Edit Obat">
                 <Button
                   size="sm"
                   variant="light"
                   aria-label="edit medicine"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() =>
-                    console.log(`Edit medicine ${medicine.medicine_id}`)
-                  }
+                  onPress={() => {
+                    setIsModalOpen("edit");
+                    setSelectedData(medicine);
+                  }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
@@ -86,9 +93,10 @@ const Medicine = () => {
                   variant="light"
                   aria-label="hapus medicine"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
-                  onPress={() =>
-                    console.log(`Hapus medicine ${medicine.medicine_id}`)
-                  }
+                  onPress={() => {
+                    setIsModalOpen("delete");
+                    setSelectedId(String(medicine.medicine_id));
+                  }}
                 >
                   <FaTrash className="text-lg" />
                 </Button>
@@ -131,17 +139,27 @@ const Medicine = () => {
               totalPage={dataMedicine?.total_pages}
               isLoading={isLoadingMedicine || isRefetchingMedicine}
               buttonTopContent="Tambah Obat"
-              onClickButtonTopContent={() => setIsModalOpen(true)}
+              onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataMedicine?.data || []}
             />
           )}
         </section>
       </div>
 
-      <AddMedicineModal
+      <ActionMedicineModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => setIsModalOpen("")}
         refetchMedicine={refetchMedicine}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      <DeleteMedicineModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchMedicine={refetchMedicine}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
       />
     </div>
   );

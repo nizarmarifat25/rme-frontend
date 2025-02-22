@@ -11,7 +11,7 @@ const schema = yup.object().shape({
   code: yup.string().required("Kode wajib diisi").min(3, "Minimal 3 karakter"),
   name: yup.string().required("Nama wajib diisi").min(3, "Minimal 3 karakter"),
   category: yup.string().required("Kategori wajib diisi"),
-  unit: yup.string().required("Unit wajib diisi"),
+  unit: yup.string().required("Satuan wajib diisi"),
   price: yup
     .string()
     .typeError("Harga harus angka")
@@ -26,8 +26,7 @@ const schema = yup.object().shape({
   expiry_date: yup.string().required("Tanggal kadaluarsa wajib diisi"),
 });
 
-
-const useAddMedicineModal = () => {
+const useActionMedicineModal = () => {
   const { setToaster } = useContext(ToasterContext);
 
   const getMedicineCategorys = async () => {
@@ -42,24 +41,30 @@ const useAddMedicineModal = () => {
     return data;
   };
 
-  const {
-    data: dataMedicineCategorys = [],
-    isLoading: isLoadingMedicineCategorys,
-  } = useQuery<IMedicineCategory[]>({
+  const { data: dataMedicineCategorys = [] } = useQuery<IMedicineCategory[]>({
     queryKey: ["medicine-categories"],
     queryFn: getMedicineCategorys,
   });
 
-  const { data: dataMedicineUnits = [], isLoading: isLoadingMedicineUnits } =
-    useQuery<IMedicineUnits[]>({
-      queryKey: ["medicine-units"],
-      queryFn: getMedicineUnits,
-    });
+  const { data: dataMedicineUnits = [] } = useQuery<IMedicineUnits[]>({
+    queryKey: ["medicine-units"],
+    queryFn: getMedicineUnits,
+  });
 
   const addMedicine = async (payload: IMedicine) => {
     const res = await medicineServices.postMedicine(payload);
 
     return res;
+  };
+
+  const editMedicine = async ({
+    payload,
+    id,
+  }: {
+    payload: IMedicine;
+    id: string;
+  }) => {
+    return medicineServices.editMedicine(payload, id);
   };
 
   const {
@@ -69,12 +74,23 @@ const useAddMedicineModal = () => {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      code: "",
+      name: "",
+      unit: "",
+      price: "",
+      stock: "",
+      dosage: "",
+      category: "",
+      expiry_date: "",
+    },
   });
 
   const {
     mutate: mutateAddMedicine,
     isPending: isPendingMutateAddMedicine,
     isSuccess: isSuccessMutateAddMedicine,
+    reset: resetAddMedicine 
   } = useMutation({
     mutationFn: addMedicine,
     onError: (error) => {
@@ -92,22 +108,54 @@ const useAddMedicineModal = () => {
     },
   });
 
+  const {
+    mutate: mutateEditMedicine,
+    isPending: isPendingMutateEditMedicine,
+    isSuccess: isSuccessMutateEditMedicine,
+    reset: resetEditMedicine 
+  } = useMutation({
+    mutationFn: editMedicine,
+    onError: (error) => {
+      setToaster({
+        type: "error",
+        message: error.message,
+      });
+    },
+    onSuccess: () => {
+      setToaster({
+        type: "success",
+        message: "Berhasil mengubah data obat!",
+      });
+      reset();
+    },
+  });
+
   const handleAddMedicine = (data: IMedicine) => {
     mutateAddMedicine(data);
   };
+
+  const handleEditMedicine = (data: IMedicine, id: string) => {
+    console.log("handleEditMedicine called with:", { data, id });
+    mutateEditMedicine({ payload: data, id });
+  };
+  
 
   return {
     control,
     errors,
     dataMedicineCategorys,
     dataMedicineUnits,
-    isLoadingMedicineCategorys,
     isPendingMutateAddMedicine,
     isSuccessMutateAddMedicine,
+    isPendingMutateEditMedicine,
+    isSuccessMutateEditMedicine,
     handleAddMedicine,
     handleSubmitForm,
+    handleEditMedicine,
+    resetAddMedicine,
+    resetEditMedicine,
     reset,
   };
 };
 
-export default useAddMedicineModal;
+export default useActionMedicineModal;

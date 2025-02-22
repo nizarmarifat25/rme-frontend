@@ -16,6 +16,7 @@ import {
 } from "@heroui/react";
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { CiSearch } from "react-icons/ci";
+import { IoIosAdd } from "react-icons/io";
 
 interface PropsTypes {
   buttonTopContent?: string;
@@ -71,7 +72,7 @@ const DataTable = (props: PropsTypes) => {
             aria-label={buttonTopContent || "Tambah Data"}
             onPress={onClickButtonTopContent}
           >
-            {buttonTopContent}
+           <IoIosAdd className="text-lg" />  {buttonTopContent}
           </Button>
         )}
       </div>
@@ -119,6 +120,7 @@ const DataTable = (props: PropsTypes) => {
 
   return (
     <Table
+      aria-label="Tabel Data"
       align="center"
       topContent={topContent}
       bottomContent={bottomContent}

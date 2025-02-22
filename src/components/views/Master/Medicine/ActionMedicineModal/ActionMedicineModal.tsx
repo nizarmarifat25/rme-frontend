@@ -1,7 +1,8 @@
 import {
   Button,
-  DateInput,
+  CalendarDate,
   DatePicker,
+  DateValue,
   Input,
   Modal,
   ModalBody,
@@ -10,28 +11,37 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import useAddMedicineModal from "./useAddMedicineModal";
+import useAddMedicineModal from "./useActionMedicineModal";
 import { Controller } from "react-hook-form";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { parseDate } from "@internationalized/date";
 
 interface PropsType {
-  isOpen: boolean;
+  isOpen: string;
   onClose: () => void;
   refetchMedicine: () => void;
+  selectedData: Record<string, unknown>;
+  setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
 }
 
-const AddMedicineModal = (props: PropsType) => {
-  const { isOpen, onClose, refetchMedicine } = props;
+const ActionMedicineModal = (props: PropsType) => {
+  const { isOpen, onClose, refetchMedicine, selectedData, setSelectedData } =
+    props;
+
   const {
     control,
     errors,
     dataMedicineCategorys,
     dataMedicineUnits,
-    isLoadingMedicineCategorys,
     isPendingMutateAddMedicine,
     isSuccessMutateAddMedicine,
+    isPendingMutateEditMedicine,
+    isSuccessMutateEditMedicine,
     handleSubmitForm,
     handleAddMedicine,
+    handleEditMedicine,
+    resetAddMedicine,
+    resetEditMedicine,
     reset,
   } = useAddMedicineModal();
 
@@ -39,12 +49,32 @@ const AddMedicineModal = (props: PropsType) => {
     if (isSuccessMutateAddMedicine) {
       onClose();
       refetchMedicine();
+      resetAddMedicine()
+      reset();
     }
-  }, [isSuccessMutateAddMedicine]);
+
+    if (isSuccessMutateEditMedicine) {
+      onClose();
+      refetchMedicine();
+      resetEditMedicine()
+      reset();
+
+      console.log({isSuccessMutateEditMedicine});
+      
+    }
+
+    if (isOpen === "edit" && selectedData) {
+      reset(selectedData);
+      reset({});
+    }
+  }, [isSuccessMutateAddMedicine, isSuccessMutateEditMedicine, isOpen]);
+
+
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isOpen === "add" || isOpen === "edit"}
       onClose={() => {
+        setSelectedData({});
         onClose();
         reset();
       }}
@@ -52,9 +82,19 @@ const AddMedicineModal = (props: PropsType) => {
       scrollBehavior="inside"
       size="3xl"
     >
-      <form onSubmit={handleSubmitForm(handleAddMedicine)}>
+      <form
+        onSubmit={
+          isOpen === "add"
+            ? handleSubmitForm(handleAddMedicine)
+            : handleSubmitForm((data) =>
+                handleEditMedicine(data, selectedData.medicine_id as string),
+              )
+        }
+      >
         <ModalContent className="m-4">
-          <ModalHeader>Tambah Obat</ModalHeader>
+          <ModalHeader>
+            {isOpen === "add" ? "Tambah" : "Perbaharui"} Obat
+          </ModalHeader>
           <ModalBody>
             <div className="grid grid-cols-2 gap-4">
               <Controller
@@ -96,7 +136,7 @@ const AddMedicineModal = (props: PropsType) => {
                     {...field}
                     selectionMode="single"
                     aria-label="Pilih unit obat"
-                    label="Unit"
+                    label="Satuan"
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
@@ -105,10 +145,7 @@ const AddMedicineModal = (props: PropsType) => {
                     onSelectionChange={(value) => field.onChange(value)}
                   >
                     {dataMedicineUnits.map((unit) => (
-                      <SelectItem
-                        key={unit.medicine_unit_id}
-                        value={unit.medicine_unit_id}
-                      >
+                      <SelectItem key={unit.name} value={unit.name}>
                         {unit.name}
                       </SelectItem>
                     ))}
@@ -177,12 +214,12 @@ const AddMedicineModal = (props: PropsType) => {
                     radius="sm"
                     isInvalid={!!errors.category}
                     errorMessage={errors.category?.message}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.category)] : ""
+                    }
                   >
                     {dataMedicineCategorys.map((category) => (
-                      <SelectItem
-                        key={category.medicine_category_id}
-                        value={category.medicine_category_id}
-                      >
+                      <SelectItem key={category.name} value={category.name}>
                         {category.name}
                       </SelectItem>
                     ))}
@@ -193,16 +230,21 @@ const AddMedicineModal = (props: PropsType) => {
                 name="expiry_date"
                 control={control}
                 render={({ field }) => (
-                  <>
-                    <DatePicker
-                      variant="bordered"
-                      radius="sm"
-                      label="Tanggal Kedaluwarsa"
-                      onChange={(date) => field.onChange(date)}
-                      isInvalid={!!errors.expiry_date}
-                      errorMessage={errors.expiry_date?.message}
-                    />
-                  </>
+                  <DatePicker
+                    variant="bordered"
+                    radius="sm"
+                    label="Tanggal Kedaluwarsa"
+                    showMonthAndYearPickers
+                    onChange={(date) => field.onChange(date)}
+                    isInvalid={!!errors.expiry_date}
+                    errorMessage={errors.expiry_date?.message}
+                    defaultValue={
+                      selectedData?.expiry_date &&
+                      typeof selectedData.expiry_date === "string"
+                        ? parseDate(selectedData.expiry_date)
+                        : null
+                    }
+                  />
                 )}
               />
             </div>
@@ -210,6 +252,7 @@ const AddMedicineModal = (props: PropsType) => {
               <Button
                 variant="bordered"
                 onPress={() => {
+                  setSelectedData({});
                   onClose();
                   reset();
                 }}
@@ -223,7 +266,16 @@ const AddMedicineModal = (props: PropsType) => {
                 type="submit"
                 color="success"
                 className="text-white"
-                isLoading={isPendingMutateAddMedicine}
+                isLoading={
+                  isOpen === "add"
+                    ? isPendingMutateAddMedicine
+                    : isPendingMutateEditMedicine
+                }
+                disabled={
+                  isOpen === "add"
+                    ? isPendingMutateAddMedicine
+                    : isPendingMutateEditMedicine
+                }
               >
                 Simpan
               </Button>
@@ -235,4 +287,4 @@ const AddMedicineModal = (props: PropsType) => {
   );
 };
 
-export default AddMedicineModal;
+export default ActionMedicineModal;
