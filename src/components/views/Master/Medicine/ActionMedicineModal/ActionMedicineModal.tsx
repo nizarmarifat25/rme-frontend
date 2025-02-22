@@ -238,12 +238,12 @@ const ActionMedicineModal = (props: PropsType) => {
                     onChange={(date) => field.onChange(date)}
                     isInvalid={!!errors.expiry_date}
                     errorMessage={errors.expiry_date?.message}
-                    defaultValue={
-                      selectedData?.expiry_date &&
-                      typeof selectedData.expiry_date === "string"
-                        ? parseDate(selectedData.expiry_date)
-                        : null
-                    }
+                    // defaultValue={
+                    //   selectedData?.expiry_date &&
+                    //   typeof selectedData.expiry_date === "string"
+                    //     ? parseDate(selectedData.expiry_date)
+                    //     : null
+                    // }
                   />
                 )}
               />

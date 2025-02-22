@@ -135,7 +135,6 @@ const useActionMedicineModal = () => {
   };
 
   const handleEditMedicine = (data: IMedicine, id: string) => {
-    console.log("handleEditMedicine called with:", { data, id });
     mutateEditMedicine({ payload: data, id });
   };
   
