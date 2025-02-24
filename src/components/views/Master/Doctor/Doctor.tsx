@@ -2,10 +2,19 @@ import DataTable from "@/components/ui/DataTable";
 import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback, useEffect } from "react";
+import {
+  Dispatch,
+  Key,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+} from "react";
 import { COLUMN_LISTS_DOCTOR } from "./Doctor.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useDoctor from "./UseDoctor";
+import ActionDoctorModal from "./ActionDoctorModal";
+import DeleteDoctorModal from "./DeleteDoctorModal";
 
 interface Doctor {
   doctor_id: number;
@@ -14,6 +23,8 @@ interface Doctor {
   specialization: string;
   phone: string;
   registration_date: string;
+  selectedData: Record<string, unknown>;
+  setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
 }
 
 const Doctor = () => {
@@ -25,10 +36,17 @@ const Doctor = () => {
     currentPage,
     currentSize,
     isRefetchingDoctor,
+    refetchDoctor,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
+    isModalOpen,
+    setIsModalOpen,
+    selectedId,
+    setSelectedId,
+    selectedData,
+    setSelectedData,
   } = useDoctor();
 
   useEffect(() => {
@@ -55,25 +73,16 @@ const Doctor = () => {
         case "actions":
           return (
             <div className="flex space-x-1">
-              <Tooltip content="Lihat Detail">
-                <Button
-                  size="sm"
-                  variant="light"
-                  aria-label="detail dokter"
-                  className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => push(`/owner/detail/${doctor.doctor_id}`)}
-                >
-                  <FaEye className="text-lg" />
-                </Button>
-              </Tooltip>
-
-              <Tooltip content="Edit Dokter">
+              <Tooltip content="Perbaharui Dokter">
                 <Button
                   size="sm"
                   variant="light"
                   aria-label="edit dokter"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => console.log(`Edit dokter ${doctor.doctor_id}`)}
+                  onPress={() => {
+                    setIsModalOpen("edit");
+                    setSelectedData(doctor);
+                  }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
@@ -85,9 +94,10 @@ const Doctor = () => {
                   variant="light"
                   aria-label="hapus dokter"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
-                  onPress={() =>
-                    console.log(`Hapus dokter ${doctor.doctor_id}`)
-                  }
+                  onPress={() => {
+                    setIsModalOpen("delete");
+                    setSelectedId(String(doctor.doctor_id));
+                  }}
                 >
                   <FaTrash className="text-lg" />
                 </Button>
@@ -130,12 +140,28 @@ const Doctor = () => {
               totalPage={dataDoctor?.total_pages}
               isLoading={isLoadingDoctor || isRefetchingDoctor}
               buttonTopContent="Tambah Dokter"
-              onClickButtonTopContent={() => {}}
+              onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataDoctor?.data || []}
             />
           )}
         </section>
       </div>
+
+      <ActionDoctorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchDoctor={refetchDoctor}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      <DeleteDoctorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchDoctor={refetchDoctor}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+      />
     </div>
   );
 };

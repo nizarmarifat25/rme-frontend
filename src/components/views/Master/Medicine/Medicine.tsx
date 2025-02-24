@@ -55,8 +55,6 @@ const Medicine = () => {
   }, [isReady]);
 
 
-  console.log({isModalOpen});
-  
   const renderCell = useCallback(
     (medicine: Record<string, unknown>, columnKey: Key) => {
       const cellValue = medicine[columnKey as keyof typeof medicine];
@@ -72,7 +70,7 @@ const Medicine = () => {
         case "actions":
           return (
             <div className="flex space-x-1">
-              <Tooltip content="Edit Obat">
+              <Tooltip content="Perbaharui Obat">
                 <Button
                   size="sm"
                   variant="light"

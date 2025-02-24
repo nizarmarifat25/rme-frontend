@@ -3,9 +3,15 @@ import useDebounce from "@/hooks/useDebounce"
 import doctorServices from "@/services/doctor.service"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/router"
-import { ChangeEvent } from "react"
+import { ChangeEvent, useState } from "react"
 
 const useDoctor = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState("");
+    const [selectedId, setSelectedId] = useState("");
+    const [selectedData, setSelectedData] = useState({})
+
+
     const router = useRouter()
     const debounce = useDebounce()
 
@@ -94,7 +100,27 @@ const useDoctor = () => {
 
 
 
-    return { dataDoctor, isLoadingDoctor, currentPage, currentSize, isRefetchingDoctor, setURL, handleChangePage, handleChangeSize, handleKeyword, handleClearKeyword }
+    return {
+        dataDoctor,
+        isLoadingDoctor,
+        currentPage,
+        currentSize,
+        isRefetchingDoctor,
+        setURL,
+        handleChangePage,
+        handleChangeSize, handleKeyword,
+        handleClearKeyword,
+        refetchDoctor,
+
+        isModalOpen,
+        setIsModalOpen,
+
+        selectedId,
+        setSelectedId,
+
+        selectedData,
+        setSelectedData
+    }
 
 }
 

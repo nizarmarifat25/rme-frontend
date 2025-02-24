@@ -2,19 +2,30 @@ import DataTable from "@/components/ui/DataTable";
 import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback, useEffect } from "react";
+import {
+  Dispatch,
+  Key,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+} from "react";
 import { COLUMN_LISTS_NURSE } from "./Nurse.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import useNurse from "./useNurse"; 
+import useNurse from "./useNurse";
+import ActionNurseModal from "./ActionNurseModal";
+import DeleteNurseModal from "./DeleteNurseModal";
 
-interface Nurse {
-  nurse_id: number;
-  name: string;
-  department: string;
-  hospital: string;
-  salary: string;
-  shift: string;
-}
+// interface Nurse {
+//   nurse_id: number;
+//   name: string;
+//   department: string;
+//   hospital: string;
+//   salary: string;
+//   shift: string;
+//   selectedData: Record<string, unknown>;
+//   setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
+// }
 
 const Nurse = () => {
   const { push, isReady, query } = useRouter();
@@ -25,10 +36,17 @@ const Nurse = () => {
     currentPage,
     currentSize,
     isRefetchingNurse,
+    refetchNurse,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
+    isModalOpen,
+    setIsModalOpen,
+    selectedId,
+    setSelectedId,
+    selectedData,
+    setSelectedData,
   } = useNurse();
 
   useEffect(() => {
@@ -55,25 +73,16 @@ const Nurse = () => {
         case "actions":
           return (
             <div className="flex space-x-1">
-              <Tooltip content="Lihat Detail">
-                <Button
-                  size="sm"
-                  variant="light"
-                  aria-label="detail Perawat"
-                  className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => push(`/owner/detail/${nurse.nurse_id}`)}
-                >
-                  <FaEye className="text-lg" />
-                </Button>
-              </Tooltip>
-
-              <Tooltip content="Edit Perawat">
+              <Tooltip content="Perbaharui Perawat">
                 <Button
                   size="sm"
                   variant="light"
                   aria-label="edit nurse"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => console.log(`Edit nurse ${nurse.nurse_id}`)}
+                  onPress={() => {
+                    setIsModalOpen("edit");
+                    setSelectedData(nurse);
+                  }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
@@ -85,9 +94,10 @@ const Nurse = () => {
                   variant="light"
                   aria-label="hapus nurse"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
-                  onPress={() =>
-                    console.log(`Hapus nurse ${nurse.nurse_id}`)
-                  }
+                  onPress={() => {
+                    setIsModalOpen("delete");
+                    setSelectedId(String(nurse.nurse_id));
+                  }}
                 >
                   <FaTrash className="text-lg" />
                 </Button>
@@ -130,12 +140,28 @@ const Nurse = () => {
               totalPage={dataNurse?.total_pages}
               isLoading={isLoadingNurse || isRefetchingNurse}
               buttonTopContent="Tambah Perawat"
-              onClickButtonTopContent={() => {}}
+              onClickButtonTopContent={() => setIsModalOpen('add')}
               data={dataNurse?.data || []}
             />
           )}
         </section>
       </div>
+
+      <ActionNurseModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchNurse={refetchNurse}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      <DeleteNurseModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchNurse={refetchNurse}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+      />
     </div>
   );
 };

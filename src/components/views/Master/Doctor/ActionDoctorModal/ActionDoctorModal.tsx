@@ -1,8 +1,5 @@
 import {
   Button,
-  CalendarDate,
-  DatePicker,
-  DateValue,
   Input,
   Modal,
   ModalBody,
@@ -10,69 +7,78 @@ import {
   ModalHeader,
   Select,
   SelectItem,
+  Textarea,
 } from "@heroui/react";
-import useAddMedicineModal from "./useActionMedicineModal";
+import useAddDoctorModal from "./useActionDoctorModal";
 import { Controller } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import { parseDate } from "@internationalized/date";
 
 interface PropsType {
   isOpen: string;
   onClose: () => void;
-  refetchMedicine: () => void;
+  refetchDoctor: () => void;
   selectedData: Record<string, unknown>;
   setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
 }
 
-const ActionMedicineModal = (props: PropsType) => {
-  const { isOpen, onClose, refetchMedicine, selectedData, setSelectedData } =
+const ActionDoctorModal = (props: PropsType) => {
+  const { isOpen, onClose, refetchDoctor, selectedData, setSelectedData } =
     props;
 
   const {
     control,
     errors,
-    dataMedicineCategorys,
-    dataMedicineUnits,
-    isPendingMutateAddMedicine,
-    isSuccessMutateAddMedicine,
-    isPendingMutateEditMedicine,
-    isSuccessMutateEditMedicine,
+    dataDoctorSpesializations,
+    isPendingMutateAddDoctor,
+    isSuccessMutateAddDoctor,
+    isPendingMutateEditDoctor,
+    isSuccessMutateEditDoctor,
     handleSubmitForm,
-    handleAddMedicine,
-    handleEditMedicine,
-    resetAddMedicine,
-    resetEditMedicine,
+    handleAddDoctor,
+    handleEditDoctor,
+    resetAddDoctor,
+    resetEditDoctor,
     reset,
-  } = useAddMedicineModal();
+  } = useAddDoctorModal();
 
   useEffect(() => {
-    if (isSuccessMutateAddMedicine) {
+    if (isSuccessMutateAddDoctor) {
       onClose();
-      refetchMedicine();
-      resetAddMedicine()
+      refetchDoctor();
+      resetAddDoctor();
       reset();
     }
 
-    if (isSuccessMutateEditMedicine) {
+    if (isSuccessMutateEditDoctor) {
       onClose();
-      refetchMedicine();
-      resetEditMedicine()
+      refetchDoctor();
+      resetEditDoctor();
       reset();
-
     }
 
     if (isOpen === "edit" && selectedData) {
+      console.log(selectedData);
+      
       reset(selectedData);
       reset({});
     }
-  }, [isSuccessMutateAddMedicine, isSuccessMutateEditMedicine, isOpen]);
-
+  }, [isSuccessMutateAddDoctor, isSuccessMutateEditDoctor, isOpen]);
 
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
       onClose={() => {
-        setSelectedData({});
+        setSelectedData({
+          name: "",
+          gender: "",
+          address: "",
+          specialization: "",
+          registration_number: "",
+          phone: "",
+          sharing_fee: "",
+          email: "",
+          password: "",
+        });
         onClose();
         reset();
       }}
@@ -83,33 +89,18 @@ const ActionMedicineModal = (props: PropsType) => {
       <form
         onSubmit={
           isOpen === "add"
-            ? handleSubmitForm(handleAddMedicine)
+            ? handleSubmitForm(handleAddDoctor)
             : handleSubmitForm((data) =>
-                handleEditMedicine(data, selectedData.medicine_id as string),
+                handleEditDoctor(data, selectedData.doctor_id as string),
               )
         }
       >
         <ModalContent className="m-4">
           <ModalHeader>
-            {isOpen === "add" ? "Tambah" : "Perbaharui"} Obat
+            {isOpen === "add" ? "Tambah" : "Perbaharui"} Dokter
           </ModalHeader>
           <ModalBody>
             <div className="grid grid-cols-2 gap-4">
-              <Controller
-                name="code"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    radius="sm"
-                    labelPlacement="inside"
-                    label="Kode Obat"
-                    variant="bordered"
-                    isInvalid={!!errors.code}
-                    errorMessage={errors.code?.message}
-                  />
-                )}
-              />
               <Controller
                 name="name"
                 control={control}
@@ -118,130 +109,153 @@ const ActionMedicineModal = (props: PropsType) => {
                     {...field}
                     radius="sm"
                     labelPlacement="inside"
-                    label="Nama Obat"
+                    label="Nama"
                     variant="bordered"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
                   />
                 )}
               />
-
               <Controller
-                name="unit"
+                name="gender"
                 control={control}
                 render={({ field }) => (
                   <Select
                     {...field}
                     selectionMode="single"
-                    aria-label="Pilih unit obat"
-                    label="Satuan"
+                    aria-label="Pilih jenis Kelamin"
+                    label="Jenis Kelamin"
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
-                    isInvalid={!!errors.unit}
-                    errorMessage={errors.unit?.message}
+                    isInvalid={!!errors.gender}
+                    errorMessage={errors.gender?.message}
                     onSelectionChange={(value) => field.onChange(value)}
                   >
-                    {dataMedicineUnits.map((unit) => (
-                      <SelectItem key={unit.name} value={unit.name}>
+                    <SelectItem key="L" value="L">
+                      Laki - Laki
+                    </SelectItem>
+                    <SelectItem key="P" value="P">
+                      Perempuan
+                    </SelectItem>
+                  </Select>
+                )}
+              />
+
+              <Controller
+                name="specialization"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    selectionMode="single"
+                    aria-label="Pilih Spesialisasi"
+                    label="Spesialisasi"
+                    labelPlacement="inside"
+                    variant="bordered"
+                    radius="sm"
+                    isInvalid={!!errors.specialization}
+                    errorMessage={errors.specialization?.message}
+                    onSelectionChange={(value) => field.onChange(value)}
+                  >
+                    {dataDoctorSpesializations.map((unit) => (
+                      <SelectItem
+                        key={unit.doctor_specialization_id}
+                        value={unit.name}
+                      >
                         {unit.name}
                       </SelectItem>
                     ))}
                   </Select>
                 )}
               />
+              <Controller
+                name="registration_number"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Registrasi"
+                    variant="bordered"
+                    isInvalid={!!errors.registration_number}
+                    errorMessage={errors.registration_number?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Telepon"
+                    variant="bordered"
+                    type="number"
+                    isInvalid={!!errors.phone}
+                    errorMessage={errors.phone?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="sharing_fee"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Fee"
+                    variant="bordered"
+                    isInvalid={!!errors.sharing_fee}
+                    errorMessage={errors.sharing_fee?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Email"
+                    variant="bordered"
+                    isInvalid={!!errors.email}
+                    errorMessage={errors.email?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Password"
+                    type="password"
+                    variant="bordered"
+                    isInvalid={!!errors.password}
+                    errorMessage={errors.password?.message}
+                  />
+                )}
+              />
 
               <Controller
-                name="price"
+                name="address"
                 control={control}
                 render={({ field }) => (
-                  <Input
+                  <Textarea
                     {...field}
-                    radius="sm"
-                    labelPlacement="inside"
-                    type="number"
-                    label="Harga"
-                    variant="bordered"
-                    isInvalid={!!errors.price}
-                    errorMessage={errors.price?.message}
-                  />
-                )}
-              />
-              <Controller
-                name="stock"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    radius="sm"
-                    labelPlacement="inside"
-                    type="number"
-                    label="Stok"
-                    variant="bordered"
-                    isInvalid={!!errors.stock}
-                    errorMessage={errors.stock?.message}
-                  />
-                )}
-              />
-              <Controller
-                name="dosage"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    radius="sm"
-                    labelPlacement="inside"
-                    label="Dosis"
-                    variant="bordered"
-                    isInvalid={!!errors.dosage}
-                    errorMessage={errors.dosage?.message}
-                  />
-                )}
-              />
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    selectionMode="single"
-                    aria-label="Pilih kategori obat"
-                    label="Kategori"
+                    label="Alamat"
                     labelPlacement="inside"
                     variant="bordered"
-                    radius="sm"
-                    isInvalid={!!errors.category}
-                    errorMessage={errors.category?.message}
-                    defaultSelectedKeys={
-                      isOpen === "edit" ? [String(selectedData.category)] : ""
-                    }
-                  >
-                    {dataMedicineCategorys.map((category) => (
-                      <SelectItem key={category.name} value={category.name}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )}
-              />
-              <Controller
-                name="expiry_date"
-                control={control}
-                render={({ field }) => (
-                  <DatePicker
-                    variant="bordered"
-                    radius="sm"
-                    label="Tanggal Kedaluwarsa"
-                    showMonthAndYearPickers
-                    onChange={(date) => field.onChange(date)}
-                    isInvalid={!!errors.expiry_date}
-                    errorMessage={errors.expiry_date?.message}
-                    // defaultValue={
-                    //   selectedData?.expiry_date &&
-                    //   typeof selectedData.expiry_date === "string"
-                    //     ? parseDate(selectedData.expiry_date)
-                    //     : null
-                    // }
                   />
                 )}
               />
@@ -255,7 +269,7 @@ const ActionMedicineModal = (props: PropsType) => {
                   reset();
                 }}
                 color="success"
-                disabled={isPendingMutateAddMedicine}
+                disabled={isPendingMutateAddDoctor}
               >
                 Batal
               </Button>
@@ -266,13 +280,13 @@ const ActionMedicineModal = (props: PropsType) => {
                 className="text-white"
                 isLoading={
                   isOpen === "add"
-                    ? isPendingMutateAddMedicine
-                    : isPendingMutateEditMedicine
+                    ? isPendingMutateAddDoctor
+                    : isPendingMutateEditDoctor
                 }
                 disabled={
                   isOpen === "add"
-                    ? isPendingMutateAddMedicine
-                    : isPendingMutateEditMedicine
+                    ? isPendingMutateAddDoctor
+                    : isPendingMutateEditDoctor
                 }
               >
                 Simpan
@@ -285,4 +299,4 @@ const ActionMedicineModal = (props: PropsType) => {
   );
 };
 
-export default ActionMedicineModal;
+export default ActionDoctorModal;

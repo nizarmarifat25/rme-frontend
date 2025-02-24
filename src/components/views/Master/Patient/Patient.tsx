@@ -3,9 +3,10 @@ import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
-import { COLUMN_LISTS_PATIENT } from "./Patient.constans";  
+import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import usePatient from "./usePatient"; 
+import usePatient from "./usePatient";
+import ActionPatientModal from "./ActionPatientModal";
 
 interface Patient {
   patient_id: number;
@@ -25,10 +26,17 @@ const Patient = () => {
     currentPage,
     currentSize,
     isRefetchingPatient,
+    refetchPatient,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
+    isModalOpen,
+    setIsModalOpen,
+    selectedId,
+    setSelectedId,
+    selectedData,
+    setSelectedData,
   } = usePatient();
 
   useEffect(() => {
@@ -63,7 +71,10 @@ const Patient = () => {
                   variant="light"
                   aria-label="edit patient"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
-                  onPress={() => console.log(`Edit patient ${patient.patient_id}`)}
+                  onPress={() => {
+                    setIsModalOpen("edit");
+                    setSelectedData(patient);
+                  }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
@@ -75,9 +86,10 @@ const Patient = () => {
                   variant="light"
                   aria-label="hapus patient"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
-                  onPress={() =>
-                    console.log(`Hapus patient ${patient.patient_id}`)
-                  }
+                  onPress={() => {
+                    setIsModalOpen("delete");
+                    setSelectedId(String(patient.patient_id));
+                  }}
                 >
                   <FaTrash className="text-lg" />
                 </Button>
@@ -120,12 +132,28 @@ const Patient = () => {
               totalPage={dataPatient?.total_pages}
               isLoading={isLoadingPatient || isRefetchingPatient}
               buttonTopContent="Tambah Pasien"
-              onClickButtonTopContent={() => {}}
+              onClickButtonTopContent={() => setIsModalOpen('add')}
               data={dataPatient?.data || []}
             />
           )}
         </section>
       </div>
+
+      <ActionPatientModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchPatient={refetchPatient}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      {/* <DeletePatientModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchPatient={refetchPatient}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+      /> */}
     </div>
   );
 };

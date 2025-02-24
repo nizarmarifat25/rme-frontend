@@ -1,11 +1,15 @@
 import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constans/list.constans";
 import useDebounce from "@/hooks/useDebounce";
-import nurseServices from "@/services/nurse.service"; 
+import nurseServices from "@/services/nurse.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 const useNurse = () => {
+    const [isModalOpen, setIsModalOpen] = useState("");
+    const [selectedId, setSelectedId] = useState("");
+    const [selectedData, setSelectedData] = useState({})
+
     const router = useRouter();
     const debounce = useDebounce();
 
@@ -87,17 +91,27 @@ const useNurse = () => {
         });
     };
 
-    return { 
-        dataNurse, 
-        isLoadingNurse, 
-        currentPage, 
-        currentSize, 
-        isRefetchingNurse, 
-        setURL, 
-        handleChangePage, 
-        handleChangeSize, 
-        handleKeyword, 
-        handleClearKeyword 
+    return {
+        dataNurse,
+        isLoadingNurse,
+        currentPage,
+        currentSize,
+        isRefetchingNurse,
+        refetchNurse,
+        setURL,
+        handleChangePage,
+        handleChangeSize,
+        handleKeyword,
+        handleClearKeyword,
+
+        isModalOpen,
+        setIsModalOpen,
+
+        selectedId,
+        setSelectedId,
+
+        selectedData,
+        setSelectedData
     };
 };
 
