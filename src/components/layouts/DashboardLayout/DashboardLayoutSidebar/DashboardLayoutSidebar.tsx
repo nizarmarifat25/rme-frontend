@@ -39,7 +39,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
         <div className="text-center text-3xl font-semibold text-green-400">
           RME
         </div>
-        <div className="sidebar-items mt-4 flex flex-col gap-2 overflow-y-auto flex-grow">
+        <div className="sidebar-items mt-4 flex flex-grow flex-col gap-2 overflow-y-auto">
           {sidebarItems.map((item, index) =>
             item.child && item.child.length > 0 ? (
               <div key={index} className="px-2">
@@ -64,7 +64,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                           href={subItem.path_name}
                           className={`rounded px-4 py-2 ${
                             router.pathname === subItem.path_name
-                              ? "bg-green-100 text-green-600 pointer-events-none cursor-default"
+                              ? "pointer-events-none cursor-default bg-green-100 text-green-600"
                               : "hover:bg-gray-100"
                           }`}
                         >
@@ -81,14 +81,14 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                   href={item.path_name}
                   className={`flex items-center gap-2 rounded px-4 py-2 ${
                     router.pathname === item.path_name
-                      ? "bg-green-100 text-green-600 pointer-events-none cursor-default"
+                      ? "pointer-events-none cursor-default bg-green-100 text-green-600"
                       : "hover:bg-gray-100"
                   }`}
                 >
                   {item.icon} {item.name}
                 </Link>
               </div>
-            )
+            ),
           )}
         </div>
         <Button
@@ -97,7 +97,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
           className="mt-auto flex justify-start rounded-lg px-2 py-1.5"
           variant="light"
           color="success"
-          onPress={() => signOut()}
+          onPress={() => signOut({ callbackUrl: "/auth/login" })}
         >
           <CiLogout />
           Logout
