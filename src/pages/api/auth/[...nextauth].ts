@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { UserExtended, JWTExtended, SessionExtended } from "@/types/Auth";
 import authServices from "@/services/auth";
+import instance from "@/libs/axios/instance";
 
 
 export default NextAuth({
@@ -36,7 +37,20 @@ export default NextAuth({
                     const user = result.data;
                     user.accessToken = accessToken;
 
+                    try {
+                        const { data: menus } = await instance.get(`/menus`, {
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`
+                            }
+                        });
+                        user.menus = menus.data;
+                    } catch (error) {
+                        console.error("Error fetching menus:", error);
+                        user.menus = [];
+                    }
+
                     return user;
+
                 } else {
                     return null;
                 }
@@ -52,7 +66,7 @@ export default NextAuth({
         },
         async session({ session, token }: { session: SessionExtended; token: JWTExtended }) {
             session.user = token.user;
-            session.accessToken = token.user?.accessToken
+            session.accessToken = token.user?.accessToken;
 
             return session
         }

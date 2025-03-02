@@ -11,9 +11,15 @@ interface IDoctor {
 }
 
 interface IDoctorSpesializations {
-    doctor_specialization_id: number,
+    doctor_specialization_id: number;
+    name: string
+}
+
+interface IDoctorDropdown {
+    doctor_id: number
+    specialization: string
     name: string
 }
 
 
-export type { IDoctor , IDoctorSpesializations};
+export type { IDoctor, IDoctorSpesializations, IDoctorDropdown };

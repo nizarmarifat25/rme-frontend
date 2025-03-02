@@ -12,7 +12,8 @@ interface IActivation {
 
 interface UserExtended extends User {
     accessToken?: string,
-    role?: string
+    role?: string,
+    menus?: any[];
 }
 
 interface SessionExtended extends Session {

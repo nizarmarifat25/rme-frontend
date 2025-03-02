@@ -7,6 +7,7 @@ interface IMedicine {
     stock: string;
     dosage: string;
     expiry_date: string;
+    medicine_id?: string;
 }
 
 interface IMedicineCategory {

@@ -5,6 +5,7 @@ interface INurse {
     phone: string
     registration_number: string
     sharing_fee: string
+    nurse_id?: string
 }
 
 export { INurse }

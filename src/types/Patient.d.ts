@@ -4,6 +4,7 @@ interface IPatient {
     address: string;
     phone: string;
     email: string;
+    patient_id?: string;
     allergies?: string;
     insurance: string;
     birth_date: string;

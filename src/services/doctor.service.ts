@@ -9,6 +9,7 @@ const doctorServices = {
     deleteDoctor: (id?: string) => instance.delete(`${endpoint.DOCTOR}/${id}`),
 
     getDoctorSpecializations: () => instance.get(`${endpoint.DOCTOR_SPECIALIZATIONS}`),
+    getDoctorDropdown: (params?: string) => instance.get(`${endpoint.DOCTOR_DROPDOWN}?${params}`),
 
 }
 

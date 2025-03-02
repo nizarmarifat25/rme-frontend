@@ -8,15 +8,6 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import usePatient from "./usePatient";
 import ActionPatientModal from "./ActionPatientModal";
 
-interface Patient {
-  patient_id: number;
-  name: string;
-  age: number;
-  gender: string;
-  diagnosis: string;
-  room: string;
-}
-
 const Patient = () => {
   const { push, isReady, query } = useRouter();
   const {

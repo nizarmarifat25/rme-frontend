@@ -1,0 +1,15 @@
+import instance from "@/libs/axios/instance";
+import endpoint from "./endpoint.constant";
+import { IPatient } from "@/types/Patient";
+import { IReservation, IUpdateReservation } from "@/types/Reservation";
+
+const reservationServices = {
+    getReservations: (params?: string) => instance.get(`${endpoint.MEDICAL_RECORD}/daily?${params}`),
+    postReservation: (payload: IReservation) => instance.post(`${endpoint.MEDICAL_RECORD}`, payload),
+    updateResultReservation: (payload: IUpdateReservation, id: string) => instance.post(`${endpoint.MEDICAL_RECORD}/${id}/result`, payload),
+
+
+    getReservationStatus: () => instance.get(`${endpoint.MEDICAL_RECORD}/status`),
+}
+
+export default reservationServices

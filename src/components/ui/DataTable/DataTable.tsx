@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
+import { useSession } from "next-auth/react";
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
@@ -53,6 +54,8 @@ const DataTable = (props: PropsTypes) => {
     totalPage,
   } = props;
 
+  const { data: session } = useSession();
+
   const topContent = useMemo(() => {
     return (
       <div className="flex flex-col-reverse items-start justify-between gap-y-4 px-4 lg:flex-row lg:items-center">
@@ -65,16 +68,18 @@ const DataTable = (props: PropsTypes) => {
           onClear={() => onClearKeyword()}
           onChange={(e) => onChangeKeyword(e)}
         />
-        {buttonTopContent && (
-          <Button
-            color="success"
-            className="text-white"
-            aria-label={buttonTopContent || "Tambah Data"}
-            onPress={onClickButtonTopContent}
-          >
-           <IoIosAdd className="text-lg" />  {buttonTopContent}
-          </Button>
-        )}
+        {buttonTopContent &&
+          (session?.user?.role == "admin" ||
+            session?.user?.role == "owner") && (
+            <Button
+              color="success"
+              className="text-white"
+              aria-label={buttonTopContent || "Tambah Data"}
+              onPress={onClickButtonTopContent}
+            >
+              <IoIosAdd className="text-lg" /> {buttonTopContent}
+            </Button>
+          )}
       </div>
     );
   }, [

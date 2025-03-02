@@ -1,12 +1,15 @@
 const endpoint = {
     AUTH: "/auth",
     DOCTOR: "/doctors",
+    DOCTOR_DROPDOWN: "/doctors/dropdown",
     DOCTOR_SPECIALIZATIONS: "/doctor/specializations",
     MEDICINE: "/medicines",
     MEDICINE_CATEGORY: "/medicine/categories",
     MEDICE_UNIT: "/medicine/units",
     NURSE: "/nurses",
-    PATIENT: "/patients"
+    PATIENT: "/patients",
+    MEDICAL_RECORD: "/medical-records",
+    TREATMENT: "/treatments"
 }
 
 export default endpoint

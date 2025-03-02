@@ -21,17 +21,14 @@ const SIDEBAR_OWNER = [
       {
         name: "Dokter",
         path_name: "/master-data/doctor",
-        icon: <FaUserMd />,
       },
       {
         name: "Perawat",
         path_name: "/master-data/nurse",
-        icon: <FaUserNurse />,
       },
       {
         name: "Pasien",
         path_name: "/master-data/patient",
-        icon: <FaUsers />,
       },
     ],
   },

@@ -5,12 +5,11 @@ import { useRouter } from "next/router";
 import { JSX } from "react";
 import { CiLogout } from "react-icons/ci";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
-
 interface SidebarItem {
   name: string;
   path_name: string;
   icon: JSX.Element;
-  child?: { name: string; path_name: string }[];
+  children?: { name: string; path_name: string }[];
 }
 
 interface PropsTypes {
@@ -21,6 +20,8 @@ interface PropsTypes {
 
 const DashboardLayoutSidebar = (props: PropsTypes) => {
   const { sidebarItems, isOpen, toggleSidebar } = props;
+
+
   const router = useRouter();
 
   return (
@@ -41,7 +42,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
         </div>
         <div className="sidebar-items mt-4 flex flex-grow flex-col gap-2 overflow-y-auto">
           {sidebarItems.map((item, index) =>
-            item.child && item.child.length > 0 ? (
+            item.children && item.children.length > 0 ? (
               <div key={index} className="px-2">
                 <Accordion className="w-full">
                   <AccordionItem
@@ -58,7 +59,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                     }
                   >
                     <div className="flex flex-col pl-4">
-                      {item.child.map((subItem, subIndex) => (
+                      {item.children.map((subItem, subIndex) => (
                         <Link
                           key={subIndex}
                           href={subItem.path_name}
