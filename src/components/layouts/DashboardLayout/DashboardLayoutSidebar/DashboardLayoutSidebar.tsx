@@ -21,7 +21,6 @@ interface PropsTypes {
 const DashboardLayoutSidebar = (props: PropsTypes) => {
   const { sidebarItems, isOpen, toggleSidebar } = props;
 
-
   const router = useRouter();
 
   return (
@@ -98,7 +97,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
           className="mt-auto flex justify-start rounded-lg px-2 py-1.5"
           variant="light"
           color="success"
-          onPress={() => signOut({ callbackUrl: "/auth/login" })}
+          onPress={() => signOut({ callbackUrl: `/auth/login` })}
         >
           <CiLogout />
           Logout
