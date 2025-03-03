@@ -1,0 +1,3 @@
+import UpdateResultReservationModal from "./UpdateResultReservationModal";
+
+export default UpdateResultReservationModal

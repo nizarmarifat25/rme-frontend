@@ -6,9 +6,11 @@ import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_RESERVATIONS } from "./Reservation.constants";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useReservation from "./useReservation";
-import AddReservationModal from "./AddReservation/AddReservationModal";
-import UpdateResultReservation from "./UpdateResultReservation";
+import AddReservationModal from "./AddReservationModal/AddReservationModal";
+import UpdateResultReservationModal from "./UpdateResultReservationModal";
 import { useSession } from "next-auth/react";
+import UpdateStatusReservationModal from "./UpdateStatusReservationModal";
+import CloseReservationModal from "./CloseReservationModal";
 
 const Reservation = () => {
   const { push, isReady, query } = useRouter();
@@ -59,7 +61,7 @@ const Reservation = () => {
                       setSelectedData(reservation);
                     }}
                   >
-                    Update Hasil Reservasi
+                    Perbaharui Hasil Kunjungan
                   </Button>
                 )}
               {reservation.latest_status === "scheduled" &&
@@ -67,29 +69,32 @@ const Reservation = () => {
                   <>
                     <Button
                       size="sm"
-                      variant="solid"
+                      variant="bordered"
                       color="primary"
-                      className="text-white"
                       aria-label="edit reservation"
                       onPress={() => {
-                        setIsModalOpen("edit");
+                        setIsModalOpen("update-status");
                         setSelectedData(reservation);
                       }}
                     >
-                      Update Status Rekam Medis
+                      Perbaharui Status Kunjungan
                     </Button>
+                  </>
+                )}
+              {reservation.latest_status === "pending_payment" &&
+                session?.user?.role == "admin" && (
+                  <>
                     <Button
                       size="sm"
-                      variant="solid"
-                      color="primary"
-                      className="text-white"
+                      variant="bordered"
+                      color="success"
                       aria-label="edit reservation"
                       onPress={() => {
-                        setIsModalOpen("edit");
+                        setIsModalOpen("close");
                         setSelectedData(reservation);
                       }}
                     >
-                      Tutup Rekam Medis
+                      Selesaikan Kunjungan
                     </Button>
                   </>
                 )}
@@ -147,7 +152,23 @@ const Reservation = () => {
         setSelectedData={setSelectedData}
       />
 
-      <UpdateResultReservation
+      <UpdateResultReservationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchReservation={refetchReservation}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      <UpdateStatusReservationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        refetchReservation={refetchReservation}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+
+      <CloseReservationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
         refetchReservation={refetchReservation}

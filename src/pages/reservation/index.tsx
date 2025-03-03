@@ -3,7 +3,7 @@ import Reservation from "@/components/views/Reservation";
 
 const ReservationPage = () =>{
     return (
-        <DashboardLayout title="RME | Rekam Medis "> 
+        <DashboardLayout title="RME | Kunjungan Pasien "> 
             <Reservation />
         </DashboardLayout>
     )

@@ -1,0 +1,3 @@
+import UpdateStatusReservationModal from "./UpdateStatusReservationModal";
+
+export default UpdateStatusReservationModal

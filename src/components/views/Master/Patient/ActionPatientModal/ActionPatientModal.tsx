@@ -4,6 +4,7 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   Select,
   SelectItem,
@@ -57,7 +58,7 @@ const ActionPatientModal = (props: PropsType) => {
 
     if (isOpen === "edit" && selectedData) {
       console.log(selectedData);
-      
+
       reset(selectedData);
       reset({});
     }
@@ -148,6 +149,36 @@ const ActionPatientModal = (props: PropsType) => {
                 )}
               />
               <Controller
+                name="address"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Alamat"
+                    variant="bordered"
+                    isInvalid={!!errors.address}
+                    errorMessage={errors.address?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Telepon"
+                    variant="bordered"
+                    isInvalid={!!errors.phone}
+                    errorMessage={errors.phone?.message}
+                  />
+                )}
+              />
+              <Controller
                 name="email"
                 control={control}
                 render={({ field }) => (
@@ -208,7 +239,84 @@ const ActionPatientModal = (props: PropsType) => {
                   />
                 )}
               />
+              <Controller
+                name="history_of_illness"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Riwayat Penyakit"
+                    variant="bordered"
+                    isInvalid={!!errors.history_of_illness}
+                    errorMessage={errors.history_of_illness?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="emergency_contact"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Kontak Darurat"
+                    variant="bordered"
+                    isInvalid={!!errors.emergency_contact}
+                    errorMessage={errors.emergency_contact?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="emergency_contact_phone"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Kontak Darurat"
+                    variant="bordered"
+                    isInvalid={!!errors.emergency_contact_phone}
+                    errorMessage={errors.emergency_contact_phone?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="emergency_contact_relation"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Hubungan Dengan Kontak Darurat"
+                    variant="bordered"
+                    isInvalid={!!errors.emergency_contact_relation}
+                    errorMessage={errors.emergency_contact_relation?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="insurance_number"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Asuransi"
+                    variant="bordered"
+                    isInvalid={!!errors.insurance_number}
+                    errorMessage={errors.insurance_number?.message}
+                  />
+                )}
+              />
             </div>
+          </ModalBody>
+          <ModalFooter>
             <div className="mt-4 flex justify-end gap-2">
               <Button
                 variant="bordered"
@@ -241,7 +349,7 @@ const ActionPatientModal = (props: PropsType) => {
                 Simpan
               </Button>
             </div>
-          </ModalBody>
+          </ModalFooter>
         </ModalContent>
       </form>
     </Modal>

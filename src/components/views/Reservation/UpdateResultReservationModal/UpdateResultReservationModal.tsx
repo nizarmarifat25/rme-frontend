@@ -8,7 +8,7 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import useUpdateResultReservation from "./useUpdateResultReservation";
+import useUpdateResultReservation from "./useUpdateResultReservationModal";
 import { Controller, useFieldArray } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";

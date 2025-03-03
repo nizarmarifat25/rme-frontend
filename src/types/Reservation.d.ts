@@ -32,5 +32,15 @@ interface IUpdateReservation {
     latest_status?: string
 }
 
+interface IUpdateStatusReservation {
+    latest_status: string
+}
 
-export { IReservation, IReservationStatus, IUpdateReservation }
+interface ICloseReservation {
+    latest_status: string
+    payment_method: string
+    payment_status: string
+}
+
+
+export { IReservation, IReservationStatus, IUpdateReservation, IUpdateStatusReservation, ICloseReservation }
