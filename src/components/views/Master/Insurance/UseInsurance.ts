@@ -1,15 +1,15 @@
 import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/hooks/useDebounce";
-import patientServices from "@/services/patient.service";
+import insuranceServices from "@/services/insurance.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 
-const UsePatient = () => {
-
+const useInsurance = () => {
     const [isModalOpen, setIsModalOpen] = useState("");
     const [selectedId, setSelectedId] = useState("");
     const [selectedData, setSelectedData] = useState({})
+
     const router = useRouter();
     const debounce = useDebounce();
 
@@ -26,25 +26,31 @@ const UsePatient = () => {
             }
         });
     };
+    const getInsurances = async () => {
+        try {
+            let params = `size=${currentSize}&page=${currentPage}`;
+            if (currentKeyword) {
+                params += `&keyword=${currentKeyword}`;
+            }
 
-    const getPatients = async () => {
-        let params = `size=${currentSize}&page=${currentPage}`;
-        if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`;
+            const res = await insuranceServices.getInsurances(params);
+            const { data } = res;
+            return data;
+        } catch (error) {
+            console.error("Error fetching insurances:", error);
+
+            return { error: true, message: "Gagal mengambil data asuransi." };
         }
-        const res = await patientServices.getPatients(params);
-        const { data } = res;
-        return data;
     };
 
     const {
-        data: dataPatient,
-        isLoading: isLoadingPatient,
-        isRefetching: isRefetchingPatient,
-        refetch: refetchPatient
+        data: dataInsurance,
+        isLoading: isLoadingInsurance,
+        isRefetching: isRefetchingInsurance,
+        refetch: refetchInsurance
     } = useQuery({
-        queryKey: ["Patient", currentPage, currentSize, currentKeyword],
-        queryFn: getPatients,
+        queryKey: ["Insurance", currentPage, currentSize, currentKeyword],
+        queryFn: getInsurances,
         enabled: router.isReady && !!currentPage && !!currentSize
     });
 
@@ -92,24 +98,28 @@ const UsePatient = () => {
     };
 
     return {
-        dataPatient,
-        isLoadingPatient,
+        dataInsurance,
+        isLoadingInsurance,
         currentPage,
         currentSize,
-        isRefetchingPatient,
-        refetchPatient,
+        currentKeyword,
+        isRefetchingInsurance,
         setURL,
+        refetchInsurance,
         handleChangePage,
         handleChangeSize,
         handleKeyword,
         handleClearKeyword,
+
         isModalOpen,
         setIsModalOpen,
+
         selectedId,
         setSelectedId,
+
         selectedData,
-        setSelectedData,
+        setSelectedData
     };
 };
 
-export default UsePatient;
+export default useInsurance;

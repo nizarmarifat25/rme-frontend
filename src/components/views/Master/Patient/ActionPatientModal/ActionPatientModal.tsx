@@ -10,7 +10,7 @@ import {
   SelectItem,
   Textarea,
 } from "@heroui/react";
-import useAddPatientModal from "./useActionPatientModal";
+import useAddPatientModal from "./UseActionPatientModal";
 import { Controller } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
@@ -64,6 +64,8 @@ const ActionPatientModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddPatient, isSuccessMutateEditPatient, isOpen]);
 
+  console.log(errors);
+
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
@@ -98,7 +100,10 @@ const ActionPatientModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddPatient)
             : handleSubmitForm((data) =>
-                handleEditPatient(data, selectedData.patient_id as string),
+                handleEditPatient(
+                  data,
+                  selectedData.medical_record_number as string,
+                ),
               )
         }
       >
@@ -138,6 +143,9 @@ const ActionPatientModal = (props: PropsType) => {
                     isInvalid={!!errors.gender}
                     errorMessage={errors.gender?.message}
                     onSelectionChange={(value) => field.onChange(value)}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.gender)] : ""
+                    }
                   >
                     <SelectItem key="L" value="L">
                       Laki - Laki
@@ -171,6 +179,7 @@ const ActionPatientModal = (props: PropsType) => {
                     {...field}
                     radius="sm"
                     labelPlacement="inside"
+                    type="number"
                     label="Nomor Telepon"
                     variant="bordered"
                     isInvalid={!!errors.phone}
@@ -277,6 +286,7 @@ const ActionPatientModal = (props: PropsType) => {
                     {...field}
                     radius="sm"
                     labelPlacement="inside"
+                    type="number"
                     label="Nomor Kontak Darurat"
                     variant="bordered"
                     isInvalid={!!errors.emergency_contact_phone}
@@ -311,6 +321,51 @@ const ActionPatientModal = (props: PropsType) => {
                     variant="bordered"
                     isInvalid={!!errors.insurance_number}
                     errorMessage={errors.insurance_number?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name="identity_type"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    selectionMode="single"
+                    aria-label="Pilih Type Identitas"
+                    label="Tipe Identitas"
+                    labelPlacement="inside"
+                    variant="bordered"
+                    radius="sm"
+                    isInvalid={!!errors.identity_type}
+                    errorMessage={errors.identity_type?.message}
+                    defaultSelectedKeys={
+                      isOpen === "edit"
+                        ? [String(selectedData.identity_type)]
+                        : ""
+                    }
+                  >
+                    <SelectItem key="1" value="KTP">
+                      KTP
+                    </SelectItem>
+                    <SelectItem key="2" value="Passport">
+                      Passport
+                    </SelectItem>
+                  </Select>
+                )}
+              />
+              <Controller
+                name="identity_number"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    radius="sm"
+                    labelPlacement="inside"
+                    label="Nomor Identitas"
+                    variant="bordered"
+                    isInvalid={!!errors.identity_number}
+                    errorMessage={errors.identity_number?.message}
                   />
                 )}
               />

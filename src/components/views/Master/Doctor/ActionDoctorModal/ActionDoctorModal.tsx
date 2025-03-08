@@ -9,7 +9,7 @@ import {
   SelectItem,
   Textarea,
 } from "@heroui/react";
-import useAddDoctorModal from "./useActionDoctorModal";
+import useActionDoctorModal from "./UseActionDoctorModal";
 import { Controller } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
@@ -39,7 +39,7 @@ const ActionDoctorModal = (props: PropsType) => {
     resetAddDoctor,
     resetEditDoctor,
     reset,
-  } = useAddDoctorModal();
+  } = useActionDoctorModal();
 
   useEffect(() => {
     if (isSuccessMutateAddDoctor) {

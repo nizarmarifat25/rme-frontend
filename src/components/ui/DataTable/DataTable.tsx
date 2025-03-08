@@ -1,4 +1,4 @@
-import { SIZE_LISTS } from "@/constans/list.constans";
+import { SIZE_LISTS } from "@/constants/list.constants";
 import { cn } from "@/utils/cn";
 import {
   Button,

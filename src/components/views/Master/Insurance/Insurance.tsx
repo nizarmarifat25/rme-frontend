@@ -1,24 +1,29 @@
 import DataTable from "@/components/ui/DataTable";
-import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
-import Image from "next/image";
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  Button,
+  Tooltip,
+} from "@heroui/react";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback, useEffect } from "react";
-import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
+import { Key, ReactNode, useCallback, useEffect, useState } from "react";
+import { COLUMN_LISTS_INSURANCE } from "./Insurance.constants";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import usePatient from "./UsePatient";
-import ActionPatientModal from "./ActionPatientModal";
-import DeletePatientModal from "./DeletePatientModal";
+import useInsurance from "./UseInsurance";
+import { formatRupiah } from "@/utils/currency-format";
+import ActionInsuranceModal from "./ActionInsuranceModal";
+import DeleteInsuranceModal from "./DeleteInsuranceModal";
 
-const Patient = () => {
+const Insurance = () => {
   const { push, isReady, query } = useRouter();
   const {
     setURL,
-    dataPatient,
-    isLoadingPatient,
+    dataInsurance,
+    isLoadingInsurance,
     currentPage,
     currentSize,
-    isRefetchingPatient,
-    refetchPatient,
+    isRefetchingInsurance,
+    refetchInsurance,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
@@ -29,7 +34,7 @@ const Patient = () => {
     setSelectedId,
     selectedData,
     setSelectedData,
-  } = usePatient();
+  } = useInsurance();
 
   useEffect(() => {
     if (isReady) {
@@ -38,37 +43,44 @@ const Patient = () => {
   }, [isReady]);
 
   const renderCell = useCallback(
-    (patient: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = patient[columnKey as keyof typeof patient];
+    (insurance: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = insurance[columnKey as keyof typeof insurance];
 
       switch (columnKey) {
+        case "premium":
+          return (
+            <p className="font-semibold text-green-500">
+              {formatRupiah(Number(cellValue))}
+            </p>
+          );
+
         case "actions":
           return (
             <div className="flex space-x-1">
-              <Tooltip content="Edit Pasien">
+              <Tooltip content="Perbaharui Asuransi">
                 <Button
                   size="sm"
                   variant="light"
-                  aria-label="edit patient"
+                  aria-label="edit insurance"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
                   onPress={() => {
                     setIsModalOpen("edit");
-                    setSelectedData(patient);
+                    setSelectedData(insurance);
                   }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
               </Tooltip>
 
-              <Tooltip content="Hapus Pasien" color="danger">
+              <Tooltip content="Hapus Asuransi" color="danger">
                 <Button
                   size="sm"
                   variant="light"
-                  aria-label="hapus patient"
+                  aria-label="hapus insurance"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(patient.medical_record_number));
+                    setSelectedId(String(insurance.insurance_id));
                   }}
                 >
                   <FaTrash className="text-lg" />
@@ -86,51 +98,51 @@ const Patient = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Pasien</h1>
+      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Asuransi</h1>
       <div className="mb-5 mt-6">
         <Breadcrumbs>
           <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Pasien</BreadcrumbItem>
+          <BreadcrumbItem>Asuransi</BreadcrumbItem>
         </Breadcrumbs>
       </div>
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
-          Tabel Pasien
+          Tabel Asuransi
         </h2>
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
-              emptyContent="Tidak ada data pasien"
+              emptyContent="Tidak ada data asuransi"
               renderCell={renderCell}
-              columns={COLUMN_LISTS_PATIENT}
+              columns={COLUMN_LISTS_INSURANCE}
               size={String(currentSize)}
               onClearKeyword={handleClearKeyword}
               onChangeKeyword={handleKeyword}
               onChangeSize={handleChangeSize}
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
-              totalPage={dataPatient?.total_pages}
-              isLoading={isLoadingPatient || isRefetchingPatient}
-              buttonTopContent="Tambah Pasien"
+              totalPage={dataInsurance?.total_pages}
+              isLoading={isLoadingInsurance || isRefetchingInsurance}
+              buttonTopContent="Tambah Asuransi"
               onClickButtonTopContent={() => setIsModalOpen("add")}
-              data={dataPatient?.data || []}
+              data={dataInsurance?.data || []}
             />
           )}
         </section>
       </div>
 
-      <ActionPatientModal
+      <ActionInsuranceModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
-        refetchPatient={refetchPatient}
+        refetchInsurance={refetchInsurance}
         selectedData={selectedData}
         setSelectedData={setSelectedData}
       />
 
-      <DeletePatientModal
+      <DeleteInsuranceModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
-        refetchPatient={refetchPatient}
+        refetchInsurance={refetchInsurance}
         selectedId={selectedId}
         setSelectedId={setSelectedId}
       />
@@ -138,4 +150,4 @@ const Patient = () => {
   );
 };
 
-export default Patient;
+export default Insurance;

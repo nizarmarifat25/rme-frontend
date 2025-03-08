@@ -1,4 +1,4 @@
-import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constans/list.constans";
+import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/hooks/useDebounce";
 import reservationServices from "@/services/reservation.service"; 
 import { useQuery } from "@tanstack/react-query";
