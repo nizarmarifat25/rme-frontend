@@ -1,14 +1,14 @@
 import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/hooks/useDebounce";
-import insuranceServices from "@/services/insurance.service";
+import treatmentServices from "@/services/treatments.service"; 
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 
-const UseInsurance = () => {
+const UseTreatment = () => {
     const [isModalOpen, setIsModalOpen] = useState("");
     const [selectedId, setSelectedId] = useState("");
-    const [selectedData, setSelectedData] = useState({})
+    const [selectedData, setSelectedData] = useState({});
 
     const router = useRouter();
     const debounce = useDebounce();
@@ -26,31 +26,32 @@ const UseInsurance = () => {
             }
         });
     };
-    const getInsurances = async () => {
+
+    const getTreatments = async () => {
         try {
             let params = `size=${currentSize}&page=${currentPage}`;
             if (currentKeyword) {
                 params += `&keyword=${currentKeyword}`;
             }
 
-            const res = await insuranceServices.getInsurances(params);
+            const res = await treatmentServices.getTreatments(params);
             const { data } = res;
             return data;
         } catch (error) {
-            console.error("Error fetching insurances:", error);
+            console.error("Error fetching treatments:", error);
 
-            return { error: true, message: "Gagal mengambil data asuransi." };
+            return { error: true, message: "Gagal mengambil data treatment." };
         }
     };
 
     const {
-        data: dataInsurance,
-        isLoading: isLoadingInsurance,
-        isRefetching: isRefetchingInsurance,
-        refetch: refetchInsurance
+        data: dataTreatment,
+        isLoading: isLoadingTreatment,
+        isRefetching: isRefetchingTreatment,
+        refetch: refetchTreatment
     } = useQuery({
-        queryKey: ["Insurance", currentPage, currentSize, currentKeyword],
-        queryFn: getInsurances,
+        queryKey: ["Treatment", currentPage, currentSize, currentKeyword],
+        queryFn: getTreatments,
         enabled: router.isReady && !!currentPage && !!currentSize
     });
 
@@ -98,14 +99,14 @@ const UseInsurance = () => {
     };
 
     return {
-        dataInsurance,
-        isLoadingInsurance,
+        dataTreatment,
+        isLoadingTreatment,
         currentPage,
         currentSize,
         currentKeyword,
-        isRefetchingInsurance,
+        isRefetchingTreatment,
         setURL,
-        refetchInsurance,
+        refetchTreatment,
         handleChangePage,
         handleChangeSize,
         handleKeyword,
@@ -122,4 +123,4 @@ const UseInsurance = () => {
     };
 };
 
-export default UseInsurance;
+export default UseTreatment;

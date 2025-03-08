@@ -3,8 +3,8 @@
 
 interface ITreatment {
     name: string;
-    price: number;
-    description: string;
+    price: string;
+    description?: string;
     treatment_id?: number
 }
 
