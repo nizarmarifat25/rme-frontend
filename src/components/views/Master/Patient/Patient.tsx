@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import UsePatient from "./UsePatient";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
+import UsePatient from "./UsePatient";
 
 const Patient = () => {
   const { push, isReady, query } = useRouter();

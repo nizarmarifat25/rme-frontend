@@ -11,7 +11,7 @@ import {
   useEffect,
 } from "react";
 import { COLUMN_LISTS_DOCTOR } from "./Doctor.constans";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import useDoctor from "./UseDoctor";
 import ActionDoctorModal from "./ActionDoctorModal";
 import DeleteDoctorModal from "./DeleteDoctorModal";
