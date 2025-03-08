@@ -86,7 +86,7 @@ const UseActionDoctorModal = () => {
           message: error.message,
         });
       }
-      
+
     },
     onSuccess: () => {
       setToaster({
