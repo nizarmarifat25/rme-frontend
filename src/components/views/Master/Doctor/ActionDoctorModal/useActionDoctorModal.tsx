@@ -24,7 +24,7 @@ const schema = yup.object().shape({
   password: yup.string().required("Password wajib diisi").min(8, "Minimal 8 karakter"),
 });
 
-const useActionDoctorModal = () => {
+const UseActionDoctorModal = () => {
   const { setToaster } = useContext(ToasterContext);
 
 
@@ -144,4 +144,4 @@ const useActionDoctorModal = () => {
   };
 };
 
-export default useActionDoctorModal;
+export default UseActionDoctorModal;
