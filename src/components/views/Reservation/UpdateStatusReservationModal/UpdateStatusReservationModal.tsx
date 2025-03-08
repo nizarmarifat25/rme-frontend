@@ -50,7 +50,7 @@ const UpdateStatusReservationModal = (props: PropsType) => {
         <ModalBody>
           <div className="flex flex-col items-center text-center">
             <p className="text-base text-gray-700">
-              Apakah Anda yakin ingin memperbaharui status reservasi?
+              Apakah Anda yakin ingin memperbaharui status Kunjungan?
             </p>
           </div>
         </ModalBody>

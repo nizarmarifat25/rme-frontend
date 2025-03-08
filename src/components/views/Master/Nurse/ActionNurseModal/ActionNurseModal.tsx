@@ -52,12 +52,18 @@ const ActionNurseModal = (props: PropsType) => {
       onClose();
       refetchNurse();
       resetEditNurse();
-      reset();
+      reset({});
+      setSelectedData({
+        name: "",
+        gender: "",
+        address: "",
+        registration_number: "",
+        phone: "",
+        sharing_fee: "",
+      });
     }
 
     if (isOpen === "edit" && selectedData) {
-      console.log(selectedData);
-      
       reset(selectedData);
       reset({});
     }

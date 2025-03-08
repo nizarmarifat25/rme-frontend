@@ -9,8 +9,11 @@ const reservationServices = {
     updateResultReservation: (payload: IUpdateReservation, id: string) => instance.post(`${endpoint.MEDICAL_RECORD}/${id}/result`, payload),
     updateStatusReservation: (payload: IUpdateStatusReservation, id: string) => instance.put(`${endpoint.MEDICAL_RECORD}/${id}/status`, payload),
     closeReservation: (payload: ICloseReservation, id: string) => instance.put(`${endpoint.MEDICAL_RECORD}/${id}/close`, payload),
-
+    
     getReservationStatus: () => instance.get(`${endpoint.MEDICAL_RECORD}/status`),
+
+
+    getMedicalRecord: (params?: string) => instance.get(`${endpoint.MEDICAL_RECORD}?${params}`),
 }
 
 export default reservationServices

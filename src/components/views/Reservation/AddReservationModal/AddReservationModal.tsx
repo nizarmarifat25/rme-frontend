@@ -65,7 +65,7 @@ const AddReservationModal = (props: PropsType) => {
     >
       <form onSubmit={handleSubmitForm(handleAddReservation)}>
         <ModalContent className="m-4">
-          <ModalHeader>Tambah Reservasi</ModalHeader>
+          <ModalHeader>Tambah Kunjungan</ModalHeader>
           <ModalBody>
             <div className="grid grid-cols-2 gap-4">
               <Controller

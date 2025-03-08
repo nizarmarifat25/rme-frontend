@@ -3,15 +3,15 @@ interface IDoctor {
     gender: string;
     address: string;
     specialization: string;
-    // registration_number: string;
+    registration_number: string;
     phone: string;
     sharing_fee: string;
     email: string;
     password: string;
 }
 
-interface IDoctorSpesializations {
-    doctor_specialization_id: number;
+interface IDoctorSpesialization {
+    doctor_specialization_id?: number;
     name: string
 }
 
@@ -22,4 +22,4 @@ interface IDoctorDropdown {
 }
 
 
-export type { IDoctor, IDoctorSpesializations, IDoctorDropdown };
+export type { IDoctor, IDoctorSpesialization, IDoctorDropdown };

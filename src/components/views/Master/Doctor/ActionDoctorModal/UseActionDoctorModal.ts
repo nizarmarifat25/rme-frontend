@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useContext } from "react";
 import doctorServices from "@/services/doctor.service";
 import { ToasterContext } from "@/contexts/ToasterContext";
-import { IDoctor, IDoctorSpesializations } from "@/types/Doctor";
+import { IDoctor, IDoctorSpesialization } from "@/types/Doctor";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -34,7 +34,7 @@ const UseActionDoctorModal = () => {
     return data;
   };
 
-  const { data: dataDoctorSpesializations = [] } = useQuery<IDoctorSpesializations[]>({
+  const { data: dataDoctorSpesializations = [] } = useQuery<IDoctorSpesialization[]>({
     queryKey: ["doctor-spesializations"],
     queryFn: getDoctorSpecializations,
   });
@@ -59,7 +59,7 @@ const UseActionDoctorModal = () => {
       gender: "",
       address: "",
       specialization: "",
-      registration_number: "",
+      // registration_number: "",
       phone: "",
       sharing_fee: "",
       email: "",

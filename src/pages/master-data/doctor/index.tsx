@@ -3,7 +3,7 @@ import Doctor from "@/components/views/Master/Doctor";
 
 const DoctorPage = () =>{
     return (
-        <DashboardLayout title="RME | Doctor "> 
+        <DashboardLayout title="RME | Dokter "> 
             <Doctor />
         </DashboardLayout>
     )

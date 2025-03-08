@@ -10,22 +10,33 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { COLUMN_LISTS_NURSE } from "./Nurse.constans";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import useNurse from "./useNurse";
-import ActionNurseModal from "./ActionNurseModal";
-import DeleteNurseModal from "./DeleteNurseModal";
+import { COLUMN_LISTS_DOCTOR_SPECIALIZATION } from "./DoctorSpecialization.contants"; 
+import { FaEdit, FaTrash } from "react-icons/fa";
+import useDoctorSpecialization from "./UseDoctorSpecialization";
+import ActionDoctorSpecializationModal from "./ActionDoctorSpecializationModal";
+// import DeleteDoctorSpecializationModal from "./DeleteDoctorSpecializationModal";
 
-const Nurse = () => {
+interface DoctorSpecialization {
+  doctor_id: number;
+  name: string;
+  gender: string;
+  specialization: string;
+  phone: string;
+  registration_date: string;
+  selectedData: Record<string, unknown>;
+  setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
+}
+
+const DoctorSpecialization = () => {
   const { push, isReady, query } = useRouter();
   const {
     setURL,
-    dataNurse,
-    isLoadingNurse,
+    dataDoctorSpecialization,
+    isLoadingDoctorSpecialization,
     currentPage,
     currentSize,
-    isRefetchingNurse,
-    refetchNurse,
+    isRefetchingDoctorSpecialization,
+    refetchDoctorSpecialization,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
@@ -36,7 +47,7 @@ const Nurse = () => {
     setSelectedId,
     selectedData,
     setSelectedData,
-  } = useNurse();
+  } = useDoctorSpecialization();
 
   useEffect(() => {
     if (isReady) {
@@ -45,15 +56,15 @@ const Nurse = () => {
   }, [isReady]);
 
   const renderCell = useCallback(
-    (nurse: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = nurse[columnKey as keyof typeof nurse];
+    (doctor: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = doctor[columnKey as keyof typeof doctor];
 
       switch (columnKey) {
         case "image":
           return (
             <Image
               src={`${cellValue}`}
-              alt="nurse image"
+              alt="profile image"
               width={100}
               height={200}
             />
@@ -61,31 +72,31 @@ const Nurse = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1">
-              <Tooltip content="Perbaharui Perawat">
+            <div className="flex space-x-1 justify-center">
+              <Tooltip content="Perbaharui Spesialis Dokter">
                 <Button
                   size="sm"
                   variant="light"
-                  aria-label="edit nurse"
+                  aria-label="edit Spesialis Dokter"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-slate-400"
                   onPress={() => {
                     setIsModalOpen("edit");
-                    setSelectedData(nurse);
+                    setSelectedData(doctor);
                   }}
                 >
                   <FaEdit className="text-lg" />
                 </Button>
               </Tooltip>
 
-              <Tooltip content="Hapus Perawat" color="danger">
+              <Tooltip content="Hapus Spesialis Dokter" color="danger">
                 <Button
                   size="sm"
                   variant="light"
-                  aria-label="hapus nurse"
+                  aria-label="hapus Spesialis Dokter"
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(nurse.nurse_id));
+                    setSelectedId(String(doctor.doctor_id));
                   }}
                 >
                   <FaTrash className="text-lg" />
@@ -103,56 +114,56 @@ const Nurse = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Perawat</h1>
+      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Spesialis Dokter</h1>
       <div className="mb-5 mt-6">
         <Breadcrumbs>
           <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Perawat</BreadcrumbItem>
+          <BreadcrumbItem>Spesialis Dokter</BreadcrumbItem>
         </Breadcrumbs>
       </div>
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
-          Tabel Perawat
+          Tabel Spesialis Dokter
         </h2>
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
-              emptyContent="Tidak ada data perawat"
+              emptyContent="Tidak ada data Spesialis Dokter"
               renderCell={renderCell}
-              columns={COLUMN_LISTS_NURSE}
+              columns={COLUMN_LISTS_DOCTOR_SPECIALIZATION}
               size={String(currentSize)}
               onClearKeyword={handleClearKeyword}
               onChangeKeyword={handleKeyword}
               onChangeSize={handleChangeSize}
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
-              totalPage={dataNurse?.total_pages}
-              isLoading={isLoadingNurse || isRefetchingNurse}
-              buttonTopContent="Tambah Perawat"
-              onClickButtonTopContent={() => setIsModalOpen('add')}
-              data={dataNurse?.data || []}
+              totalPage={dataDoctorSpecialization?.total_pages}
+              isLoading={isLoadingDoctorSpecialization || isRefetchingDoctorSpecialization}
+              buttonTopContent="Tambah Spesialis Dokter"
+              onClickButtonTopContent={() => setIsModalOpen("add")}
+              data={dataDoctorSpecialization?.data || []}
             />
           )}
         </section>
       </div>
 
-      <ActionNurseModal
+      <ActionDoctorSpecializationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
-        refetchNurse={refetchNurse}
+        refetchDoctorSpecialization={refetchDoctorSpecialization}
         selectedData={selectedData}
         setSelectedData={setSelectedData}
       />
 
-      <DeleteNurseModal
+      {/* <DeleteDoctorSpecializationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
-        refetchNurse={refetchNurse}
+        refetchDoctorSpecialization={refetchDoctorSpecialization}
         selectedId={selectedId}
         setSelectedId={setSelectedId}
-      />
+      /> */}
     </div>
   );
 };
 
-export default Nurse;
+export default DoctorSpecialization;

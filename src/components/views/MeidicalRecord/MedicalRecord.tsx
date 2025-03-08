@@ -2,33 +2,26 @@ import DataTable from "@/components/ui/DataTable";
 import { Breadcrumbs, BreadcrumbItem, Button } from "@heroui/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
-import { COLUMN_LISTS_RESERVATIONS } from "./Reservation.constants";
-import useReservation from "./useReservation";
-import AddReservationModal from "./AddReservationModal/AddReservationModal";
-import UpdateResultReservationModal from "./UpdateResultReservationModal";
+import { COLUMN_LISTS_MEDICAL_RECORDS } from "./MedicalRecord.constants";
+import useMedicalRecord from "./UseMedicalRecord";
 import { useSession } from "next-auth/react";
-import UpdateStatusReservationModal from "./UpdateStatusReservationModal";
-import CloseReservationModal from "./CloseReservationModal";
 
-const Reservation = () => {
+const MedicalRecord = () => {
   const { push, isReady, query } = useRouter();
   const {
     setURL,
-    dataReservation,
-    isLoadingReservation,
+    dataMedicalRecord,
+    isLoadingMedicalRecord,
     currentPage,
     currentSize,
-    isRefetchingReservation,
-    refetchReservation,
+    isRefetchingMedicalRecord,
     handleChangePage,
     handleChangeSize,
     handleKeyword,
     handleClearKeyword,
-    isModalOpen,
     setIsModalOpen,
-    selectedData,
     setSelectedData,
-  } = useReservation();
+  } = useMedicalRecord();
 
   useEffect(() => {
     if (isReady) {
@@ -39,58 +32,58 @@ const Reservation = () => {
   const { data: session } = useSession();
 
   const renderCell = useCallback(
-    (reservation: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = reservation[columnKey as keyof typeof reservation];
+    (medicalRecord: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = medicalRecord[columnKey as keyof typeof medicalRecord];
 
       switch (columnKey) {
         case "actions":
           return (
             <div className="flex justify-center space-x-1">
-              {reservation.latest_status === "scheduled" &&
+              {medicalRecord.latest_status === "scheduled" &&
                 session?.user?.role == "doctor" && (
                   <Button
                     size="sm"
                     variant="solid"
                     color="primary"
                     className="text-white"
-                    aria-label="edit reservation"
+                    aria-label="edit medical record"
                     onPress={() => {
                       setIsModalOpen("update-result");
-                      setSelectedData(reservation);
+                      setSelectedData(medicalRecord);
                     }}
                   >
                     Perbaharui Hasil Kunjungan
                   </Button>
                 )}
-              {reservation.latest_status === "scheduled" &&
+              {medicalRecord.latest_status === "scheduled" &&
                 session?.user?.role == "admin" && (
                   <>
                     <Button
                       size="sm"
                       variant="solid"
                       color="primary"
-                      aria-label="edit reservation"
+                      aria-label="edit medical record"
                       onPress={() => {
                         setIsModalOpen("update-status");
-                        setSelectedData(reservation);
+                        setSelectedData(medicalRecord);
                       }}
                     >
                       Perbaharui Status Kunjungan
                     </Button>
                   </>
                 )}
-              {reservation.latest_status === "pending_payment" &&
+              {medicalRecord.latest_status === "pending_payment" &&
                 session?.user?.role == "admin" && (
                   <>
                     <Button
                       size="sm"
                       variant="solid"
                       color="success"
-                      aria-label="edit reservation"
+                      aria-label="edit medical record"
                       className="text-white"
                       onPress={() => {
                         setIsModalOpen("close");
-                        setSelectedData(reservation);
+                        setSelectedData(medicalRecord);
                       }}
                     >
                       Selesaikan Kunjungan
@@ -110,72 +103,40 @@ const Reservation = () => {
   return (
     <div className="mx-auto p-4">
       <h1 className="mb-4 text-2xl font-semibold text-gray-700">
-        Kunjungan Pasien
+        Rekam Medis Pasien
       </h1>
       <div className="mb-5 mt-6">
         <Breadcrumbs>
-          <BreadcrumbItem>Kunjungan Pasien</BreadcrumbItem>
+          <BreadcrumbItem>Rekam Medis Pasien</BreadcrumbItem>
         </Breadcrumbs>
       </div>
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
-          Tabel Kunjungan Pasien
+          Tabel Rekam Medis Pasien
         </h2>
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
-              emptyContent="Tidak ada data kunjungan"
+              emptyContent="Tidak ada data rekam medis"
               renderCell={renderCell}
-              columns={COLUMN_LISTS_RESERVATIONS}
+              columns={COLUMN_LISTS_MEDICAL_RECORDS}
               size={String(currentSize)}
               onClearKeyword={handleClearKeyword}
               onChangeKeyword={handleKeyword}
               onChangeSize={handleChangeSize}
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
-              totalPage={dataReservation?.total_pages}
-              isLoading={isLoadingReservation || isRefetchingReservation}
-              buttonTopContent="Tambah Kunjungan Pasien"
-              onClickButtonTopContent={() => setIsModalOpen("add")}
-              data={dataReservation?.data || []}
+              totalPage={dataMedicalRecord?.total_pages}
+              isLoading={isLoadingMedicalRecord || isRefetchingMedicalRecord}
+              buttonTopContent=""
+              onClickButtonTopContent={() => {}}
+              data={dataMedicalRecord?.data || []}
             />
           )}
         </section>
       </div>
-
-      <AddReservationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen("")}
-        refetchReservation={refetchReservation}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
-      />
-
-      <UpdateResultReservationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen("")}
-        refetchReservation={refetchReservation}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
-      />
-
-      <UpdateStatusReservationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen("")}
-        refetchReservation={refetchReservation}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
-      />
-
-      <CloseReservationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen("")}
-        refetchReservation={refetchReservation}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
-      />
     </div>
   );
 };
 
-export default Reservation;
+export default MedicalRecord;

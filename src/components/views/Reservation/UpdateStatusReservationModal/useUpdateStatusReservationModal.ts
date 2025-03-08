@@ -28,7 +28,7 @@ const useUpdateStatusReservation = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Berhasil memperbaharui status reservasi",
+                message: "Berhasil memperbaharui status kunjungan",
             });
         },
     });

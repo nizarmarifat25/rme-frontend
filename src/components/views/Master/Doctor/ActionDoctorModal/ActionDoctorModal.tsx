@@ -131,6 +131,9 @@ const ActionDoctorModal = (props: PropsType) => {
                     isInvalid={!!errors.gender}
                     errorMessage={errors.gender?.message}
                     onSelectionChange={(value) => field.onChange(value)}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.gender)] : ""
+                    }
                   >
                     <SelectItem key="L" value="L">
                       Laki - Laki
@@ -157,6 +160,9 @@ const ActionDoctorModal = (props: PropsType) => {
                     isInvalid={!!errors.specialization}
                     errorMessage={errors.specialization?.message}
                     onSelectionChange={(value) => field.onChange(value)}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.specialization)] : ""
+                    }
                   >
                     {dataDoctorSpesializations.map((unit) => (
                       <SelectItem

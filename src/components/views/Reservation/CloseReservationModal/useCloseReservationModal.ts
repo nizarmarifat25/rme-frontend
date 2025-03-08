@@ -28,7 +28,7 @@ const useCloseReservationModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Berhasil selesaikan reservasi",
+                message: "Berhasil selesaikan Kunjungan",
             });
         },
     });

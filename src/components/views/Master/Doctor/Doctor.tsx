@@ -72,7 +72,7 @@ const Doctor = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 justify-center">
               <Tooltip content="Perbaharui Dokter">
                 <Button
                   size="sm"

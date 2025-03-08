@@ -56,7 +56,7 @@ const Insurance = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 justify-center">
               <Tooltip content="Perbaharui Asuransi">
                 <Button
                   size="sm"

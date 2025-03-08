@@ -1,0 +1,3 @@
+import ActionDoctorSpecializationModal from "./ActionDoctorSpecializationModal";
+
+export default ActionDoctorSpecializationModal

@@ -130,7 +130,7 @@ const useUpdateResultReservation = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Berhasil memperbarui hasil reservasi!",
+                message: "Berhasil memperbarui hasil Kunjungan!",
             });
             reset();
         },

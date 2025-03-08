@@ -15,7 +15,9 @@ const Login = () => {
     isPendingLogin,
     errors,
   } = useLogin();
-  console.log(errors);
+
+  console.log(isPendingLogin, "ispending");
+  
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-10 lg:flex-row lg:gap-20">
@@ -86,8 +88,9 @@ const Login = () => {
               className="text-white"
               type="submit"
               disabled={isPendingLogin}
+              isLoading={isPendingLogin}
             >
-              {isPendingLogin ? <Spinner color="white" size="sm" /> : "Login"}
+             Login
             </Button>
           </form>
           {errors.root ? (

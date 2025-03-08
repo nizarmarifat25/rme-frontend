@@ -1,5 +1,4 @@
 const COLUMN_LISTS_DOCTOR = [
-    // { name: "Doctor ID", uid: "doctor_id" },
     { name: "NAMA", uid: "name" },
     { name: "GENDER", uid: "gender" },
     { name: "SPESIALIS", uid: "specialization" },

@@ -74,7 +74,7 @@ const UpdateResultReservation = (props: PropsType) => {
         )}
       >
         <ModalContent className="m-4">
-          <ModalHeader>Update Hasil Reservasi</ModalHeader>
+          <ModalHeader>Update Hasil Kunjungan</ModalHeader>
           <ModalBody>
             <div className="grid grid-cols-2 gap-4">
               <Controller
