@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import usePatient from "./UsePatient";
+import UsePatient from "./UsePatient";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
 
@@ -29,7 +29,7 @@ const Patient = () => {
     setSelectedId,
     selectedData,
     setSelectedData,
-  } = usePatient();
+  } = UsePatient();
 
   useEffect(() => {
     if (isReady) {
