@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 
 const UsePatient = () => {
 
+    
     const [isModalOpen, setIsModalOpen] = useState("");
     const [selectedId, setSelectedId] = useState("");
     const [selectedData, setSelectedData] = useState({})
