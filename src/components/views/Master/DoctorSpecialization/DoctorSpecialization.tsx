@@ -14,7 +14,7 @@ import { COLUMN_LISTS_DOCTOR_SPECIALIZATION } from "./DoctorSpecialization.conta
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useDoctorSpecialization from "./UseDoctorSpecialization";
 import ActionDoctorSpecializationModal from "./ActionDoctorSpecializationModal";
-// import DeleteDoctorSpecializationModal from "./DeleteDoctorSpecializationModal";
+import DeleteDoctorSpecializationModal from "./DeleteDoctorSpecializationModal";
 
 interface DoctorSpecialization {
   doctor_id: number;
@@ -96,7 +96,7 @@ const DoctorSpecialization = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(doctor.doctor_id));
+                    setSelectedId(String(doctor.doctor_specialization_id));
                   }}
                 >
                   <FaTrash className="text-lg" />
@@ -155,13 +155,13 @@ const DoctorSpecialization = () => {
         setSelectedData={setSelectedData}
       />
 
-      {/* <DeleteDoctorSpecializationModal
+      <DeleteDoctorSpecializationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
         refetchDoctorSpecialization={refetchDoctorSpecialization}
         selectedId={selectedId}
         setSelectedId={setSelectedId}
-      /> */}
+      />
     </div>
   );
 };
