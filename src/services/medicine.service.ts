@@ -1,6 +1,6 @@
 import instance from "@/libs/axios/instance";
 import endpoint from "./endpoint.constant";
-import { IMedicine } from "@/types/Medicine";
+import { IMedicine, IMedicineCategory } from "@/types/Medicine";
 
 const medicineServices = {
     getMedicines: (params?: string) => instance.get(`${endpoint.MEDICINE}?${params}`),
@@ -8,7 +8,11 @@ const medicineServices = {
     editMedicine: (payload: IMedicine, id: string) => instance.put(`${endpoint.MEDICINE}/${id}`, payload),
     deleteMedicine: (id?: string) => instance.delete(`${endpoint.MEDICINE}/${id}`),
 
-    getMedicineCategorys: () => instance.get(`${endpoint.MEDICINE_CATEGORY}`),
+    getMedicineCategories: (params?: string) => instance.get(`${endpoint.MEDICINE_CATEGORY}?${params}`),
+    postMedicineCategory: (payload: IMedicineCategory) => instance.post(`${endpoint.MEDICINE_CATEGORY}`, payload),
+    editMedicineCategory: (payload: IMedicineCategory, id: string) => instance.put(`${endpoint.MEDICINE_CATEGORY}/${id}`, payload),
+    deleteMedicineCategory: (id?: string) => instance.delete(`${endpoint.MEDICINE_CATEGORY}/${id}`),
+
     
     getMedicineUnits: () => instance.get(`${endpoint.MEDICE_UNIT}`)
     

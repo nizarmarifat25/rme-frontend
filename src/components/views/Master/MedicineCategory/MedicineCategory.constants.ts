@@ -1,0 +1,6 @@
+const COLUMN_LISTS_MEDICINE_CATEGORY = [
+    { name: "NAMA", uid: "name" },
+    { name: "AKSI", uid: "actions" },
+];
+
+export { COLUMN_LISTS_MEDICINE_CATEGORY }

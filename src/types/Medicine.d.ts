@@ -11,7 +11,7 @@ interface IMedicine {
 }
 
 interface IMedicineCategory {
-    medicine_category_id: string;
+    medicine_category_id?: string;
     name: string;
 }
 

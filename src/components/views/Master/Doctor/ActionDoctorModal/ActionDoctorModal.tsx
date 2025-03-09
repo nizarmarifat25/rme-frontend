@@ -64,6 +64,9 @@ const ActionDoctorModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddDoctor, isSuccessMutateEditDoctor, isOpen]);
 
+  console.log(selectedData);
+  
+
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
@@ -161,7 +164,7 @@ const ActionDoctorModal = (props: PropsType) => {
                     errorMessage={errors.specialization?.message}
                     onSelectionChange={(value) => field.onChange(value)}
                     defaultSelectedKeys={
-                      isOpen === "edit" ? [String(selectedData.specialization)] : ""
+                      isOpen === "edit" ? [String(selectedData.specialization_id)] : ""
                     }
                   >
                     {dataDoctorSpesializations.map((unit) => (

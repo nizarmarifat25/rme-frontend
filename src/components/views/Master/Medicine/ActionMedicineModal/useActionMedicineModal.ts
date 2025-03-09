@@ -29,8 +29,8 @@ const schema = yup.object().shape({
 const useActionMedicineModal = () => {
   const { setToaster } = useContext(ToasterContext);
 
-  const getMedicineCategorys = async () => {
-    const res = await medicineServices.getMedicineCategorys();
+  const getMedicineCategories = async () => {
+    const res = await medicineServices.getMedicineCategories();
     const { data } = res.data;
     return data;
   };
@@ -43,7 +43,7 @@ const useActionMedicineModal = () => {
 
   const { data: dataMedicineCategorys = [] } = useQuery<IMedicineCategory[]>({
     queryKey: ["medicine-categories"],
-    queryFn: getMedicineCategorys,
+    queryFn: getMedicineCategories,
   });
 
   const { data: dataMedicineUnits = [] } = useQuery<IMedicineUnits[]>({
