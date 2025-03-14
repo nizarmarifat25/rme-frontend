@@ -1,8 +1,8 @@
 interface IMedicine {
     code: string;
     name: string;
-    category: string;
-    unit: string;
+    category_id: string;
+    unit_id: string;
     price: string;
     stock: string;
     dosage: string;
@@ -15,9 +15,9 @@ interface IMedicineCategory {
     name: string;
 }
 
-interface IMedicineUnits {
-    medicine_unit_id: string;
+interface IMedicineUnit {
+    medicine_unit_id?: string;
     name: string;
 }
 
-export type { IMedicine , IMedicineCategory, IMedicineUnits};
+export type { IMedicine , IMedicineCategory, IMedicineUnit};

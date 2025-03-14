@@ -4,14 +4,16 @@ import * as yup from "yup";
 import { useContext } from "react";
 import medicineServices from "@/services/medicine.service";
 import { ToasterContext } from "@/contexts/ToasterContext";
-import { IMedicine, IMedicineCategory, IMedicineUnits } from "@/types/Medicine";
+import { IMedicine, IMedicineCategory, IMedicineUnit } from "@/types/Medicine";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+
 
 const schema = yup.object().shape({
   code: yup.string().required("Kode wajib diisi").min(3, "Minimal 3 karakter"),
   name: yup.string().required("Nama wajib diisi").min(3, "Minimal 3 karakter"),
-  category: yup.string().required("Kategori wajib diisi"),
-  unit: yup.string().required("Satuan wajib diisi"),
+  category_id: yup.string().required("Kategori wajib diisi"),
+  unit_id: yup.string().required("Satuan wajib diisi"),
   price: yup
     .string()
     .typeError("Harga harus angka")
@@ -46,7 +48,7 @@ const useActionMedicineModal = () => {
     queryFn: getMedicineCategories,
   });
 
-  const { data: dataMedicineUnits = [] } = useQuery<IMedicineUnits[]>({
+  const { data: dataMedicineUnits = [] } = useQuery<IMedicineUnit[]>({
     queryKey: ["medicine-units"],
     queryFn: getMedicineUnits,
   });
@@ -77,11 +79,11 @@ const useActionMedicineModal = () => {
     defaultValues: {
       code: "",
       name: "",
-      unit: "",
+      unit_id: "",
       price: "",
       stock: "",
       dosage: "",
-      category: "",
+      category_id: "",
       expiry_date: "",
     },
   });
@@ -90,14 +92,21 @@ const useActionMedicineModal = () => {
     mutate: mutateAddMedicine,
     isPending: isPendingMutateAddMedicine,
     isSuccess: isSuccessMutateAddMedicine,
-    reset: resetAddMedicine 
+    reset: resetAddMedicine
   } = useMutation({
     mutationFn: addMedicine,
     onError: (error) => {
-      setToaster({
-        type: "error",
-        message: error.message,
-      });
+      if (error instanceof AxiosError) {
+        setToaster({
+          type: "error",
+          message: error.response?.data?.message || "Terjadi kesalahan",
+        });
+      } else {
+        setToaster({
+          type: "error",
+          message: error.message,
+        });
+      }
     },
     onSuccess: () => {
       setToaster({
@@ -112,14 +121,21 @@ const useActionMedicineModal = () => {
     mutate: mutateEditMedicine,
     isPending: isPendingMutateEditMedicine,
     isSuccess: isSuccessMutateEditMedicine,
-    reset: resetEditMedicine 
+    reset: resetEditMedicine
   } = useMutation({
     mutationFn: editMedicine,
     onError: (error) => {
-      setToaster({
-        type: "error",
-        message: error.message,
-      });
+      if (error instanceof AxiosError) {
+        setToaster({
+          type: "error",
+          message: error.response?.data?.message || "Terjadi kesalahan",
+        });
+      } else {
+        setToaster({
+          type: "error",
+          message: error.message,
+        });
+      }
     },
     onSuccess: () => {
       setToaster({
@@ -137,7 +153,7 @@ const useActionMedicineModal = () => {
   const handleEditMedicine = (data: IMedicine, id: string) => {
     mutateEditMedicine({ payload: data, id });
   };
-  
+
 
   return {
     control,

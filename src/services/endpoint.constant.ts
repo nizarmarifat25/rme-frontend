@@ -5,7 +5,7 @@ const endpoint = {
     DOCTOR_SPECIALIZATIONS: "/doctor/specializations",
     MEDICINE: "/medicines",
     MEDICINE_CATEGORY: "/medicine/categories",
-    MEDICE_UNIT: "/medicine/units",
+    MEDICINE_UNIT: "/medicine/units",
     NURSE: "/nurses",
     PATIENT: "/patients",
     MEDICAL_RECORD: "/medical-records",

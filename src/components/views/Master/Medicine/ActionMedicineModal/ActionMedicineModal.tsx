@@ -49,16 +49,15 @@ const ActionMedicineModal = (props: PropsType) => {
     if (isSuccessMutateAddMedicine) {
       onClose();
       refetchMedicine();
-      resetAddMedicine()
+      resetAddMedicine();
       reset();
     }
 
     if (isSuccessMutateEditMedicine) {
       onClose();
       refetchMedicine();
-      resetEditMedicine()
+      resetEditMedicine();
       reset();
-
     }
 
     if (isOpen === "edit" && selectedData) {
@@ -66,7 +65,6 @@ const ActionMedicineModal = (props: PropsType) => {
       reset({});
     }
   }, [isSuccessMutateAddMedicine, isSuccessMutateEditMedicine, isOpen]);
-
 
   return (
     <Modal
@@ -127,7 +125,7 @@ const ActionMedicineModal = (props: PropsType) => {
               />
 
               <Controller
-                name="unit"
+                name="unit_id"
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -138,12 +136,18 @@ const ActionMedicineModal = (props: PropsType) => {
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
-                    isInvalid={!!errors.unit}
-                    errorMessage={errors.unit?.message}
+                    isInvalid={!!errors.unit_id}
+                    errorMessage={errors.unit_id?.message}
                     onSelectionChange={(value) => field.onChange(value)}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.unit_id)] : ""
+                    }
                   >
                     {dataMedicineUnits.map((unit) => (
-                      <SelectItem key={unit.name} value={unit.name}>
+                      <SelectItem
+                        key={unit.medicine_unit_id}
+                        value={unit.medicine_unit_id}
+                      >
                         {unit.name}
                       </SelectItem>
                     ))}
@@ -199,7 +203,7 @@ const ActionMedicineModal = (props: PropsType) => {
                 )}
               />
               <Controller
-                name="category"
+                name="category_id"
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -210,14 +214,17 @@ const ActionMedicineModal = (props: PropsType) => {
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
-                    isInvalid={!!errors.category}
-                    errorMessage={errors.category?.message}
+                    isInvalid={!!errors.category_id}
+                    errorMessage={errors.category_id?.message}
                     defaultSelectedKeys={
-                      isOpen === "edit" ? [String(selectedData.category)] : ""
+                      isOpen === "edit" ? [String(selectedData.category_id)] : ""
                     }
                   >
                     {dataMedicineCategorys.map((category) => (
-                      <SelectItem key={category.name} value={category.name}>
+                      <SelectItem
+                        key={category.medicine_category_id}
+                        value={category.medicine_category_id}
+                      >
                         {category.name}
                       </SelectItem>
                     ))}
