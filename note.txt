@@ -1,0 +1,22 @@
+✅
+
+KUNJUNGAN PASIEN -> UPDATE STATUS
+-> Tambahkan select PAYMENT_METHOD
+-> Jika PAYMENT_METHOD === "INSURANCE" muncul dropdown INSURANCE ambil dari insurance-dropdown dan payment_status hardcode menjadi pending
+-> Jika PAYMENT_METHOD !== "INSURANCE" pilih payment-status
+
+
+URL specialization
+
+-/master-data/doctor-specialization - Spesialis Dokter
+-/master-data/medicine-unit - Satuan Obat
+-/master-data/medicine-category - Kategori Obat
+
+MASTER MENU
+-Icon Menu
+
+import { FiCheck } from "../"
+
+
+
+

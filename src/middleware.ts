@@ -12,6 +12,7 @@ export async function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
+
     if (pathname === "/auth/login") {
         if (token) {
             const url = new URL(request.url);
@@ -26,7 +27,7 @@ export async function middleware(request: NextRequest) {
     
     if (pathname === "/") {
         if (!token) {
-            return NextResponse.redirect(new URL("/owner/dashboard", request.url))
+            return NextResponse.redirect(new URL("/auth/login", request.url))
         }
     }
 

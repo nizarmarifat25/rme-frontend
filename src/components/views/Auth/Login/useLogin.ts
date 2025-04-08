@@ -7,6 +7,8 @@ import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { signIn } from "next-auth/react"
 import { ToasterContext } from "@/contexts/ToasterContext"
+import { getSession } from "next-auth/react"
+
 
 const loginSchema = yup.object().shape({
     email: yup.string().email("Email tidak valid").required("Harap isi Email"),
@@ -29,16 +31,28 @@ const useLogin = () => {
         resolver: yupResolver(loginSchema)
     })
 
+
     const loginService = async (payload: ILogin) => {
         const result = await signIn("credentials", {
             ...payload,
             redirect: false,
-            callbackUrl
-        })
+        });
+
         if (result?.error && result?.status === 401) {
-            throw new Error("Email atau Password salah")
+            throw new Error("Email atau Password salah");
         }
+
+        const session = await getSession();
+        const menus = session?.user?.menus || [];
+
+        const firstMenu = menus
+            .filter((menu: any) => menu?.path_name)
+            .sort((a: any, b: any) => a.menu_order - b.menu_order)[0];
+
+        const callbackPath = firstMenu?.path_name || "/owner";
+        return callbackPath;
     }
+
 
     const { mutate: mutateLogin, isPending: isPendingLogin } = useMutation({
         mutationFn: loginService,
@@ -51,13 +65,15 @@ const useLogin = () => {
             //     message: error.message,
             // })
         },
-        onSuccess: () => {
+        onSuccess: (callbackPath) => {
             reset();
             setToaster({
                 type: 'success',
                 message: 'Login Sukses'
-            })
-            router.push(callbackUrl)
+            });
+console.log(callbackPath);
+
+            router.push(callbackPath);
         }
     })
 
