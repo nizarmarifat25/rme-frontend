@@ -40,6 +40,7 @@ interface ICloseReservation {
     latest_status: string
     payment_method: string
     payment_status: string
+    insurance_id: string 
 }
 
 

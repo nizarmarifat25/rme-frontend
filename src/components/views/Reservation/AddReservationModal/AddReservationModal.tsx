@@ -50,7 +50,6 @@ const AddReservationModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddReservation]);
 
-  console.log(errors, "error");
 
   return (
     <Modal

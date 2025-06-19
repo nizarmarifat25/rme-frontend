@@ -10,7 +10,8 @@ const endpoint = {
     PATIENT: "/patients",
     MEDICAL_RECORD: "/medical-records",
     TREATMENT: "/treatments",
-    INSURANCE: "/insurances"
+    INSURANCE: "/insurances",
+    PAYMENT_METHOD: "/payments",
 }
 
 export default endpoint
