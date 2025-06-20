@@ -9,7 +9,7 @@ interface PropTypes {
 const AuthLayout = (props: PropTypes) => {
   const { title, children } = props;
   return (
-    <div className="flex min-h-screen min-w-full flex-col items-center justify-center gap-10 py-10 lg:py-0">
+    <div className="flex min-h-screen min-w-full flex-col items-center justify-center gap-10 py-10 lg:py-0 bg-gradient-to-r from-green-300 via-green-400 to-green-500">
       <PageHead title={title} />
       <section className="max-w-screen-3xl 3xl:container p-6">
         {children}

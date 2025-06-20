@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable";
-import { Breadcrumbs, BreadcrumbItem, Button } from "@heroui/react";
+import { Breadcrumbs, BreadcrumbItem, Button, Chip } from "@heroui/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_RESERVATIONS } from "./Reservation.constants";
@@ -41,6 +41,18 @@ const Reservation = () => {
   const renderCell = useCallback(
     (reservation: Record<string, unknown>, columnKey: Key) => {
       const cellValue = reservation[columnKey as keyof typeof reservation];
+      const getStatusColor = (status: string) => {
+        switch (status) {
+          case "scheduled":
+            return "warning";
+          case "pending_payment":
+            return "danger";
+          case "closed":
+            return "success";
+          default:
+            return "primary";
+        }
+      };
 
       switch (columnKey) {
         case "actions":
@@ -97,6 +109,37 @@ const Reservation = () => {
                     </Button>
                   </>
                 )}
+            </div>
+          );
+
+        case "latest_status_name":
+          return (
+            <div className="flex justify-center space-x-1">
+              {reservation.latest_status === "pending_payment" ? (
+                <Chip
+                  radius="sm"
+                  size="sm"
+                  className="bg-yellow-400 font-semibold"
+                  variant="flat"
+                >
+                  {cellValue as string}
+                </Chip>
+              ) : (
+                <Chip
+                  size="sm"
+                  radius="sm"
+                  variant="flat"
+                  color={
+                    reservation.latest_status === "scheduled"
+                      ? "warning"
+                      : reservation.latest_status === "closed"
+                        ? "success"
+                        : "primary"
+                  }
+                >
+                  {cellValue as string}
+                </Chip>
+              )}
             </div>
           );
 

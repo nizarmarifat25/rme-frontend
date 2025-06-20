@@ -96,9 +96,6 @@ const UseActionTreatmentModal = () => {
     };
 
     const handleEditTreatment = (data: ITreatment, id: string) => {
-        console.log(data);
-
-
         mutateEditTreatment({ payload: data, id });
     };
 

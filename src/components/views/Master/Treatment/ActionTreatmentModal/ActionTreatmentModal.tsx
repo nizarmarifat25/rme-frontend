@@ -54,8 +54,6 @@ const ActionTreatmentModal = (props: PropsType) => {
     }
 
     if (isOpen === "edit" && selectedData) {
-      console.log(selectedData);
-
       reset(selectedData);
       reset({});
     }

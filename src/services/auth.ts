@@ -1,11 +1,15 @@
 import instance from "@/libs/axios/instance";
 import endpoint from "./endpoint.constant";
 import { ILogin } from "@/types/Auth";
+import environment from "@/config/environment";
 
 const authServices = {
     login: async (payload: ILogin) => {
+        console.log(`${environment.API_URL}${endpoint.AUTH}/login`, "aasdasds");
+
         try {
             const response = await instance.post(`${endpoint.AUTH}/login`, payload);
+
             return response;
         } catch (error: any) {
             return {

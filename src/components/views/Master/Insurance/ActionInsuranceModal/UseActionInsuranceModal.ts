@@ -99,8 +99,6 @@ const UseActionInsuranceModal = () => {
     };
 
     const handleEditInsurance = (data: IInsurance, id: string) => {
-        console.log(data);
-
         const updatedData = {
             ...data,
             is_active: data.is_active === true ? 1 : 0

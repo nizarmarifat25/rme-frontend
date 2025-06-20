@@ -14,6 +14,7 @@ const DashboardLayout = (props: PropTypes) => {
   const { title, children, type = "owner" } = props;
   const { data: session } = useSession();
 
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {

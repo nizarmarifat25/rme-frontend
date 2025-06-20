@@ -38,6 +38,7 @@ const useLogin = () => {
             redirect: false,
         });
 
+        
         if (result?.error && result?.status === 401) {
             throw new Error("Email atau Password salah");
         }
@@ -61,9 +62,6 @@ const useLogin = () => {
                 type: 'error',
                 message: error.message
             })
-            // setError("root", {
-            //     message: error.message,
-            // })
         },
         onSuccess: (callbackPath) => {
             reset();
@@ -71,8 +69,6 @@ const useLogin = () => {
                 type: 'success',
                 message: 'Login Sukses'
             });
-console.log(callbackPath);
-
             router.push(callbackPath);
         }
     })

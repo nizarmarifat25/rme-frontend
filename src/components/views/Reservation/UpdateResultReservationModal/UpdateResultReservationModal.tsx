@@ -52,7 +52,6 @@ const UpdateResultReservation = (props: PropsType) => {
     }
   }, [isSuccessMutateUpdateResultReservation]);
 
-  console.log(errors);
 
   return (
     <Modal

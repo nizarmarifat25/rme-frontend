@@ -26,8 +26,6 @@ const useActionNurseModal = () => {
 
   const addNurse = async (payload: INurse) => {
     const res = await nurseServices.postNurse(payload);
-    console.log(res);
-    
 
     return res;
   };

@@ -57,15 +57,11 @@ const ActionDoctorModal = (props: PropsType) => {
     }
 
     if (isOpen === "edit" && selectedData) {
-      console.log(selectedData);
-      
       reset(selectedData);
       reset({});
     }
   }, [isSuccessMutateAddDoctor, isSuccessMutateEditDoctor, isOpen]);
 
-  console.log(selectedData);
-  
 
   return (
     <Modal

@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable";
-import { Breadcrumbs, BreadcrumbItem, Button } from "@heroui/react";
+import { Breadcrumbs, BreadcrumbItem, Button, Chip } from "@heroui/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_MEDICAL_RECORDS } from "./MedicalRecord.constants";
@@ -34,8 +34,51 @@ const MedicalRecord = () => {
   const renderCell = useCallback(
     (medicalRecord: Record<string, unknown>, columnKey: Key) => {
       const cellValue = medicalRecord[columnKey as keyof typeof medicalRecord];
+      const getStatusColor = (status: string) => {
+        switch (status) {
+          case "scheduled":
+            return "warning";
+          case "pending_payment":
+            return "danger";
+          case "closed":
+            return "success";
+          default:
+            return "primary";
+        }
+      };
 
       switch (columnKey) {
+        case "latest_status_name":
+          return (
+            <div className="flex justify-center space-x-1">
+              {medicalRecord.latest_status === "pending_payment" ? (
+                <Chip
+                  radius="sm"
+                  size="sm"
+                  className="bg-yellow-400 font-semibold"
+                  variant="flat"
+                >
+                  {cellValue as string}
+                </Chip>
+              ) : (
+                <Chip
+                  radius="sm"
+                  size="sm"
+                  variant="flat"
+                  color={
+                    medicalRecord.latest_status === "scheduled"
+                      ? "warning"
+                      : medicalRecord.latest_status === "closed"
+                        ? "success"
+                        : "primary"
+                  }
+                >
+                  {cellValue as string}
+                </Chip>
+              )}
+            </div>
+          );
+
         case "actions":
           return (
             <div className="flex justify-center space-x-1">

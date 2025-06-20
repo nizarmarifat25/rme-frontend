@@ -57,14 +57,10 @@ const ActionPatientModal = (props: PropsType) => {
     }
 
     if (isOpen === "edit" && selectedData) {
-      console.log(selectedData);
-
       reset(selectedData);
       reset({});
     }
   }, [isSuccessMutateAddPatient, isSuccessMutateEditPatient, isOpen]);
-
-  console.log(errors);
 
   return (
     <Modal
