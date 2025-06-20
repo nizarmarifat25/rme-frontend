@@ -126,7 +126,6 @@ const DataTable = (props: PropsTypes) => {
   return (
     <Table
       aria-label="Tabel Data"
-      align="center"
       topContent={topContent}
       bottomContent={bottomContent}
       topContentPlacement="outside"

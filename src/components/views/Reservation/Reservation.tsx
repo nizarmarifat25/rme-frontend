@@ -115,12 +115,12 @@ const Reservation = () => {
 
         case "latest_status_name":
           return (
-            <div className="flex justify-center space-x-1">
+            <div>
               {reservation.latest_status === "pending_payment" ? (
                 <Chip
                   radius="sm"
                   size="sm"
-                  className="bg-yellow-400 font-semibold"
+                  className="bg-yellow-400 font-semibold text-yellow-700"
                   variant="flat"
                 >
                   {cellValue as string}

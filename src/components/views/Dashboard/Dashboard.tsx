@@ -43,7 +43,7 @@ const Dashboard = () => {
         />
 
         <div className="flex flex-col gap-6">
-          <div className="relative overflow-hidden rounded-lg  bg-green-600/10 p-6 backdrop-blur-sm shadow">
+          <div className="relative overflow-hidden rounded-lg  bg-green-600/10 p-6 backdrop-blur-sm">
             <img
               src="/images/illustration/revenue.png"
               alt="Revenue Illustration"
