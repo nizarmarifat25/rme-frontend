@@ -8,6 +8,7 @@ import UseTreatment from "./UseTreatment";
 import { formatRupiah } from "@/utils/currency-format";
 import ActionTreatmentModal from "./ActionTreatmentModal";
 import DeleteTreatmentModal from "./DeleteTreatmentModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const Treatment = () => {
   const { push, isReady, query } = useRouter();
@@ -93,21 +94,15 @@ const Treatment = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Treatment</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Treatment</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout title="Tindakan" breadcrumbs={["Master Data", "Tindakan"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
-          Tabel Treatment
+          Tabel Tindakan
         </h2>
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
-              emptyContent="Tidak ada data treatment"
+              emptyContent="Tidak ada data tinfakan"
               renderCell={renderCell}
               columns={COLUMN_LISTS_TREATMENT}
               size={String(currentSize)}

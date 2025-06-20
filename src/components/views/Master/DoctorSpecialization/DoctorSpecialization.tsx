@@ -10,11 +10,12 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { COLUMN_LISTS_DOCTOR_SPECIALIZATION } from "./DoctorSpecialization.constants"; 
+import { COLUMN_LISTS_DOCTOR_SPECIALIZATION } from "./DoctorSpecialization.constants";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useDoctorSpecialization from "./UseDoctorSpecialization";
 import ActionDoctorSpecializationModal from "./ActionDoctorSpecializationModal";
 import DeleteDoctorSpecializationModal from "./DeleteDoctorSpecializationModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 interface DoctorSpecialization {
   doctor_id: number;
@@ -72,7 +73,7 @@ const DoctorSpecialization = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1 justify-center">
+            <div className="flex justify-center space-x-1">
               <Tooltip content="Perbaharui Spesialis Dokter">
                 <Button
                   size="sm"
@@ -114,13 +115,10 @@ const DoctorSpecialization = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Spesialis Dokter</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Spesialis Dokter</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout
+        title="Spesialis Dokter"
+        breadcrumbs={["Master Data", "Spesialis Dokter"]}
+      />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Spesialis Dokter
@@ -138,7 +136,10 @@ const DoctorSpecialization = () => {
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
               totalPage={dataDoctorSpecialization?.total_pages}
-              isLoading={isLoadingDoctorSpecialization || isRefetchingDoctorSpecialization}
+              isLoading={
+                isLoadingDoctorSpecialization ||
+                isRefetchingDoctorSpecialization
+              }
               buttonTopContent="Tambah Spesialis Dokter"
               onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataDoctorSpecialization?.data || []}

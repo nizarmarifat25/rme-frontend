@@ -46,7 +46,7 @@ const Bar = ({ labels, data }: BarProps) => {
       grid: {
         show: false,
       },
-      colors: ["#4ade80"],
+      colors: ["#15803D"],
       tooltip: {
         enabled: true,
       },
@@ -55,15 +55,15 @@ const Bar = ({ labels, data }: BarProps) => {
   );
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow">
-      <h2 className="mb-4 text-lg font-semibold text-gray-700">
+    <div className="rounded-xl bg-green-600/10 p-6 backdrop-blur-sm">
+      <h2 className="mb-4 text-lg font-semibold text-green-700">
         Top 5 Diagnosa Terbanyak Bulan Ini
       </h2>
       <ApexChart
         options={options}
         series={[{ name: "Jumlah", data }]}
         type="bar"
-        height={350}
+        height={300}
       />
     </div>
   );

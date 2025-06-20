@@ -43,20 +43,20 @@ const Dashboard = () => {
         />
 
         <div className="flex flex-col gap-6">
-          <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 p-6 shadow">
+          <div className="relative overflow-hidden rounded-lg  bg-green-600/10 p-6 backdrop-blur-sm shadow">
             <img
               src="/images/illustration/revenue.png"
               alt="Revenue Illustration"
               className="absolute right-4 top-1/2 w-44 -translate-y-1/2 opacity-30"
             />
 
-            <h3 className="mb-2 text-lg font-semibold tracking-wide text-white">
+            <h3 className="mb-2 text-lg font-semibold tracking-wide text-green-700">
               Revenue Bulan Ini
             </h3>
-            <p className="text-3xl font-bold leading-snug tracking-tight text-white">
+            <p className="text-3xl font-bold leading-snug tracking-tight text-green-700">
               Rp 25.000.000
             </p>
-            <span className="text-sm leading-relaxed tracking-normal text-white/80">
+            <span className="text-sm leading-relaxed tracking-normal text-green-700/80">
               Periode: Jan - Jun 2024
             </span>
           </div>

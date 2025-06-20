@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";  
-import MedicalRecord from "@/components/views/MeidicalRecord";
+import MedicalRecord from "@/components/views/MedicalRecord";
 
 const MedicalRecordPage = () =>{
     return (

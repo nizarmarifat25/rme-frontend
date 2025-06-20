@@ -8,6 +8,7 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
 import usePatient from "./UsePatient";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const Patient = () => {
   const { push, isReady, query } = useRouter();
@@ -86,13 +87,7 @@ const Patient = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Pasien</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Pasien</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout title="Pasien" breadcrumbs={["Master Data", "Pasien"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Pasien

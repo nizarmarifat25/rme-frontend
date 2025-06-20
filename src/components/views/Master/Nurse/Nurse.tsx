@@ -15,6 +15,7 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useNurse from "./useNurse";
 import ActionNurseModal from "./ActionNurseModal";
 import DeleteNurseModal from "./DeleteNurseModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const Nurse = () => {
   const { push, isReady, query } = useRouter();
@@ -103,13 +104,7 @@ const Nurse = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Perawat</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Perawat</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout title="Perawat" breadcrumbs={["Master Data", "Perawat"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Perawat
@@ -129,7 +124,7 @@ const Nurse = () => {
               totalPage={dataNurse?.total_pages}
               isLoading={isLoadingNurse || isRefetchingNurse}
               buttonTopContent="Tambah Perawat"
-              onClickButtonTopContent={() => setIsModalOpen('add')}
+              onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataNurse?.data || []}
             />
           )}

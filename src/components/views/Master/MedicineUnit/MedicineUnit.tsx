@@ -10,11 +10,12 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { COLUMN_LISTS_MEDICINE_UNIT } from "./MedicineUnit.constants"; 
+import { COLUMN_LISTS_MEDICINE_UNIT } from "./MedicineUnit.constants";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useMedicineUnit from "./UseMedicineUnit";
 import ActionMedicineUnitModal from "./ActionMedicineUnitModal";
 import DeleteMedicineUnitModal from "./DeleteMedicineUnitModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const MedicineUnit = () => {
   const { push, isReady, query } = useRouter();
@@ -61,7 +62,7 @@ const MedicineUnit = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1 justify-center">
+            <div className="flex justify-center space-x-1">
               <Tooltip content="Perbaharui satuan obat">
                 <Button
                   size="sm"
@@ -103,13 +104,10 @@ const MedicineUnit = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Satuan Obat</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Satuan Obat</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout
+        title="Satuan Obat"
+        breadcrumbs={["Master Data", "Satuan Obat"]}
+      />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Satuan Obat

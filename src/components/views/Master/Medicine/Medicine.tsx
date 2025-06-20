@@ -16,6 +16,7 @@ import { formatRupiah } from "@/utils/currency-format";
 import DeleteMedicineModal from "./DeleteMedicineModal";
 import ActionMedicineModal from "./ActionMedicineModal";
 import { getLocalTimeZone, now, parseDate } from "@internationalized/date";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 interface Medicine {
   medicine_id: string;
@@ -53,7 +54,6 @@ const Medicine = () => {
       setURL();
     }
   }, [isReady]);
-
 
   const renderCell = useCallback(
     (medicine: Record<string, unknown>, columnKey: Key) => {
@@ -111,13 +111,10 @@ const Medicine = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Obat</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Obat</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout
+        title="Obat"
+        breadcrumbs={["Master Data", "Obat"]}
+      />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Obat

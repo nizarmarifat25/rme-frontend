@@ -5,6 +5,7 @@ import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LISTS_MEDICAL_RECORDS } from "./MedicalRecord.constants";
 import useMedicalRecord from "./UseMedicalRecord";
 import { useSession } from "next-auth/react";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const MedicalRecord = () => {
   const { push, isReady, query } = useRouter();
@@ -145,14 +146,10 @@ const MedicalRecord = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">
-        Rekam Medis Pasien
-      </h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Rekam Medis Pasien</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout
+        title="Rekam Medis Pasien"
+        breadcrumbs={["Rekam Medis"]}
+      />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Rekam Medis Pasien

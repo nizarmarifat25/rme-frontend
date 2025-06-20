@@ -10,11 +10,12 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { COLUMN_LISTS_MEDICINE_CATEGORY } from "./MedicineCategory.constants"; 
+import { COLUMN_LISTS_MEDICINE_CATEGORY } from "./MedicineCategory.constants";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useMedicineCategory from "./UseMedicineCategory";
 import ActionMedicineCategoryModal from "./ActionMedicineCategoryModal";
 import DeleteMedicineCategoryModal from "./DeleteMedicineCategoryModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const MedicineCategory = () => {
   const { push, isReady, query } = useRouter();
@@ -61,7 +62,7 @@ const MedicineCategory = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1 justify-center">
+            <div className="flex justify-center space-x-1">
               <Tooltip content="Perbaharui Kategori Obat">
                 <Button
                   size="sm"
@@ -103,13 +104,10 @@ const MedicineCategory = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Kategori Obat</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Kategori Obat</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout
+        title="Kategori Obat"
+        breadcrumbs={["Master Data", "Kategori Obat"]}
+      />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Kategori Obat
@@ -127,7 +125,9 @@ const MedicineCategory = () => {
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
               totalPage={dataMedicineCategory?.total_pages}
-              isLoading={isLoadingMedicineCategory || isRefetchingMedicineCategory}
+              isLoading={
+                isLoadingMedicineCategory || isRefetchingMedicineCategory
+              }
               buttonTopContent="Tambah Kategori Obat"
               onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataMedicineCategory?.data || []}

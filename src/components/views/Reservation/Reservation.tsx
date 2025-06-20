@@ -9,6 +9,7 @@ import UpdateResultReservationModal from "./UpdateResultReservationModal";
 import { useSession } from "next-auth/react";
 import UpdateStatusReservationModal from "./UpdateStatusReservationModal";
 import CloseReservationModal from "./CloseReservationModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const Reservation = () => {
   const { push, isReady, query } = useRouter();
@@ -152,14 +153,7 @@ const Reservation = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">
-        Kunjungan Pasien
-      </h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Kunjungan Pasien</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout title="Kunjungan Pasien" breadcrumbs={["Kunjungan Pasien"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Kunjungan Pasien

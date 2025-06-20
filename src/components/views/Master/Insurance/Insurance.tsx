@@ -1,10 +1,5 @@
 import DataTable from "@/components/ui/DataTable";
-import {
-  Breadcrumbs,
-  BreadcrumbItem,
-  Button,
-  Tooltip,
-} from "@heroui/react";
+import { Breadcrumbs, BreadcrumbItem, Button, Tooltip } from "@heroui/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect, useState } from "react";
 import { COLUMN_LISTS_INSURANCE } from "./Insurance.constants";
@@ -13,6 +8,7 @@ import useInsurance from "./UseInsurance";
 import { formatRupiah } from "@/utils/currency-format";
 import ActionInsuranceModal from "./ActionInsuranceModal";
 import DeleteInsuranceModal from "./DeleteInsuranceModal";
+import HeaderLayout from "@/components/ui/Header/Header";
 
 const Insurance = () => {
   const { push, isReady, query } = useRouter();
@@ -56,7 +52,7 @@ const Insurance = () => {
 
         case "actions":
           return (
-            <div className="flex space-x-1 justify-center">
+            <div className="flex justify-center space-x-1">
               <Tooltip content="Perbaharui Asuransi">
                 <Button
                   size="sm"
@@ -98,13 +94,7 @@ const Insurance = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-700">Asuransi</h1>
-      <div className="mb-5 mt-6">
-        <Breadcrumbs>
-          <BreadcrumbItem>Master Data</BreadcrumbItem>
-          <BreadcrumbItem>Asuransi</BreadcrumbItem>
-        </Breadcrumbs>
-      </div>
+      <HeaderLayout title="Asuransi" breadcrumbs={["Master Data", "Asuransi"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
           Tabel Asuransi
