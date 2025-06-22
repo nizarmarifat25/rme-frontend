@@ -126,7 +126,7 @@ const MedicineUnit = () => {
               currentPage={Number(currentPage)}
               totalPage={dataMedicineUnit?.total_pages}
               isLoading={isLoadingMedicineUnit || isRefetchingMedicineUnit}
-              buttonTopContent="Tambah Unit Obat"
+              buttonTopContent="Tambah Satuan Obat"
               onClickButtonTopContent={() => setIsModalOpen("add")}
               data={dataMedicineUnit?.data || []}
             />
