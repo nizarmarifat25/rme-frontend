@@ -16,7 +16,7 @@ const Login = () => {
   } = useLogin();
 
   return (
-      <Card className="w-full max-w-5xl rounded-2xl bg-white/30 p-6 shadow-lg backdrop-blur-md bg-gradient-to-br from-green-100 via-green-100 to-green-200">
+      <Card className="w-full max-w-5xl rounded-2xl  p-6 shadow-lg backdrop-blur-md ">
         <CardBody className="flex flex-col items-center gap-10 lg:flex-row">
           <div className="hidden w-full lg:block lg:w-1/2">
             <Image

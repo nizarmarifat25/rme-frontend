@@ -4,8 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { UserExtended, JWTExtended, SessionExtended } from "@/types/Auth";
 import authServices from "@/services/auth";
 import instance from "@/libs/axios/instance";
-import { getMenuIcon } from "@/utils/menu-icons";
-import React from "react";
 
 
 export default NextAuth({
