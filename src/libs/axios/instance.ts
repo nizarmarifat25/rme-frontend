@@ -8,7 +8,6 @@ const headers = {
 }
 
 const instance = axios.create({
-    baseURL: environment.API_URL,
     headers,
     timeout: 60 * 1000
 })
@@ -16,6 +15,7 @@ const instance = axios.create({
 let cachedSession: SessionExtended | null = null;
 
 instance.interceptors.request.use(
+
     async (request) => {
         if (!cachedSession) {
             cachedSession = await getSession();
@@ -24,6 +24,13 @@ instance.interceptors.request.use(
         if (cachedSession?.accessToken) {
             request.headers.Authorization = `Bearer ${cachedSession.accessToken}`;
         }
+
+        const fullUrl = request.baseURL
+            ? new URL(request.url ?? "", request.baseURL).toString()
+            : request.url;
+
+        console.log("➡️ Request URL:", fullUrl);
+        console.log("➡️ Request Data:", request.data);
 
         return request;
     },

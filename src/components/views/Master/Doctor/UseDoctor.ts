@@ -31,10 +31,11 @@ const useDoctor = () => {
 
 
     const getDoctors = async () => {
+        let pagination = true
 
-        let params = `size=${currentSize}&page=${currentPage}`
+        let params = `pagination=${pagination}&limit=${currentSize}&page=${currentPage}`
         if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`
+            params += `&search=${currentKeyword}`
         }
         const res = await doctorServices.getDoctors(params);
         const { data } = res;

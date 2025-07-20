@@ -12,11 +12,11 @@ const schema = yup.object().shape({
   name: yup.string().required("Nama wajib diisi").min(3, "Minimal 3 karakter"),
   gender: yup.string().required("Jenis kelamin wajib diisi"),
   address: yup.string().required("Alamat wajib diisi"),
-  specialization: yup.string().required("Spesialisasi wajib diisi"),
+  specialization_id: yup.string().required("Spesialisasi wajib diisi"),
   registration_number: yup.string().required("Nomor registrasi wajib diisi"),
   phone: yup.string().required("Nomor telepon wajib diisi"),
   sharing_fee: yup
-    .string()
+    .number()
     .typeError("Fee harus angka")
     .required("Fee wajib diisi")
     .min(0, "Minimal 0"),
@@ -58,10 +58,10 @@ const UseActionDoctorModal = () => {
       name: "",
       gender: "",
       address: "",
-      specialization: "",
+      specialization_id: "",
       // registration_number: "",
       phone: "",
-      sharing_fee: "",
+      sharing_fee: 0,
       email: "",
       password: "",
     },

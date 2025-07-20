@@ -62,7 +62,6 @@ const ActionDoctorModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddDoctor, isSuccessMutateEditDoctor, isOpen]);
 
-
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
@@ -71,7 +70,7 @@ const ActionDoctorModal = (props: PropsType) => {
           name: "",
           gender: "",
           address: "",
-          specialization: "",
+          specialization_id: "",
           registration_number: "",
           phone: "",
           sharing_fee: "",
@@ -90,7 +89,7 @@ const ActionDoctorModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddDoctor)
             : handleSubmitForm((data) =>
-                handleEditDoctor(data, selectedData.doctor_id as string),
+                handleEditDoctor(data, selectedData.id as string),
               )
         }
       >
@@ -145,7 +144,7 @@ const ActionDoctorModal = (props: PropsType) => {
               />
 
               <Controller
-                name="specialization"
+                name="specialization_id"
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -156,16 +155,18 @@ const ActionDoctorModal = (props: PropsType) => {
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
-                    isInvalid={!!errors.specialization}
-                    errorMessage={errors.specialization?.message}
+                    isInvalid={!!errors.specialization_id}
+                    errorMessage={errors.specialization_id?.message}
                     onSelectionChange={(value) => field.onChange(value)}
                     defaultSelectedKeys={
-                      isOpen === "edit" ? [String(selectedData.specialization_id)] : ""
+                      isOpen === "edit"
+                        ? [String(selectedData.specialization_id)]
+                        : ""
                     }
                   >
                     {dataDoctorSpesializations.map((unit) => (
                       <SelectItem
-                        key={unit.doctor_specialization_id}
+                        key={unit.id}
                         value={unit.name}
                       >
                         {unit.name}
@@ -212,9 +213,12 @@ const ActionDoctorModal = (props: PropsType) => {
                   <Input
                     {...field}
                     radius="sm"
+                    value={field.value?.toString() ?? ""} 
+                    onChange={(e) => field.onChange(e.target.value)} //
                     labelPlacement="inside"
                     label="Fee"
                     variant="bordered"
+                    type="number"
                     isInvalid={!!errors.sharing_fee}
                     errorMessage={errors.sharing_fee?.message}
                   />

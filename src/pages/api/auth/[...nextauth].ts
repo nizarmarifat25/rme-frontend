@@ -31,14 +31,15 @@ export default NextAuth({
                 const { email, password } = credentials;
 
                 const result = await authServices.login({ email, password });
+                
 
                 if (result.status === 200) {
-                    const accessToken = result.data.token;
-                    const user = result.data;
+                    const accessToken = result.data.data.access_token;
+                    const user = result.data.data;
                     user.accessToken = accessToken;
 
                     try {
-                        const { data: menus } = await instance.get(`/menus`, {
+                        const { data: menus } = await instance.get(`http://localhost:8088/api/v1/menus`, {
                             headers: {
                                 Authorization: `Bearer ${accessToken}`
                             }
