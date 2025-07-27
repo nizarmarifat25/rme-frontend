@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 
-const usePatient = () => {
+const UsePatient = () => {
 
     const [isModalOpen, setIsModalOpen] = useState("");
     const [selectedId, setSelectedId] = useState("");
@@ -112,4 +112,4 @@ const usePatient = () => {
     };
 };
 
-export default usePatient;
+export default UsePatient;

@@ -7,7 +7,7 @@ import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
-import usePatient from "./UsePatient";
+import UsePatient from "./UsePatient";  
 import HeaderLayout from "@/components/ui/Header/Header";
 
 const Patient = () => {
@@ -30,7 +30,7 @@ const Patient = () => {
     setSelectedId,
     selectedData,
     setSelectedData,
-  } = usePatient();
+  } = UsePatient();
 
   useEffect(() => {
     if (isReady) {
