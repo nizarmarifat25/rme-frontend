@@ -11,7 +11,7 @@ interface IActivation {
 }
 
 interface UserExtended extends User {
-    accessToken?: string,
+    access_token?: string,
     role?: string,
     menus?: any[];
 }

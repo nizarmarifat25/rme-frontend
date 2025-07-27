@@ -15,11 +15,15 @@ const instance = axios.create({
 
 let cachedSession: SessionExtended | null = null;
 
+
+
 instance.interceptors.request.use(
     async (request) => {
         if (!cachedSession) {
             cachedSession = await getSession();
+            console.log(cachedSession, "cachedSession in instance.ts");
         }
+
 
         if (cachedSession?.accessToken) {
             request.headers.Authorization = `Bearer ${cachedSession.accessToken}`;

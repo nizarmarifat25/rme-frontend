@@ -4,6 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { UserExtended, JWTExtended, SessionExtended } from "@/types/Auth";
 import authServices from "@/services/auth";
 import instance from "@/libs/axios/instance";
+import { access } from "fs";
+import endpoint from "@/services/endpoint.constant";
 
 
 export default NextAuth({
@@ -31,11 +33,16 @@ export default NextAuth({
                 const { email, password } = credentials;
 
                 const result = await authServices.login({ email, password });
+                console.log(result, "result from authServices.login");
 
                 if (result.status === 200) {
-                    const accessToken = result.data.token;
-                    const user = result.data;
-                    user.accessToken = accessToken;
+                    console.log(result.data.data, "result.data from authServices.login");
+
+                    const accessToken = result.data.data.access_token;
+                    const user = result.data.data;
+                    user.access_token = accessToken;
+
+
 
                     try {
                         const { data: menus } = await instance.get(`/menus`, {
@@ -43,6 +50,7 @@ export default NextAuth({
                                 Authorization: `Bearer ${accessToken}`
                             }
                         });
+
                         user.menus = menus.data.map((menu: any) => {
                             return {
                                 ...menu,
@@ -72,7 +80,7 @@ export default NextAuth({
         },
         async session({ session, token }: { session: SessionExtended; token: JWTExtended }) {
             session.user = token.user;
-            session.accessToken = token.user?.accessToken;
+            session.accessToken = token.user?.access_token;
 
             return session
         }

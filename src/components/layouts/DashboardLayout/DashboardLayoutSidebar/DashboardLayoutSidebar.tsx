@@ -36,7 +36,6 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
     }));
   };
 
-  console.log(openItems, "openItems");
 
   return (
     <>
