@@ -7,7 +7,7 @@ import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
-import usePatient from "./UsePatient"; 
+import usePatient from "./temp"; 
 import HeaderLayout from "@/components/ui/Header/Header";
 
 const Patient = () => {
