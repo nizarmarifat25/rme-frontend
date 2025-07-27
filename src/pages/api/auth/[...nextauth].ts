@@ -33,10 +33,8 @@ export default NextAuth({
                 const { email, password } = credentials;
 
                 const result = await authServices.login({ email, password });
-                console.log(result, "result from authServices.login");
 
                 if (result.status === 200) {
-                    console.log(result.data.data, "result.data from authServices.login");
 
                     const accessToken = result.data.data.access_token;
                     const user = result.data.data;
