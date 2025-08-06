@@ -7,81 +7,88 @@ import instance from "@/libs/axios/instance";
 import { access } from "fs";
 import endpoint from "@/services/endpoint.constant";
 
-
 export default NextAuth({
-    session: {
-        strategy: "jwt",
-        maxAge: 900
-    },
-    secret: environment.AUTH_SECRET,
-    providers: [
-        CredentialsProvider({
-            id: "credentials",
-            name: "credentials",
-            credentials: {
-                email: { label: "email", type: "text" },
-                password: { label: "password", type: "password" }
-            },
-            async authorize(
-                credentials: Record<"email" | "password", string> | undefined
-            ): Promise<UserExtended | null> {
-
-                if (!credentials) {
-                    return null;
-                }
-
-                const { email, password } = credentials;
-
-                const result = await authServices.login({ email, password });
-
-                console.log("Result: ", result);
-                
-
-                if (result.status === 200) {
-
-                    const accessToken = result.data.data.access_token;
-                    const user = result.data.data;
-                    user.access_token = accessToken;
-
-                    try {
-                        const { data: menus } = await instance.get(`/menus`, {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`
-                            }
-                        });
-
-                        user.menus = menus.data.map((menu: any) => {
-                            return {
-                                ...menu,
-                                iconName: menu.name,
-                            };
-                        });
-
-                    } catch (error) {
-                        console.error("Error fetching menus:", error);
-                        user.menus = [];
-                    }
-
-                    return user;
-
-                } else {
-                    return null;
-                }
-            }
-        })
-    ],
-    callbacks: {
-        async jwt({ token, user }: { token: JWTExtended; user: UserExtended | null }) {
-            if (user) {
-                token.user = user;
-            }
-            return token
-        },
-        async session({ session, token }: { session: SessionExtended; token: JWTExtended }) {
-            session.user = token.user;
-            session.accessToken = token.user?.access_token;
-
-            return session
+  session: {
+    strategy: "jwt",
+    maxAge: 900,
+  },
+  secret: environment.AUTH_SECRET,
+  providers: [
+    CredentialsProvider({
+      id: "credentials",
+      name: "credentials",
+      credentials: {
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
+      },
+      async authorize(
+        credentials: Record<"email" | "password", string> | undefined,
+      ): Promise<UserExtended | null> {
+        if (!credentials) {
+          return null;
         }
-    }
-})
+
+        const { email, password } = credentials;
+
+        const result = await authServices.login({ email, password });
+
+        console.log("Result: ", result);
+        console.log("NEXTAUTH_SECRET: ", environment.AUTH_SECRET);
+
+        if (result.status === 200) {
+          const accessToken = result.data.data.access_token;
+          const user = result.data.data;
+          user.access_token = accessToken;
+
+          try {
+            const { data: menus } = await instance.get(`/menus`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+
+            user.menus = menus.data.map((menu: any) => {
+              return {
+                ...menu,
+                iconName: menu.name,
+              };
+            });
+          } catch (error) {
+            console.error("Error fetching menus:", error);
+            user.menus = [];
+          }
+
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({
+      token,
+      user,
+    }: {
+      token: JWTExtended;
+      user: UserExtended | null;
+    }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+    async session({
+      session,
+      token,
+    }: {
+      session: SessionExtended;
+      token: JWTExtended;
+    }) {
+      session.user = token.user;
+      session.accessToken = token.user?.access_token;
+
+      return session;
+    },
+  },
+});
