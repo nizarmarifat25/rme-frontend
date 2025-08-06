@@ -2,16 +2,16 @@ interface IDoctor {
     name: string;
     gender: string;
     address: string;
-    specialization: string;
+    specialization_id: string;
     registration_number: string;
     phone: string;
-    sharing_fee: string;
+    sharing_fee: number;
     email: string;
-    password: string;
+    // password: string;
 }
 
 interface IDoctorSpesialization {
-    doctor_specialization_id?: number;
+    id?: string;
     name: string
 }
 

@@ -62,6 +62,9 @@ const ActionDoctorModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddDoctor, isSuccessMutateEditDoctor, isOpen]);
 
+  console.log("Selected Data: ",selectedData);
+  
+
 
   return (
     <Modal
@@ -76,7 +79,7 @@ const ActionDoctorModal = (props: PropsType) => {
           phone: "",
           sharing_fee: "",
           email: "",
-          password: "",
+          // password: "",
         });
         onClose();
         reset();
@@ -90,7 +93,7 @@ const ActionDoctorModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddDoctor)
             : handleSubmitForm((data) =>
-                handleEditDoctor(data, selectedData.doctor_id as string),
+                handleEditDoctor(data, selectedData.id as string),
               )
         }
       >
@@ -145,7 +148,7 @@ const ActionDoctorModal = (props: PropsType) => {
               />
 
               <Controller
-                name="specialization"
+                name="specialization_id"
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -156,8 +159,8 @@ const ActionDoctorModal = (props: PropsType) => {
                     labelPlacement="inside"
                     variant="bordered"
                     radius="sm"
-                    isInvalid={!!errors.specialization}
-                    errorMessage={errors.specialization?.message}
+                    isInvalid={!!errors.specialization_id}
+                    errorMessage={errors.specialization_id?.message}
                     onSelectionChange={(value) => field.onChange(value)}
                     defaultSelectedKeys={
                       isOpen === "edit" ? [String(selectedData.specialization_id)] : ""
@@ -165,7 +168,7 @@ const ActionDoctorModal = (props: PropsType) => {
                   >
                     {dataDoctorSpesializations.map((unit) => (
                       <SelectItem
-                        key={unit.doctor_specialization_id}
+                        key={unit.id}
                         value={unit.name}
                       >
                         {unit.name}
@@ -215,6 +218,8 @@ const ActionDoctorModal = (props: PropsType) => {
                     labelPlacement="inside"
                     label="Fee"
                     variant="bordered"
+                    value={field.value?.toString() ?? ''}
+                    type="number"
                     isInvalid={!!errors.sharing_fee}
                     errorMessage={errors.sharing_fee?.message}
                   />
@@ -235,7 +240,7 @@ const ActionDoctorModal = (props: PropsType) => {
                   />
                 )}
               />
-              <Controller
+              {/* <Controller
                 name="password"
                 control={control}
                 render={({ field }) => (
@@ -250,7 +255,7 @@ const ActionDoctorModal = (props: PropsType) => {
                     errorMessage={errors.password?.message}
                   />
                 )}
-              />
+              /> */}
 
               <Controller
                 name="address"

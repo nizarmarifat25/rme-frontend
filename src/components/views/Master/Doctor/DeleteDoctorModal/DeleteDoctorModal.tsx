@@ -33,6 +33,7 @@ const DeleteDoctorModal = (props: PropsType) => {
       refetchDoctor();
     }
   }, [isSuccessMutateDeleteDoctor]);
+console.log(selectedId);
 
   return (
     <Modal

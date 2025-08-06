@@ -34,13 +34,14 @@ export default NextAuth({
 
                 const result = await authServices.login({ email, password });
 
+                console.log("Result: ", result);
+                
+
                 if (result.status === 200) {
 
                     const accessToken = result.data.data.access_token;
                     const user = result.data.data;
                     user.access_token = accessToken;
-
-
 
                     try {
                         const { data: menus } = await instance.get(`/menus`, {

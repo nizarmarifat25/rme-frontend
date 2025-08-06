@@ -5,9 +5,11 @@ import environment from "@/config/environment";
 
 const authServices = {
     login: async (payload: ILogin) => {
+        console.log("api url: ",environment.API_URL);
+        
         try {
             const response = await instance.post(`${endpoint.AUTH}/login`, payload);
-
+            
             return response;
         } catch (error: any) {
             return {

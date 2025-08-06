@@ -97,7 +97,7 @@ const Doctor = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(doctor.doctor_id));
+                    setSelectedId(String(doctor.id));
                   }}
                 >
                   <FaTrash className="text-lg" />

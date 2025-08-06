@@ -38,10 +38,12 @@ const useLogin = () => {
             redirect: false,
         });
 
-        
-        if (result?.error && result?.status === 401) {
-            throw new Error("Email atau Password salah");
-        }
+                    console.log("Result in UseLogin: ",result);
+
+        // if (result?.error && result?.status === 401) {
+            
+        //     throw new Error("Email atau Password salah");
+        // }
 
         const session = await getSession();
         const menus = session?.user?.menus || [];

@@ -2,7 +2,7 @@ const endpoint = {
     AUTH: "/auth",
     DOCTOR: "/doctors",
     DOCTOR_DROPDOWN: "/doctors/dropdown",
-    DOCTOR_SPECIALIZATIONS: "/doctor/specializations",
+    DOCTOR_SPECIALIZATIONS: "/specializations",
     MEDICINE: "/medicines",
     MEDICINE_CATEGORY: "/medicine/categories",
     MEDICINE_UNIT: "/medicine/units",

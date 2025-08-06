@@ -34,7 +34,7 @@ const useDoctor = () => {
 
         let params = `size=${currentSize}&page=${currentPage}`
         if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`
+            params += `&search=${currentKeyword}`
         }
         const res = await doctorServices.getDoctors(params);
         const { data } = res;

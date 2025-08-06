@@ -4,4 +4,4 @@ const environment = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL
 }
 
-export default environment
+export default environment 
