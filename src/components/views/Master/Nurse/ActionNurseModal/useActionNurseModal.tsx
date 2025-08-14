@@ -15,7 +15,7 @@ const schema = yup.object().shape({
   registration_number: yup.string().required("Nomor registrasi wajib diisi"),
   phone: yup.string().required("Nomor telepon wajib diisi"),
   sharing_fee: yup
-    .string()
+    .number()
     .typeError("Fee harus angka")
     .required("Fee wajib diisi")
     .min(0, "Minimal 0")
@@ -53,7 +53,7 @@ const useActionNurseModal = () => {
       address: "",
       registration_number: "",
       phone: "",
-      sharing_fee: "",
+      sharing_fee: 0,
     },
   });
 

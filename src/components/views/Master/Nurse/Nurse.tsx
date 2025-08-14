@@ -86,7 +86,7 @@ const Nurse = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(nurse.nurse_id));
+                    setSelectedId(String(nurse.id));
                   }}
                 >
                   <FaTrash className="text-lg" />

@@ -28,9 +28,9 @@ const useNurse = () => {
     };
 
     const getNurses = async () => {
-        let params = `size=${currentSize}&page=${currentPage}`;
+        let params = `limit=${currentSize}&page=${currentPage}&pagination=true`;
         if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`;
+            params += `&search=${currentKeyword}`;
         }
         const res = await nurseServices.getNurses(params);
         const { data } = res;

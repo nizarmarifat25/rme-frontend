@@ -69,6 +69,8 @@ const ActionNurseModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddNurse, isSuccessMutateEditNurse, isOpen]);
 
+  console.log("Selected Data: ", selectedData);
+  
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
@@ -93,8 +95,8 @@ const ActionNurseModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddNurse)
             : handleSubmitForm((data) =>
-                handleEditNurse(data, selectedData.nurse_id as string),
-              )
+              handleEditNurse(data, selectedData.id as string),
+            )
         }
       >
         <ModalContent className="m-4">
@@ -133,6 +135,9 @@ const ActionNurseModal = (props: PropsType) => {
                     isInvalid={!!errors.gender}
                     errorMessage={errors.gender?.message}
                     onSelectionChange={(value) => field.onChange(value)}
+                    defaultSelectedKeys={
+                      isOpen === "edit" ? [String(selectedData.gender)] : ""
+                    }
                   >
                     <SelectItem key="L" value="L">
                       Laki - Laki
@@ -185,6 +190,7 @@ const ActionNurseModal = (props: PropsType) => {
                     labelPlacement="inside"
                     label="Fee"
                     variant="bordered"
+                    value={field.value?.toString() ?? ''}
                     isInvalid={!!errors.sharing_fee}
                     errorMessage={errors.sharing_fee?.message}
                   />

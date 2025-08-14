@@ -4,7 +4,7 @@ interface INurse {
     address: string
     phone: string
     registration_number: string
-    sharing_fee: string
+    sharing_fee: number
     nurse_id?: string
 }
 

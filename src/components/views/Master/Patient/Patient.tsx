@@ -7,7 +7,7 @@ import { COLUMN_LISTS_PATIENT } from "./Patient.constans";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
-import usePatient from "./UsePatient"; 
+import usePatient from "./usePatient"; 
 import HeaderLayout from "@/components/ui/Header/Header";
 
 const Patient = () => {
@@ -69,7 +69,7 @@ const Patient = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(patient.medical_record_number));
+                    setSelectedId(String(patient.id));
                   }}
                 >
                   <FaTrash className="text-lg" />

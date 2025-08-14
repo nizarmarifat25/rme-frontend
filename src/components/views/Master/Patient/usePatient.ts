@@ -30,7 +30,7 @@ const usePatient = () => {
     const getPatients = async () => {
         let params = `size=${currentSize}&page=${currentPage}`;
         if (currentKeyword) {
-            params += `&keyword=${currentKeyword}`;
+            params += `&search=${currentKeyword}`;
         }
         const res = await patientServices.getPatients(params);
         const { data } = res;

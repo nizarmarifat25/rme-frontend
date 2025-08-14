@@ -62,6 +62,8 @@ const ActionPatientModal = (props: PropsType) => {
     }
   }, [isSuccessMutateAddPatient, isSuccessMutateEditPatient, isOpen]);
 
+  console.log("selectedData", selectedData);
+
   return (
     <Modal
       isOpen={isOpen === "add" || isOpen === "edit"}
@@ -98,7 +100,7 @@ const ActionPatientModal = (props: PropsType) => {
             : handleSubmitForm((data) =>
                 handleEditPatient(
                   data,
-                  selectedData.medical_record_number as string,
+                  selectedData.id as string,
                 ),
               )
         }
@@ -341,10 +343,10 @@ const ActionPatientModal = (props: PropsType) => {
                         : ""
                     }
                   >
-                    <SelectItem key="1" value="KTP">
-                      KTP
+                    <SelectItem key="KTP" value="KTP">
+                      KTP 
                     </SelectItem>
-                    <SelectItem key="2" value="Passport">
+                    <SelectItem key="Passport" value="Passport">
                       Passport
                     </SelectItem>
                   </Select>
