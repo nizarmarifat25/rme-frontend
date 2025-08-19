@@ -53,7 +53,7 @@ const Treatment = () => {
         case "actions":
           return (
             <div className="flex justify-center space-x-1">
-              <Tooltip content="Perbaharui Tindakan">
+              <Tooltip content="Perbaharui Perawatan">
                 <Button
                   size="sm"
                   variant="light"
@@ -68,7 +68,7 @@ const Treatment = () => {
                 </Button>
               </Tooltip>
 
-              <Tooltip content="Hapus Tindakan" color="danger">
+              <Tooltip content="Hapus Perawatan" color="danger">
                 <Button
                   size="sm"
                   variant="light"
@@ -94,10 +94,10 @@ const Treatment = () => {
 
   return (
     <div className="mx-auto p-4">
-      <HeaderLayout title="Tindakan" breadcrumbs={["Master Data", "Tindakan"]} />
+      <HeaderLayout title="Perawatan" breadcrumbs={["Master Data", "Perawatan"]} />
       <div className="min-h-[70vh] rounded-lg bg-white px-5 py-8 shadow">
         <h2 className="mb-3 px-4 text-xl font-semibold text-slate-400">
-          Tabel Tindakan
+          Tabel Perawatan
         </h2>
         <section>
           {Object.keys(query).length > 0 && (

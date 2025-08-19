@@ -51,7 +51,7 @@ const DeleteTreatmentModal = (props: PropsType) => {
           <div className="flex flex-col items-center text-center">
             <CiWarning className="mb-4 text-5xl text-yellow-500" />
             <p className="text-base text-gray-700">
-              Apakah Anda yakin ingin menghapus data tindakan ini?
+              Apakah Anda yakin ingin menghapus data perawatan ini?
             </p>
           </div>
         </ModalBody>

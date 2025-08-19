@@ -14,7 +14,6 @@ import {
 import useAddMedicineModal from "./useActionMedicineModal";
 import { Controller } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import { parseDate } from "@internationalized/date";
 
 interface PropsType {
   isOpen: string;
@@ -83,8 +82,8 @@ const ActionMedicineModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddMedicine)
             : handleSubmitForm((data) =>
-                handleEditMedicine(data, selectedData.medicine_id as string),
-              )
+              handleEditMedicine(data, selectedData.id as string),
+            )
         }
       >
         <ModalContent className="m-4">
@@ -145,8 +144,8 @@ const ActionMedicineModal = (props: PropsType) => {
                   >
                     {dataMedicineUnits.map((unit) => (
                       <SelectItem
-                        key={unit.medicine_unit_id}
-                        value={unit.medicine_unit_id}
+                        key={unit.id}
+                        value={unit.id}
                       >
                         {unit.name}
                       </SelectItem>
@@ -168,6 +167,8 @@ const ActionMedicineModal = (props: PropsType) => {
                     variant="bordered"
                     isInvalid={!!errors.price}
                     errorMessage={errors.price?.message}
+                    value={
+                      field.value !== undefined ? String(field.value) : ""}
                   />
                 )}
               />
@@ -184,6 +185,8 @@ const ActionMedicineModal = (props: PropsType) => {
                     variant="bordered"
                     isInvalid={!!errors.stock}
                     errorMessage={errors.stock?.message}
+                    value={
+                      field.value !== undefined ? String(field.value) : ""}
                   />
                 )}
               />
@@ -222,8 +225,8 @@ const ActionMedicineModal = (props: PropsType) => {
                   >
                     {dataMedicineCategorys.map((category) => (
                       <SelectItem
-                        key={category.medicine_category_id}
-                        value={category.medicine_category_id}
+                        key={category.id}
+                        value={category.id}
                       >
                         {category.name}
                       </SelectItem>
@@ -243,12 +246,12 @@ const ActionMedicineModal = (props: PropsType) => {
                     onChange={(date) => field.onChange(date)}
                     isInvalid={!!errors.expiry_date}
                     errorMessage={errors.expiry_date?.message}
-                    // defaultValue={
-                    //   selectedData?.expiry_date &&
-                    //   typeof selectedData.expiry_date === "string"
-                    //     ? parseDate(selectedData.expiry_date)
-                    //     : null
-                    // }
+                  // defaultValue={
+                  //   selectedData?.expiry_date &&
+                  //   typeof selectedData.expiry_date === "string"
+                  //     ? parseDate(selectedData.expiry_date)
+                  //     : null
+                  // }
                   />
                 )}
               />

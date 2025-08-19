@@ -3,20 +3,20 @@ interface IMedicine {
     name: string;
     category_id: string;
     unit_id: string;
-    price: string;
-    stock: string;
+    price: number;
+    stock: number;
     dosage: string;
     expiry_date: string;
     medicine_id?: string;
 }
 
 interface IMedicineCategory {
-    medicine_category_id?: string;
+    id?: string;
     name: string;
 }
 
 interface IMedicineUnit {
-    medicine_unit_id?: string;
+    id?: string;
     name: string;
 }
 

@@ -10,7 +10,7 @@ import treatmentServices from "@/services/treatments.service";
 
 
 const schema = yup.object().shape({
-    name: yup.string().required("Nama tindakan wajib diisi"),
+    name: yup.string().required("Nama perawatan wajib diisi"),
     price: yup.string().required("Harga wajib diisi"),
     description: yup.string()
 })
@@ -63,7 +63,7 @@ const UseActionTreatmentModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Berhasil menambahkan tindakan!",
+                message: "Berhasil menambahkan perawatan!",
             });
             reset();
         },
@@ -85,7 +85,7 @@ const UseActionTreatmentModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Berhasil mengubah data tindakan!",
+                message: "Berhasil mengubah data perawatan!",
             });
             reset();
         },

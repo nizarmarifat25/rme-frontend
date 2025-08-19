@@ -8,19 +8,18 @@ import { IMedicine, IMedicineCategory, IMedicineUnit } from "@/types/Medicine";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-
 const schema = yup.object().shape({
   code: yup.string().required("Kode wajib diisi").min(3, "Minimal 3 karakter"),
   name: yup.string().required("Nama wajib diisi").min(3, "Minimal 3 karakter"),
   category_id: yup.string().required("Kategori wajib diisi"),
   unit_id: yup.string().required("Satuan wajib diisi"),
   price: yup
-    .string()
+    .number()
     .typeError("Harga harus angka")
     .required("Harga wajib diisi")
     .min(1, "Minimal 1"),
   stock: yup
-    .string()
+    .number()
     .typeError("Stok harus angka")
     .required("Stok wajib diisi")
     .min(0, "Minimal 0"),
@@ -32,13 +31,15 @@ const useActionMedicineModal = () => {
   const { setToaster } = useContext(ToasterContext);
 
   const getMedicineCategories = async () => {
-    const res = await medicineServices.getMedicineCategories();
+    let params = "pagination=false";
+    const res = await medicineServices.getMedicineCategories(params);
     const { data } = res.data;
     return data;
   };
 
   const getMedicineUnits = async () => {
-    const res = await medicineServices.getMedicineUnits();
+    let params = "pagination=false";
+    const res = await medicineServices.getMedicineUnits(params);
     const { data } = res.data;
     return data;
   };
@@ -80,8 +81,8 @@ const useActionMedicineModal = () => {
       code: "",
       name: "",
       unit_id: "",
-      price: "",
-      stock: "",
+      price: 0,
+      stock: 0,
       dosage: "",
       category_id: "",
       expiry_date: "",
@@ -92,7 +93,7 @@ const useActionMedicineModal = () => {
     mutate: mutateAddMedicine,
     isPending: isPendingMutateAddMedicine,
     isSuccess: isSuccessMutateAddMedicine,
-    reset: resetAddMedicine
+    reset: resetAddMedicine,
   } = useMutation({
     mutationFn: addMedicine,
     onError: (error) => {
@@ -121,7 +122,7 @@ const useActionMedicineModal = () => {
     mutate: mutateEditMedicine,
     isPending: isPendingMutateEditMedicine,
     isSuccess: isSuccessMutateEditMedicine,
-    reset: resetEditMedicine
+    reset: resetEditMedicine,
   } = useMutation({
     mutationFn: editMedicine,
     onError: (error) => {
@@ -147,13 +148,17 @@ const useActionMedicineModal = () => {
   });
 
   const handleAddMedicine = (data: IMedicine) => {
-    mutateAddMedicine(data);
+    const parsedData = {
+      ...data,
+      price: Number(data.price),
+      stock: Number(data.stock),
+    };
+    mutateAddMedicine(parsedData);
   };
 
   const handleEditMedicine = (data: IMedicine, id: string) => {
     mutateEditMedicine({ payload: data, id });
   };
-
 
   return {
     control,

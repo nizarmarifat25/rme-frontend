@@ -93,7 +93,7 @@ const Medicine = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(medicine.medicine_id));
+                    setSelectedId(String(medicine.id));
                   }}
                 >
                   <FaTrash className="text-lg" />

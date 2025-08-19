@@ -30,7 +30,7 @@ const useMedicine = () => {
         try {
             let params = `size=${currentSize}&page=${currentPage}`;
             if (currentKeyword) {
-                params += `&keyword=${currentKeyword}`;
+                params += `&search=${currentKeyword}`;
             }
 
             const res = await medicineServices.getMedicines(params);

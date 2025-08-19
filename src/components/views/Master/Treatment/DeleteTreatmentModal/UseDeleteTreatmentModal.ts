@@ -27,7 +27,7 @@ const UseDeleteTreatmentModal = () => {
     onSuccess: () => {
       setToaster({
         type: "success",
-        message: "Berhasil hapus tindakan",
+        message: "Berhasil hapus perawatan",
       });
     },
   });

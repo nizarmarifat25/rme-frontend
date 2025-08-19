@@ -97,7 +97,7 @@ const ActionTreatmentModal = (props: PropsType) => {
                     {...field}
                     radius="sm"
                     labelPlacement="inside"
-                    label="Nama Tindakan"
+                    label="Nama Perawatan"
                     variant="bordered"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
