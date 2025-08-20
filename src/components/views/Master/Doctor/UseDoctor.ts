@@ -105,6 +105,7 @@ const useDoctor = () => {
         isLoadingDoctor,
         currentPage,
         currentSize,
+        currentKeyword,
         isRefetchingDoctor,
         setURL,
         handleChangePage,

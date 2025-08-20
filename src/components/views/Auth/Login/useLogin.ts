@@ -41,6 +41,8 @@ const useLogin = () => {
     });
 
     if (result?.error && result?.status === 401) {
+      console.log("Login failed:", result);
+      
         throw new Error("Email atau Password salah");
     }
 

@@ -1,6 +1,6 @@
 interface IPaymentMethod {
-    payment_method_id: string
+    id?: string
     name: string
-    description: string
+    description?: string
 }
 export  { IPaymentMethod }

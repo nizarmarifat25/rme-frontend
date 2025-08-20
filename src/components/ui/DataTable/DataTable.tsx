@@ -23,6 +23,7 @@ interface PropsTypes {
   buttonTopContent?: string;
   columns: { name: string; uid: string }[];
   currentPage: number;
+  currentKeyword: string;
   data: Record<string, unknown>[];
   emptyContent: string;
   isLoading?: boolean;
@@ -41,6 +42,7 @@ const DataTable = (props: PropsTypes) => {
     buttonTopContent,
     columns,
     currentPage,
+    currentKeyword,
     data,
     emptyContent,
     isLoading,
@@ -67,6 +69,7 @@ const DataTable = (props: PropsTypes) => {
           startContent={<CiSearch aria-hidden="true" />}
           onClear={() => onClearKeyword()}
           onChange={(e) => onChangeKeyword(e)}
+          defaultValue={currentKeyword || ""}
         />
         {buttonTopContent &&
           (session?.user?.role == "admin" ||

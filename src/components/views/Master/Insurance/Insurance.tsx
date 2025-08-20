@@ -18,6 +18,7 @@ const Insurance = () => {
     isLoadingInsurance,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingInsurance,
     refetchInsurance,
     handleChangePage,
@@ -76,7 +77,7 @@ const Insurance = () => {
                   className="flex h-8 w-8 min-w-0 items-center justify-center rounded-md border border-gray-300 p-0 text-red-500"
                   onPress={() => {
                     setIsModalOpen("delete");
-                    setSelectedId(String(insurance.insurance_id));
+                    setSelectedId(String(insurance.id));
                   }}
                 >
                   <FaTrash className="text-lg" />
@@ -111,6 +112,7 @@ const Insurance = () => {
               onChangeSize={handleChangeSize}
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
+              currentKeyword={String(currentKeyword)}
               totalPage={dataInsurance?.total_pages}
               isLoading={isLoadingInsurance || isRefetchingInsurance}
               buttonTopContent="Tambah Asuransi"

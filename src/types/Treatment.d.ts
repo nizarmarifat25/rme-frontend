@@ -3,9 +3,9 @@
 
 interface ITreatment {
     name: string;
-    price: string;
+    price: number;
     description?: string;
-    treatment_id?: number
+    id?: number
 }
 
 export { ITreatment }

@@ -11,7 +11,7 @@ import treatmentServices from "@/services/treatments.service";
 
 const schema = yup.object().shape({
     name: yup.string().required("Nama perawatan wajib diisi"),
-    price: yup.string().required("Harga wajib diisi"),
+    price: yup.number().required("Harga wajib diisi"),
     description: yup.string()
 })
 
@@ -36,7 +36,7 @@ const UseActionTreatmentModal = () => {
         resolver: yupResolver(schema),
         defaultValues: {
             name: "",
-            price: ""
+            price: 0
         },
     });
 
@@ -92,7 +92,12 @@ const UseActionTreatmentModal = () => {
     });
 
     const handleAddTreatment = (data: ITreatment) => {
-        mutateAddTreatment(data);
+        const parsedData: ITreatment = {
+            ...data,
+            price: Number(data.price)
+        
+        }
+        mutateAddTreatment(parsedData);
     };
 
     const handleEditTreatment = (data: ITreatment, id: string) => {

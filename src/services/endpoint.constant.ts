@@ -11,7 +11,7 @@ const endpoint = {
     MEDICAL_RECORD: "/medical-records",
     TREATMENT: "/treatments",
     INSURANCE: "/insurances",
-    PAYMENT_METHOD: "/payments",
+    PAYMENT_METHOD: "/payment",
     TRANSACTION: "/transactions",
 }
 

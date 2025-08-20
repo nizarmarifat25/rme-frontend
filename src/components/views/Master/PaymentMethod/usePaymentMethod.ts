@@ -1,14 +1,14 @@
 import { DELAY, PAGE_DEFAULT, SIZE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/hooks/useDebounce";
-import insuranceServices from "@/services/insurance.service";
+import paymentMethodServices from "@/services/payment_method.service"; 
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 
-const UseInsurance = () => {
+const usePaymentMethod = () => {
     const [isModalOpen, setIsModalOpen] = useState("");
     const [selectedId, setSelectedId] = useState("");
-    const [selectedData, setSelectedData] = useState({})
+    const [selectedData, setSelectedData] = useState({});
 
     const router = useRouter();
     const debounce = useDebounce();
@@ -26,31 +26,32 @@ const UseInsurance = () => {
             }
         });
     };
-    const getInsurances = async () => {
+
+    const getPaymentMethods = async () => {
         try {
             let params = `size=${currentSize}&page=${currentPage}`;
             if (currentKeyword) {
                 params += `&search=${currentKeyword}`;
             }
 
-            const res = await insuranceServices.getInsurances(params);
+            const res = await paymentMethodServices.getPaymentMethods(params);
             const { data } = res;
             return data;
         } catch (error) {
-            console.error("Error fetching insurances:", error);
+            console.error("Error fetching payment methods:", error);
 
-            return { error: true, message: "Gagal mengambil data asuransi." };
+            return { error: true, message: "Gagal mengambil data payment method." };
         }
     };
 
     const {
-        data: dataInsurance,
-        isLoading: isLoadingInsurance,
-        isRefetching: isRefetchingInsurance,
-        refetch: refetchInsurance
+        data: dataPaymentMethod,
+        isLoading: isLoadingPaymentMethod,
+        isRefetching: isRefetchingPaymentMethod,
+        refetch: refetchPaymentMethod
     } = useQuery({
-        queryKey: ["Insurance", currentPage, currentSize, currentKeyword],
-        queryFn: getInsurances,
+        queryKey: ["PaymentMethod", currentPage, currentSize, currentKeyword],
+        queryFn: getPaymentMethods,
         enabled: router.isReady && !!currentPage && !!currentSize
     });
 
@@ -98,14 +99,14 @@ const UseInsurance = () => {
     };
 
     return {
-        dataInsurance,
-        isLoadingInsurance,
+        dataPaymentMethod,
+        isLoadingPaymentMethod,
         currentPage,
         currentSize,
         currentKeyword,
-        isRefetchingInsurance,
+        isRefetchingPaymentMethod,
         setURL,
-        refetchInsurance,
+        refetchPaymentMethod,
         handleChangePage,
         handleChangeSize,
         handleKeyword,
@@ -122,4 +123,4 @@ const UseInsurance = () => {
     };
 };
 
-export default UseInsurance;
+export default usePaymentMethod;

@@ -7,49 +7,54 @@ import {
   ModalHeader,
   Textarea,
 } from "@heroui/react";
-import UseActionTreatmentModal from "./UseActionTreatmentModal";
+import UseActionPaymentMethodModal from "./useActionPaymentMethodModal";
 import { Controller } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface PropsType {
   isOpen: string;
   onClose: () => void;
-  refetchTreatment: () => void;
+  refetchPaymentMethod: () => void;
   selectedData: Record<string, unknown>;
   setSelectedData: Dispatch<SetStateAction<Record<string, unknown>>>;
 }
 
-const ActionTreatmentModal = (props: PropsType) => {
-  const { isOpen, onClose, refetchTreatment, selectedData, setSelectedData } =
-    props;
+const ActionPaymentMethodModal = (props: PropsType) => {
+  const {
+    isOpen,
+    onClose,
+    refetchPaymentMethod,
+    selectedData,
+    setSelectedData,
+  } = props;
 
   const {
     control,
     errors,
-    isPendingMutateAddTreatment,
-    isSuccessMutateAddTreatment,
-    isPendingMutateEditTreatment,
-    isSuccessMutateEditTreatment,
+    isPendingMutateAddPaymentMethod,
+    isSuccessMutateAddPaymentMethod,
+    isPendingMutateEditPaymentMethod,
+    isSuccessMutateEditPaymentMethod,
     handleSubmitForm,
-    handleAddTreatment,
-    handleEditTreatment,
-    resetAddTreatment,
-    resetEditTreatment,
+    handleAddPaymentMethod,
+    handleEditPaymentMethod,
+    resetAddPaymentMethod,
+    resetEditPaymentMethod,
     reset,
-  } = UseActionTreatmentModal();
+  } = UseActionPaymentMethodModal();
 
   useEffect(() => {
-    if (isSuccessMutateAddTreatment) {
+    if (isSuccessMutateAddPaymentMethod) {
       onClose();
-      refetchTreatment();
-      resetAddTreatment();
+      refetchPaymentMethod();
+      resetAddPaymentMethod();
       reset();
     }
 
-    if (isSuccessMutateEditTreatment) {
+    if (isSuccessMutateEditPaymentMethod) {
       onClose();
-      refetchTreatment();
-      resetEditTreatment();
+      refetchPaymentMethod();
+      resetEditPaymentMethod();
       reset();
     }
 
@@ -57,7 +62,7 @@ const ActionTreatmentModal = (props: PropsType) => {
       reset(selectedData);
       reset({});
     }
-  }, [isSuccessMutateAddTreatment, isSuccessMutateEditTreatment, isOpen]);
+  }, [isSuccessMutateAddPaymentMethod, isSuccessMutateEditPaymentMethod, isOpen]);
 
   return (
     <Modal
@@ -65,7 +70,6 @@ const ActionTreatmentModal = (props: PropsType) => {
       onClose={() => {
         setSelectedData({
           name: "",
-          price: "",
         });
         onClose();
         reset();
@@ -77,15 +81,15 @@ const ActionTreatmentModal = (props: PropsType) => {
       <form
         onSubmit={
           isOpen === "add"
-            ? handleSubmitForm(handleAddTreatment)
+            ? handleSubmitForm(handleAddPaymentMethod)
             : handleSubmitForm((data) =>
-              handleEditTreatment(data, selectedData.id as string),
-            )
+                handleEditPaymentMethod(data, selectedData.id as string),
+              )
         }
       >
         <ModalContent className="m-4">
           <ModalHeader>
-            {isOpen === "add" ? "Tambah" : "Perbaharui"} Treatment
+            {isOpen === "add" ? "Tambah" : "Perbaharui"} Metode Pembayaran
           </ModalHeader>
           <ModalBody>
             <div className="grid grid-cols-2 gap-4">
@@ -97,30 +101,12 @@ const ActionTreatmentModal = (props: PropsType) => {
                     {...field}
                     radius="sm"
                     labelPlacement="inside"
-                    label="Nama Perawatan"
+                    label="Nama Metode Pembayaran"
                     variant="bordered"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
                   />
                 )}
-              />
-
-              <Controller
-                name="price"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    radius="sm"
-                    labelPlacement="inside"
-                    label="Harga"
-                    type="number"
-                    variant="bordered"
-                    isInvalid={!!errors.name}
-                    errorMessage={errors.name?.message}
-                    value={
-                      field.value !== undefined ? String(field.value) : ""}
-                  />)}
               />
 
               <Controller
@@ -147,7 +133,7 @@ const ActionTreatmentModal = (props: PropsType) => {
                   reset();
                 }}
                 color="success"
-                disabled={isPendingMutateAddTreatment}
+                disabled={isPendingMutateAddPaymentMethod}
               >
                 Batal
               </Button>
@@ -158,13 +144,13 @@ const ActionTreatmentModal = (props: PropsType) => {
                 className="text-white"
                 isLoading={
                   isOpen === "add"
-                    ? isPendingMutateAddTreatment
-                    : isPendingMutateEditTreatment
+                    ? isPendingMutateAddPaymentMethod
+                    : isPendingMutateEditPaymentMethod
                 }
                 disabled={
                   isOpen === "add"
-                    ? isPendingMutateAddTreatment
-                    : isPendingMutateEditTreatment
+                    ? isPendingMutateAddPaymentMethod
+                    : isPendingMutateEditPaymentMethod
                 }
               >
                 Simpan
@@ -177,4 +163,4 @@ const ActionTreatmentModal = (props: PropsType) => {
   );
 };
 
-export default ActionTreatmentModal;
+export default ActionPaymentMethodModal;

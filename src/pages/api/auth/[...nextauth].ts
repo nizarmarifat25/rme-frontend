@@ -32,9 +32,6 @@ export default NextAuth({
 
         const result = await authServices.login({ email, password });
 
-        console.log("Result: ", result);
-        console.log("NEXTAUTH_SECRET: ", environment.AUTH_SECRET);
-
         if (result.status === 200) {
           const accessToken = result.data.data.access_token;
           const user = result.data.data;

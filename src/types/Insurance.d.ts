@@ -3,7 +3,7 @@ interface IInsurance {
     code: string;
     contact: string;
     email: string;
-    insurance_id?: string;
+    id?: string;
     is_active?: Boolean | Number
 }
 

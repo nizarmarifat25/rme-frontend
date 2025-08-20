@@ -84,7 +84,7 @@ const ActionInsuranceModal = (props: PropsType) => {
           isOpen === "add"
             ? handleSubmitForm(handleAddInsurance)
             : handleSubmitForm((data) =>
-                handleEditInsurance(data, selectedData.insurance_id as string),
+                handleEditInsurance(data, selectedData.id as string),
               )
         }
       >

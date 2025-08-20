@@ -36,6 +36,7 @@ const Doctor = () => {
     isLoadingDoctor,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingDoctor,
     refetchDoctor,
     handleChangePage,
@@ -135,6 +136,7 @@ const Doctor = () => {
               onChangeSize={handleChangeSize}
               onChangePage={handleChangePage}
               currentPage={Number(currentPage)}
+              currentKeyword={String(currentKeyword)}
               totalPage={dataDoctor?.total_pages}
               isLoading={isLoadingDoctor || isRefetchingDoctor}
               buttonTopContent="Tambah Dokter"
