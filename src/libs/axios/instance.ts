@@ -15,8 +15,6 @@ const instance = axios.create({
 
 let cachedSession: SessionExtended | null = null;
 
-
-
 instance.interceptors.request.use(
     async (request) => {
         if (!cachedSession) {
