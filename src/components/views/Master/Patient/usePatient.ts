@@ -96,6 +96,7 @@ const usePatient = () => {
         isLoadingPatient,
         currentPage,
         currentSize,
+        currentKeyword,
         isRefetchingPatient,
         refetchPatient,
         setURL,

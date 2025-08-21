@@ -16,7 +16,7 @@ interface IDoctorSpesialization {
 }
 
 interface IDoctorDropdown {
-    doctor_id: number
+    id: number
     specialization: string
     name: string
 }

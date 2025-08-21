@@ -32,7 +32,6 @@ const AddReservationModal = (props: PropsType) => {
     errors,
     dataDoctorDropdown,
     dataPatientDropdown,
-    dataReservationStatusDropdown,
     isPendingMutateAddReservation,
     isSuccessMutateAddReservation,
     handleSubmitForm,
@@ -81,7 +80,7 @@ const AddReservationModal = (props: PropsType) => {
                     placeholder="Cari Dokter"
                   >
                     {(item) => (
-                      <AutocompleteItem key={item.doctor_id}>
+                      <AutocompleteItem key={item.id}>
                         {item.name}
                       </AutocompleteItem>
                     )}
@@ -102,7 +101,7 @@ const AddReservationModal = (props: PropsType) => {
                     placeholder="Cari Pasien"
                   >
                     {(item) => (
-                      <AutocompleteItem key={item.patient_id}>
+                      <AutocompleteItem key={item.id}>
                         {item.name}
                       </AutocompleteItem>
                     )}

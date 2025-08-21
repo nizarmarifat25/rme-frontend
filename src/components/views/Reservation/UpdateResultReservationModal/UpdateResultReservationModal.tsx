@@ -125,8 +125,8 @@ const UpdateResultReservation = (props: PropsType) => {
                   >
                     {dataTreatmentDropdown.map((item) => (
                       <SelectItem
-                        key={item.treatment_id}
-                        value={item.treatment_id}
+                        key={item.id}
+                        value={item.id}
                       >
                         {item.name}
                       </SelectItem>

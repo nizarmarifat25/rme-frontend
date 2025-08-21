@@ -36,6 +36,7 @@ const DoctorSpecialization = () => {
     isLoadingDoctorSpecialization,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingDoctorSpecialization,
     refetchDoctorSpecialization,
     handleChangePage,
@@ -126,6 +127,7 @@ const DoctorSpecialization = () => {
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
+              currentKeyword={String(currentKeyword)}
               emptyContent="Tidak ada data Spesialis Dokter"
               renderCell={renderCell}
               columns={COLUMN_LISTS_DOCTOR_SPECIALIZATION}

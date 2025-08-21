@@ -13,119 +13,121 @@ import patientServices from "@/services/patient.service";
 import { IPatient } from "@/types/Patient";
 
 const schema = yup.object().shape({
-    patient_id: yup.number().required("Pasien wajib diisi"),
-    doctor_id: yup.number().required("Dokter wajib diisi"),
-    anamnesis: yup.string().required("Keluhan wajib diisi")
+  patient_id: yup.string().required("Pasien wajib diisi"),
+  doctor_id: yup.string().required("Dokter wajib diisi"),
+  anamnesis: yup.string().required("Keluhan wajib diisi"),
 });
 
 const useAddReservationModal = () => {
-    const { setToaster } = useContext(ToasterContext);
+  const { setToaster } = useContext(ToasterContext);
 
-    const getDoctorDropdown = async () => {
-        const res = await doctorServices.getDoctorDropdown();
-        const { data } = res.data;
-        return data;
+  const getDoctorDropdown = async () => {
+    let params = `pagination=${false}`;
+    const res = await doctorServices.getDoctors(params);
+    const { data } = res.data;
+    return data;
+  };
+
+  const getPatientsDropdown = async () => {
+    let params = `pagination=${false}`;
+    const res = await patientServices.getPatients(params);
+    const { data } = res.data;
+    return data;
+  };
+
+  const getReservationStatus = async () => {
+    const res = await reservationServices.getReservationStatus();
+    const { data } = res;
+    return data;
+  };
+
+  const { data: dataDoctorDropdown = [] } = useQuery<IDoctorDropdown[]>({
+    queryKey: ["doctor-dropdown"],
+    queryFn: getDoctorDropdown,
+  });
+
+  const { data: dataPatientDropdown = [] } = useQuery<IPatient[]>({
+    queryKey: ["patient-dropdown"],
+    queryFn: getPatientsDropdown,
+  });
+
+  const { data: dataReservationStatusDropdown = [] } = useQuery<
+    IReservationStatus[]
+  >({
+    queryKey: ["reservation-status-dropdown"],
+    queryFn: getReservationStatus,
+  });
+
+  const addReservation = async (payload: IReservation) => {
+    const res = await reservationServices.postReservation(payload);
+    return res;
+  };
+
+  const {
+    control,
+    handleSubmit: handleSubmitForm,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      patient_id: undefined,
+      doctor_id: undefined,
+      anamnesis: undefined,
+    },
+  });
+
+  const {
+    mutate: mutateAddReservation,
+    isPending: isPendingMutateAddReservation,
+    isSuccess: isSuccessMutateAddReservation,
+    reset: resetAddReservation,
+  } = useMutation({
+    mutationFn: addReservation,
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        setToaster({
+          type: "error",
+          message: error.response?.data?.message || "Terjadi kesalahan",
+        });
+      } else {
+        setToaster({
+          type: "error",
+          message: error.message,
+        });
+      }
+    },
+    onSuccess: () => {
+      setToaster({
+        type: "success",
+        message: "Berhasil menambahkan data kunjungan pasien!",
+      });
+      reset();
+    },
+  });
+
+  const handleAddReservation = (data: IReservation) => {
+    const updatedData = {
+      ...data,
+      latest_status: "scheduled",
     };
 
-    const getPatientsDropdown = async () => {
-        const res = await patientServices.getPatients();
-        const { data } = res.data;
-        return data;
-    };
+    mutateAddReservation(updatedData);
+  };
 
-    const getReservationStatus = async () => {
-        const res = await reservationServices.getReservationStatus();
-        const { data } = res;
-        return data;
-    };
-
-
-    const { data: dataDoctorDropdown = [] } = useQuery<IDoctorDropdown[]>({
-        queryKey: ["doctor-dropdown"],
-        queryFn: getDoctorDropdown,
-    });
-
-    const { data: dataPatientDropdown = [] } = useQuery<IPatient[]>({
-        queryKey: ["patient-dropdown"],
-        queryFn: getPatientsDropdown,
-    });
-
-    const { data: dataReservationStatusDropdown = [] } = useQuery<IReservationStatus[]>({
-        queryKey: ["reservation-status-dropdown"],
-        queryFn: getReservationStatus,
-    });
-
-
-    const addReservation = async (payload: IReservation) => {
-        const res = await reservationServices.postReservation(payload);
-        return res;
-    };
-
-    const {
-        control,
-        handleSubmit: handleSubmitForm,
-        formState: { errors },
-        reset,
-    } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            patient_id: undefined,
-            doctor_id: undefined,
-            anamnesis: undefined
-        },
-    });
-
-    const {
-        mutate: mutateAddReservation,
-        isPending: isPendingMutateAddReservation,
-        isSuccess: isSuccessMutateAddReservation,
-        reset: resetAddReservation,
-    } = useMutation({
-        mutationFn: addReservation,
-        onError: (error) => {
-            if (error instanceof AxiosError) {
-                setToaster({
-                    type: "error",
-                    message: error.response?.data?.message || "Terjadi kesalahan",
-                });
-            } else {
-                setToaster({
-                    type: "error",
-                    message: error.message,
-                });
-            }
-        },
-        onSuccess: () => {
-            setToaster({
-                type: "success",
-                message: "Berhasil menambahkan data kunjungan pasien!",
-            });
-            reset();
-        },
-    });
-
-    const handleAddReservation = (data: IReservation) => {
-        const updatedData = {
-            ...data,
-            latest_status: "scheduled",
-        };
-
-        mutateAddReservation(updatedData);
-    };
-
-    return {
-        control,
-        errors,
-        dataDoctorDropdown,
-        dataPatientDropdown,
-        dataReservationStatusDropdown,
-        isPendingMutateAddReservation,
-        isSuccessMutateAddReservation,
-        handleAddReservation,
-        handleSubmitForm,
-        resetAddReservation,
-        reset,
-    };
+  return {
+    control,
+    errors,
+    dataDoctorDropdown,
+    dataPatientDropdown,
+    dataReservationStatusDropdown,
+    isPendingMutateAddReservation,
+    isSuccessMutateAddReservation,
+    handleAddReservation,
+    handleSubmitForm,
+    resetAddReservation,
+    reset,
+  };
 };
 
 export default useAddReservationModal;

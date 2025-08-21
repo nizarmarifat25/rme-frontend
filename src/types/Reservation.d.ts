@@ -1,7 +1,7 @@
 interface IReservation {
     // latest_status: string
-    patient_id: number
-    doctor_id: number
+    patient_id: string
+    doctor_id: string
     anamnesis: string
 }
 

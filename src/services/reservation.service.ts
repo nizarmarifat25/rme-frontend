@@ -12,7 +12,6 @@ const reservationServices = {
     
     getReservationStatus: () => instance.get(`${endpoint.MEDICAL_RECORD}/status`),
 
-
     getMedicalRecord: (params?: string) => instance.get(`${endpoint.MEDICAL_RECORD}?${params}`),
 }
 

@@ -35,6 +35,7 @@ const Medicine = () => {
     isLoadingMedicine,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingMedicine,
     refetchMedicine,
     handleChangePage,
@@ -122,6 +123,7 @@ const Medicine = () => {
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
+              currentKeyword={String(currentKeyword)}
               emptyContent="Tidak ada data obat"
               renderCell={renderCell}
               columns={COLUMN_LISTS_MEDICINE}

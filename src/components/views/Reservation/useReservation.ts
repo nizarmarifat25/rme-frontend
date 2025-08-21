@@ -96,6 +96,7 @@ const useReservation = () => {
         isLoadingReservation,
         currentPage,
         currentSize,
+        currentKeyword,
         isRefetchingReservation,
         refetchReservation,
         setURL,

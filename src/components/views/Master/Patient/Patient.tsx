@@ -9,6 +9,7 @@ import ActionPatientModal from "./ActionPatientModal";
 import DeletePatientModal from "./DeletePatientModal";
 import usePatient from "./usePatient"; 
 import HeaderLayout from "@/components/ui/Header/Header";
+import { string } from "yup";
 
 const Patient = () => {
   const { push, isReady, query } = useRouter();
@@ -18,6 +19,7 @@ const Patient = () => {
     isLoadingPatient,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingPatient,
     refetchPatient,
     handleChangePage,
@@ -95,6 +97,7 @@ const Patient = () => {
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
+            currentKeyword={String(currentKeyword)}
               emptyContent="Tidak ada data pasien"
               renderCell={renderCell}
               columns={COLUMN_LISTS_PATIENT}

@@ -25,6 +25,7 @@ const Nurse = () => {
     isLoadingNurse,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingNurse,
     refetchNurse,
     handleChangePage,
@@ -112,6 +113,7 @@ const Nurse = () => {
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
+            currentKeyword={String(currentKeyword)}
               emptyContent="Tidak ada data perawat"
               renderCell={renderCell}
               columns={COLUMN_LISTS_NURSE}

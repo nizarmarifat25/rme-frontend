@@ -96,6 +96,7 @@ const UseDoctorSpecialization = () => {
         isLoadingDoctorSpecialization,
         currentPage,
         currentSize,
+        currentKeyword,
         isRefetchingDoctorSpecialization,
         setURL,
         handleChangePage,

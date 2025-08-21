@@ -19,6 +19,7 @@ const Reservation = () => {
     isLoadingReservation,
     currentPage,
     currentSize,
+    currentKeyword,
     isRefetchingReservation,
     refetchReservation,
     handleChangePage,
@@ -161,6 +162,7 @@ const Reservation = () => {
         <section>
           {Object.keys(query).length > 0 && (
             <DataTable
+            currentKeyword={String(currentKeyword)}
               emptyContent="Tidak ada data kunjungan"
               renderCell={renderCell}
               columns={COLUMN_LISTS_RESERVATIONS}

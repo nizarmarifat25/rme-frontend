@@ -96,6 +96,7 @@ const useNurse = () => {
         isLoadingNurse,
         currentPage,
         currentSize,
+        currentKeyword,
         isRefetchingNurse,
         refetchNurse,
         setURL,
